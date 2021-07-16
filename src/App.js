@@ -2,6 +2,7 @@ import React from 'react';
 import stats from './resources/1-2.season.csv';
 import axios from 'axios';
 import {parseData, getTeamResults, Team} from './scripts/readData.js'
+import TeamView from './components/TeamView';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,12 +34,9 @@ class App extends React.Component {
       <div>
         <h1>Hello</h1>
           {this.state.teams.map(team => (
-            <div>
-                <h2>The team in place {team.place} is {team.name}</h2>
-                <h2>Their points during the season were: {team.gameScoresAsSting}</h2>
-                <h2>Their total score was {team.totalScore}</h2>
-                <h2>---------------------------------------------------------</h2>      
-            </div>
+
+                <TeamView team={team}></TeamView>
+  
             ))}
       </div>
     )
