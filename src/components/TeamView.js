@@ -1,15 +1,13 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
 import LineChart from '../subcomponents/LineChart';
 
 function TeamView(props) {
     return (
         <div>
             <h2>The team in place {props.team.place} is {props.team.name}</h2>
-            <h2>Their points during the season were: {props.team.gameScoresAsSting}</h2>
             <h2>Their total score was {props.team.totalScore}</h2>
             <LineChart team={props.team}></LineChart>
-            <h2>---------------------------------------------------------</h2>    
+            <h2></h2>    
         </div>
     );
 

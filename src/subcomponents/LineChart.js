@@ -1,44 +1,55 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
+
+class LineChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+  componentDidMount() {
+      
+    console.log(this.props.team.gameScores);
+    let myChart = new Chart(this.myRef.current, {
+      type: 'line',
+      data: {
+        labels: calculateLabels(this.props.team.gameScores.length),
+          datasets: [{
+              label: '# of points',
+              data: this.props.team.gameScores,
+              borderColor: 'rgb(75, 192, 192)',
+              borderWidth: 1,
+              tension: 0.5
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  max: 10,
+                  beginAtZero: true
+              }
+          }
+      }
+    });
+  }
 
 
-
-  
-
-  
-function LineChart(props) {
-    const data = {
-        labels: calculateLabels(props.team.gameScores.length),
-        datasets: [
-            {
-                label: '# of Points',
-                data: props.team.gameScores,
-                fill: true,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
-                tension: 0.2
-            },
-        ],
-    };
-
-    const options = {
-        scales: {
-            yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 10
-                }
-            }]
-        }
-    };
-    return (
-    <>
-    <div className='header'>
-      <h1 className='title'>{props.team.name}</h1>
-    </div>
-    <Line data={data} options={options} />
+  render() {
+    return(
+      <>
+      <div className='header'>
+        <h1 className='title'>Season points for {this.props.team.name}</h1>
+        <div className='links'>
+          <a
+            className='btn btn-gh'
+          >
+          </a>
+        </div>
+      </div>
+      <canvas ref={this.myRef} width="400" height="100"></canvas>
     </>
     );
+
+  }
 }
 
 function calculateLabels(length) {
@@ -48,5 +59,5 @@ function calculateLabels(length) {
     }
     return labels;
 }
-  
+
 export default LineChart;
