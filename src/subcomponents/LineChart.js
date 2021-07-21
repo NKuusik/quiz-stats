@@ -7,8 +7,6 @@ class LineChart extends React.Component {
     this.myRef = React.createRef();
   }
   componentDidMount() {
-      
-    console.log(this.props.team.gameScores);
     let myChart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
