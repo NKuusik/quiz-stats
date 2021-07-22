@@ -4,6 +4,7 @@ import axios from 'axios';
 import {parseData, getTeamResults, Team} from './scripts/readData.js'
 import TeamView from './components/TeamView';
 import styles from './style.css';
+import CategoryView from './components/CategoryView';
 
 
 class App extends React.Component {
@@ -13,12 +14,6 @@ class App extends React.Component {
       teams: [],
       activeTeam: null
     };
-  }
-
-  chooseTeam(chosenTeam) {
-    this.setState({
-      activeTeam: chosenTeam.name
-    });
   }
 
   componentDidMount() {
@@ -41,15 +36,10 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className={styles.app}>
-        <h1 className={styles.app}>Hello, please choose the team you want to see.</h1>
-          {this.state.teams.map(team => (
-            <div>
-              <button onClick={() => this.chooseTeam(team)}>{team.name}</button>
-              {this.state.activeTeam == team.name && <TeamView team={team}/>}
-            </div>
-            ))}
+      <div className={styles["general-view"]}>
+          <CategoryView teams={this.state.teams}/>
       </div>
+        
     )
   }
 }

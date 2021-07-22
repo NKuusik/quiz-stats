@@ -1,7 +1,36 @@
-.app {
-
+.general-view {
     text-align: center;
 }
-h1 {
-    color: red;
+
+.select-category {
+    padding: 1%;
+    height: 100;
+    background-color: aqua;
+}
+
+.select-category:hover > .select-team {
+    transition: 1000ms;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear;
+
+
+}
+.select-category > h1 {
+    margin: auto;
+    width: 50%;
+    background-color: red;
+    border: 1px;
+    border-style: groove;
+}
+
+.select-team {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+    padding: 1%;
+    border: 1px;
+    border-style: groove;
+    font-size: large;
+    background-color: lightblue;
 }
