@@ -1,0 +1,36 @@
+.general-view {
+    background-color: aqua;
+    padding: 1%;
+    text-align: center;
+}
+
+.select-category:hover > .select-team {
+    transition: 1000ms;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear;
+
+
+}
+.select-category > h1 {
+    margin: auto;
+    width: 50%;
+    background-color: red;
+    border: 1px;
+    border-style: groove;
+}
+
+.select-team {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+    padding: 1%;
+    border: 1px;
+    border-style: groove;
+    font-size: large;
+    background-color: rgba(185, 155, 174, 0.527);
+}
+
+canvas {
+    background-color: antiquewhite;
+}

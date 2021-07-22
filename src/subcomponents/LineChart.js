@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from 'chart.js/auto';
+import styles from '../style.css';
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class LineChart extends React.Component {
           datasets: [{
               label: '# of points',
               data: this.props.team.gameScores,
+              backgroundColor: 'rgb(255, 99, 132)',
               borderColor: 'rgb(75, 192, 192)',
               borderWidth: 1,
               tension: 0.5

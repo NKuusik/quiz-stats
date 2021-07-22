@@ -2,9 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import TeamView from '../components/TeamView';
 import {parseData, getTeamResults, Team} from '../scripts/readData';
-import LineChart from '../subcomponents/LineChart';
-import Chart from 'chart.js/auto';
-
 
 const testData = "2,FakeTeam,9.5,8,,9,10,3,4,54";
 

@@ -1,10 +1,12 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
+import styles from '../style.css';
 
 function TeamView(props) {
     return (
         <div>
-            <h2>The team in place {props.team.place} is {props.team.name}</h2>
+            <h1>Stats for team {props.team.name}</h1>
+            <h2 onClick={() => props.chooseTeam(null)}>Go Back</h2>
             <h2>Their total score was {props.team.totalScore}</h2>
             <LineChart team={props.team}></LineChart>
             <h2></h2>    
