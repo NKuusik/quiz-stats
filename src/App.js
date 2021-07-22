@@ -2,10 +2,8 @@ import React from 'react';
 import stats from './resources/1-2.season.csv';
 import axios from 'axios';
 import {parseData, getTeamResults, Team} from './scripts/readData.js'
-import TeamView from './components/TeamView';
 import styles from './style.css';
-import CategoryView from './components/CategoryView';
-
+import ViewWrapper from './components/ViewWrapper';
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles["general-view"]}>
-          <CategoryView teams={this.state.teams}/>
+          <ViewWrapper teams={this.state.teams}/>
       </div>
         
     )

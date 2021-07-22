@@ -1,11 +1,7 @@
 .general-view {
-    text-align: center;
-}
-
-.select-category {
-    padding: 1%;
-    height: 100;
     background-color: aqua;
+    padding: 1%;
+    text-align: center;
 }
 
 .select-category:hover > .select-team {
@@ -32,5 +28,9 @@
     border: 1px;
     border-style: groove;
     font-size: large;
-    background-color: lightblue;
+    background-color: rgba(185, 155, 174, 0.527);
+}
+
+canvas {
+    background-color: antiquewhite;
 }
