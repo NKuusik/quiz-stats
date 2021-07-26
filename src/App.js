@@ -1,5 +1,5 @@
 import React from 'react';
-import stats from './resources/1-2.season.csv';
+import * as seasons from './resources/seasons.js';
 import axios from 'axios';
 import {parseData, getTeamResults, Team} from './scripts/readData.js'
 import styles from './style.css';
@@ -9,29 +9,31 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      teams: [],
+      teams: {},
       activeTeam: null
     };
   }
 
   componentDidMount() {
-    axios.get(stats)
-    .then(res => {
-      return parseData(res.data);
-    })
-    .then(parsedData => {
-      let parsedTeams = new Array();
-      for (let i = 1; i < parsedData.data.length - 1; i++) {
-        let teamData = getTeamResults(parsedData.data[i]);
-        let team = new Team(teamData.place, teamData.name, 
-          teamData.gameScores, teamData.totalScore);
-        parsedTeams.push(team);     
+    for (let season of Object.values(seasons)) {    
+      axios.get(season)
+      .then(res => {
+        return parseData(res.data);
+      })
+      .then(parsedData => {
+        for (let i = 1; i < parsedData.data.length - 1; i++) {
+          let currentTeams = {...this.state.teams};
+          let teamData = getTeamResults(parsedData.data[i]);
+          if (!(teamData.name in currentTeams.name)) {
+            let team = new Team(teamData.place, teamData.name, 
+            teamData.gameScores, teamData.totalScore);
+            currentTeams[team.name] = team;
+            this.setState({teams: currentTeams});
+            } 
+          }
+        });
       }
-
-      this.setState({teams: parsedTeams});
-      }
-    );
-  }
+    }
   render() {
     return (
       <div className={styles["general-view"]}>

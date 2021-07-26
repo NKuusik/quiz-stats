@@ -1,6 +1,6 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
-import styles from '../style.css';
+
 
 function TeamView(props) {
     return (
