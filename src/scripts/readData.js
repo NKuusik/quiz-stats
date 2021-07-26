@@ -4,6 +4,7 @@ class Team {
     constructor(place, name, gameScores, totalScore) {
         this.place = place;
         this.name = name;
+        this.seasons = {};
         this.gameScores = gameScores;
         this.totalScore = totalScore;
         this.normalizeGameScore();
