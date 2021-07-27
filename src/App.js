@@ -3,7 +3,7 @@ import * as seasons from './resources/seasons.js';
 import axios from 'axios';
 import {parseData, getTeamResults, Team} from './scripts/readData.js'
 import styles from './style.css';
-import ViewWrapper from './components/ViewWrapper';
+import ViewWrapper from './components/ViewWrapper.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,25 +17,25 @@ class App extends React.Component {
   componentDidMount() {
     let seasonNo = 0;
     for (let season of Object.values(seasons)) {
-      seasonNo += 1;    
       axios.get(season)
       .then(res => {
         return parseData(res.data);
       })
       .then(parsedData => {
-        let currentSeason[0] = parsedData.data;
+        let currentSeason = parsedData.data[0];
         for (let i = 1; i < parsedData.data.length - 1; i++) {
           let currentTeams = {...this.state.teams};
           let teamData = getTeamResults(parsedData.data[i]);
             if (!(teamData.name in currentTeams)) {
+
               let team = new Team(teamData.place, teamData.name, 
               teamData.gameScores, teamData.totalScore);
-              team.seasons[seasonNo] = team.gameScores;
+              team.seasons[currentSeason] = team.gameScores;
               currentTeams[team.name] = team;
-              this.setState({teams: currentTeams});
             } else {
-//Todo
-            } 
+              currentTeams[teamData.name].seasons[currentSeason] = teamData.gameScores;
+            }
+            this.setState({teams: currentTeams});
           }
         });
       }
