@@ -8,7 +8,6 @@ class Team {
         this.gameScores = gameScores;
         this.totalScore = totalScore;
         this.normalizeGameScore();
-        this.gameScoresAsSting = this.displayGameScore();
     }
     normalizeGameScore() {
         for (let i = 0; i < this.gameScores.length; i++) {
@@ -16,18 +15,6 @@ class Team {
                 this.gameScores[i] = '0';
             }
         } 
-    }
-    displayGameScore() {
-        let output = "";
-        for (let i = 0; i < this.gameScores.length - 1; i++) {
-          output += this.gameScores[i]
-          if (i == this.gameScores.length - 2) {
-            output += ".";
-          } else {
-            output += ", ";
-          }
-        }
-        return output;
     }
 }
 

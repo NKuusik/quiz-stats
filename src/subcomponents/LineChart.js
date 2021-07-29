@@ -29,7 +29,7 @@ class LineChart extends React.Component {
     let myChart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
-        labels: calculateLabels(this.props.team.gameScores.length),
+        labels: calculateLabels(this.props.team.seasons),
         datasets: this.createSeasonalDataSets()
       },
       options: {
@@ -63,12 +63,20 @@ class LineChart extends React.Component {
   }
 }
 
-function calculateLabels(length) {
-    let labels = []
-    for (let i = 1; i < length; i++) {
-        labels.push(`Game #${i}`);
+function calculateLabels(seasonsAsObject) {
+  let longestSeason = null;
+  for (let seasonKey in seasonsAsObject) {
+    console.log(seasonKey);
+    if (longestSeason == null || seasonsAsObject[seasonKey].length > longestSeason.length) {
+      longestSeason = seasonsAsObject[seasonKey];
     }
-    return labels;
+  }
+  let labels = []
+  for (let i = 1; i < longestSeason.length; i++) {
+      labels.push(`Game #${i}`);
+  }
+  console.log(longestSeason);
+  return labels;
 }
 
 export default LineChart;
