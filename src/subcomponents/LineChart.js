@@ -9,10 +9,10 @@ class LineChart extends React.Component {
   }
   createSeasonalDataSets() {
     let dataSets = [];
-    for (let season of Object.keys(this.props.team.seasons)) {
+    for (let season of Object.keys(this.props.data[this.props.dataSetName])) {
       let singleDataSet = {
         label: `# of points in season ${season}`,
-        data: this.props.team.seasons[season],
+        data: this.props.data.seasons[season],
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(0, 10, 12)',
         borderWidth: 1.5,
@@ -25,10 +25,11 @@ class LineChart extends React.Component {
 
 
   componentDidMount() {
+    console.log(this.props.labels);
     let myChart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
-        labels: calculateLabels(this.props.team.seasons),
+        labels: this.props.labels,
         datasets: this.createSeasonalDataSets()
       },
       options: {
@@ -47,7 +48,7 @@ class LineChart extends React.Component {
     return(
       <>
       <div className='header'>
-        <h1 className='title'>Season points for {this.props.team.name}</h1>
+        <h1 className='title'>Season points for {this.props.data.name}</h1>
         <div className='links'>
           <a
             className='btn btn-gh'

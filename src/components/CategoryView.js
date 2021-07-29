@@ -1,5 +1,4 @@
 import React from 'react';
-import TeamView from './TeamView';
 import styles from '../style.css';
 
 class CategoryView extends React.Component {
@@ -13,10 +12,9 @@ class CategoryView extends React.Component {
         return(
             <div>
                 <div className={styles["select-category"]}>
-                    <h1 >Hello, please choose the team you want to see.</h1>
-                {Object.values(this.props.teams).map(team => (
-                <div className={styles["select-team"]} onClick={() => this.props.chooseTeam(team)}>
-                    {team.name}
+                {Object.values(this.props.category).map(entryInCategory => (
+                <div className={styles["select-team"]} onClick={() => this.props.choice(entryInCategory)}>
+                    {entryInCategory.name}
                 </div>
               ))}
               </div>
