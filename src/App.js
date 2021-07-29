@@ -15,7 +15,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let seasonNo = 0;
     for (let season of Object.values(seasons)) {
       axios.get(season)
       .then(res => {
@@ -29,11 +28,11 @@ class App extends React.Component {
             if (!(teamData.name in currentTeams)) {
 
               let team = new Team(teamData.place, teamData.name, 
-              teamData.gameScores, teamData.totalScore);
-              team.seasons[currentSeason] = team.gameScores;
+              teamData.latestSeasonScores, teamData.totalScore);
+              team.seasons[currentSeason] = team.latestSeasonScores;
               currentTeams[team.name] = team;
             } else {
-              currentTeams[teamData.name].seasons[currentSeason] = teamData.gameScores;
+              currentTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
             }
             this.setState({teams: currentTeams});
           }

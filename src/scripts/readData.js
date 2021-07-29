@@ -1,18 +1,18 @@
 const papaparse = require('papaparse');
 
 class Team {
-    constructor(place, name, gameScores, totalScore) {
+    constructor(place, name, latestSeasonScores, totalScore) {
         this.place = place;
         this.name = name;
         this.seasons = {};
-        this.gameScores = gameScores;
+        this.latestSeasonScores = latestSeasonScores;
         this.totalScore = totalScore;
         this.normalizeGameScore();
     }
     normalizeGameScore() {
-        for (let i = 0; i < this.gameScores.length; i++) {
-            if (this.gameScores[i] == '') {
-                this.gameScores[i] = '0';
+        for (let i = 0; i < this.latestSeasonScores.length; i++) {
+            if (this.latestSeasonScores[i] == '') {
+                this.latestSeasonScores[i] = '0';
             }
         } 
     }
@@ -33,7 +33,7 @@ function getTeamResults(teamData) {
   let team = {
       place: teamData[0],
       name: teamData[1],
-      gameScores: teamData.slice(2, -1),
+      latestSeasonScores: teamData.slice(2, -1),
       totalScore: teamData[teamData.length - 1],
   };
   return team;
