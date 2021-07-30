@@ -31,8 +31,6 @@ function SeasonView(props) {
 
     return (
         <div>
-            <p>I am a SeasonView</p>
-            <p>This is season {props.season.name}</p>
             <LineChart titleContent={`Game-by-game points for ${props.season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()}/>
         </div>
     )

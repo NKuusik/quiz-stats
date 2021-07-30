@@ -5,6 +5,7 @@ import {parseData, getTeamResults, Team} from './scripts/readData.js'
 import styles from './style.css';
 import TeamViewWrapper from './components/TeamViewWrapper.js';
 import SeasonViewWrapper from './components/SeasonViewWrapper.js';
+import Header from './components/Header.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class App extends React.Component {
     this.state = {
       teams: {},
       seasonsWithTeamNames: {},
-      activeTeam: null
+      activeView: null
     };
   }
 
@@ -46,11 +47,22 @@ class App extends React.Component {
         });
       }
     }
+
+    chooseView(chosenView) {
+      this.setState({activeView: chosenView});
+    }
   render() {
+    const activeView = this.state.activeView;
+    let view;
+    if (activeView == "season") {
+      view = <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>;      
+    } else if (activeView == "team") {
+      view = <TeamViewWrapper teams={this.state.teams}/>;
+    }
     return (
       <div className={styles["general-view"]}>
-          <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>       
-          <TeamViewWrapper teams={this.state.teams}/>
+        <Header choice={this.chooseView.bind(this)}/>
+        {view}
       </div>
         
     )

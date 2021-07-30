@@ -4,6 +4,7 @@ import SeasonView from './SeasonView';
 
 function SeasonViewWrapper(props) {
     const [activeSeason, setActiveSeason] = useState(null);
+    
     function chooseSeason(chosenSeason) {
         setActiveSeason(chosenSeason);
 
