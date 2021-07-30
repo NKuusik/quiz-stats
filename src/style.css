@@ -34,3 +34,23 @@
 canvas {
     background-color: antiquewhite;
 }
+
+.header > ul {
+    list-style-type: none;
+    margin: 10px;
+    padding: 15px;
+    overflow: hidden;
+    
+}
+
+.header > ul li {
+    display: inline;
+}
+
+.header > ul li h2 {
+    display: inline;
+    padding: 5px;
+    background-color: red;
+    border: 1px;
+    border-style: solid;
+  }
