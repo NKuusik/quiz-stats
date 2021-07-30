@@ -26,7 +26,7 @@ class App extends React.Component {
       .then(parsedData => {
         let currentSeason = parsedData.data[0];
         seasonsData[currentSeason] = {};
-        seasonsData[currentSeason]["name"] = `Season ${currentSeason}`;
+        seasonsData[currentSeason]["name"] = `season ${currentSeason}`;
         seasonsData[currentSeason]["teams"] = [];
         for (let i = 1; i < parsedData.data.length - 1; i++) {
           let currentTeams = {...this.state.teams};
@@ -35,10 +35,10 @@ class App extends React.Component {
             if (!(teamData.name in currentTeams)) {
               let team = new Team(teamData.place, teamData.name, 
               teamData.latestSeasonScores, teamData.totalScore);
-              team.seasons[currentSeason] = team.latestSeasonScores;
+              team.seasons[`season ${currentSeason}`] = team.latestSeasonScores;
               currentTeams[team.name] = team;
             } else {
-              currentTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
+              currentTeams[teamData.name].seasons[`season ${currentSeason}`] = teamData.latestSeasonScores;
             }
             this.setState({teams: currentTeams});
             this.setState({seasonsWithTeamNames: seasonsData});
@@ -49,9 +49,8 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles["general-view"]}>
+          <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>       
           <TeamViewWrapper teams={this.state.teams}/>
-{/*          <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} /> */}
-        
       </div>
         
     )

@@ -7,30 +7,14 @@ class LineChart extends React.Component {
     super(props);
     this.myRef = React.createRef();
   }
-  createSeasonalDataSets() {
-    let dataSets = [];
-    for (let season of Object.keys(this.props.data[this.props.dataSetName])) {
-      let singleDataSet = {
-        label: `# of points in season ${season}`,
-        data: this.props.data.seasons[season],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(0, 10, 12)',
-        borderWidth: 1.5,
-        tension: 0.5
-      }
-      dataSets.push(singleDataSet);
-    }
-    return dataSets;
-  }
 
 
   componentDidMount() {
-    console.log(this.props.labels);
     let myChart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
         labels: this.props.labels,
-        datasets: this.createSeasonalDataSets()
+        datasets: this.props.dataSets
       },
       options: {
           scales: {
@@ -48,7 +32,7 @@ class LineChart extends React.Component {
     return(
       <>
       <div className='header'>
-        <h1 className='title'>Season points for {this.props.data.name}</h1>
+        <h1 className='title'>{this.props.titleContent}</h1>
         <div className='links'>
           <a
             className='btn btn-gh'
