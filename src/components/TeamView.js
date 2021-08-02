@@ -18,7 +18,7 @@ function TeamView(props) {
         return labels;
       }
 
-      function generateLabelsAccumulative() {
+      function generateLabelsCumulative() {
         let labels = []
         for (let season of Object.keys(props.team.seasons)) {
           let labelName = `Season ${season}`;
@@ -56,9 +56,9 @@ function TeamView(props) {
 
       let totalPoints = generateTotalPointsArray();
 
-      function generateDataSetsAccumualtive() {
+      function generateDataSetsCumualtive() {
         let singleDataSet = {
-          label: `Accumulative points for ${props.team.name}.`,
+          label: `Cumulative points for ${props.team.name}.`,
           data: totalPoints,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(0, 10, 12)',
@@ -67,19 +67,15 @@ function TeamView(props) {
         }
         return [singleDataSet];
       }
-    
-    console.log(generateDataSetsSeason());
-    console.log(generateDataSetsAccumualtive());
 
     return (
 
         <div>
             <h1>Stats for team {props.team.name}</h1>
             <LineChart maxValue={10} titleContent={`Game-by-game points per season`} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(props.team.seasons)} />
-            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={`Accumulative points accross seasons`} dataSets={generateDataSetsAccumualtive()} labels={generateLabelsAccumulative()} />
+            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={`Cumulative points accross seasons`} dataSets={generateDataSetsCumualtive()} labels={generateLabelsCumulative()} />
         </div>
     );
 }
-
 
 export default TeamView;
