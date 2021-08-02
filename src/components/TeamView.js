@@ -4,7 +4,7 @@ import LineChart from '../subcomponents/LineChart';
 
 function TeamView(props) {
 
-    function calculateLabels(seasonsAsObject) {
+    function generateLabelsSeason(seasonsAsObject) {
         let longestSeason = null;
         for (let seasonKey in seasonsAsObject) {
           if (longestSeason == null || seasonsAsObject[seasonKey].length > longestSeason.length) {
@@ -18,7 +18,16 @@ function TeamView(props) {
         return labels;
       }
 
-      function generateDataSetsWithSeasonPoints() {
+      function generateLabelsAccumulative() {
+        let labels = []
+        for (let season of Object.keys(props.team.seasons)) {
+          let labelName = `Season ${season}`;
+          labels.push(labelName);
+        }
+        return labels;
+      }
+
+      function generateDataSetsSeason() {
         let arrayWithSeasonPoints = [];
         for (let season of Object.keys(props.team.seasons)) {
           let singleDataSet = {
@@ -33,12 +42,41 @@ function TeamView(props) {
         }
         return arrayWithSeasonPoints;
       }
+
+      function generateTotalPointsArray() {
+        let totalPointsAllSeasons = [];
+        for (let season of Object.values(props.team.seasons)) {
+          let pointsAsNumbers = season.map(Number);
+          let sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
+
+          totalPointsAllSeasons.push(sum);
+        }
+        return totalPointsAllSeasons;
+      }
+
+      let totalPoints = generateTotalPointsArray();
+
+      function generateDataSetsAccumualtive() {
+        let singleDataSet = {
+          label: `Accumulative points for ${props.team.name}.`,
+          data: totalPoints,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(0, 10, 12)',
+          borderWidth: 1.5,
+          tension: 0.5
+        }
+        return [singleDataSet];
+      }
+    
+    console.log(generateDataSetsSeason());
+    console.log(generateDataSetsAccumualtive());
+
     return (
+
         <div>
             <h1>Stats for team {props.team.name}</h1>
-            <h2 onClick={() => props.chooseTeam(null)}>Go Back</h2>
-            <h2>Their total score was {props.team.totalScore}</h2>
-            <LineChart titleContent={`Season points for ${props.team.name}`} dataSets={generateDataSetsWithSeasonPoints()} labels={calculateLabels(props.team)} />
+            <LineChart maxValue={10} titleContent={`Game-by-game points per season`} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(props.team.seasons)} />
+            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={`Accumulative points accross seasons`} dataSets={generateDataSetsAccumualtive()} labels={generateLabelsAccumulative()} />
         </div>
     );
 }

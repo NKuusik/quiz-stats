@@ -6,17 +6,17 @@ class Team {
         this.name = name;
         this.seasons = {};
         this.latestSeasonScores = latestSeasonScores;
-        this.totalScore = totalScore;
-        this.normalizeGameScore();
+        this.totalScore = totalScore; // Todo: eraldi iga seasoni kohta.
     }
-    normalizeGameScore() {
-        for (let i = 0; i < this.latestSeasonScores.length; i++) {
-            if (this.latestSeasonScores[i] == '') {
-                this.latestSeasonScores[i] = '0';
+}
+    function normalizeGameScore(team) { //Todo: Refactor into pure function.
+        for (let i = 0; i < team.latestSeasonScores.length; i++) {
+            if (team.latestSeasonScores[i] == '') {
+                team.latestSeasonScores[i] = '0';
             }
         } 
     }
-}
+
 
 async function parseData(input) {
   return new Promise((resolve, reject) => {
@@ -36,6 +36,7 @@ function getTeamResults(teamData) {
       latestSeasonScores: teamData.slice(2, -1),
       totalScore: teamData[teamData.length - 1],
   };
+  normalizeGameScore(team);
   return team;
 }
 
