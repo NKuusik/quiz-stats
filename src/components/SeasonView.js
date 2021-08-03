@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
+import styles from '../style.css';
 
 function SeasonView(props) {
 
@@ -55,6 +56,7 @@ function SeasonView(props) {
     generateDataSetsWithIncrementalPoints();
     return (
         <div>
+            <h2 className={styles["back-button"]} onClick={() => props.chooseSeason(null)}>Go Back</h2>
             <LineChart titleContent={`Game-by-game points for ${props.season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()}/>
             <LineChart titleContent={`Incremental points ${props.season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()}/>
         </div>

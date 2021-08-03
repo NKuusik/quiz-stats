@@ -1,8 +1,12 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
+import styles from '../style.css';
 
 
 function TeamView(props) {
+  let cumulativeLabels = generateLabelsCumulative();
+  let totalPoints = generateTotalPointsArray(cumulativeLabels);
+
 
     function generateLabelsSeason(seasonsAsObject) {
         let longestSeason = null;
@@ -21,9 +25,10 @@ function TeamView(props) {
       function generateLabelsCumulative() {
         let labels = []
         for (let season of Object.keys(props.team.seasons)) {
-          let labelName = `Season ${season}`;
+          let labelName = season;
           labels.push(labelName);
         }
+        labels.sort();
         return labels;
       }
 
@@ -43,18 +48,18 @@ function TeamView(props) {
         return arrayWithSeasonPoints;
       }
 
-      function generateTotalPointsArray() {
-        let totalPointsAllSeasons = [];
-        for (let season of Object.values(props.team.seasons)) {
-          let pointsAsNumbers = season.map(Number);
-          let sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
 
+      function generateTotalPointsArray(labels) {
+        let totalPointsAllSeasons = [];
+        console.log(labels);
+        for (let seasonName of labels) {
+          let pointsAsNumbers = props.team.seasons[seasonName].map(Number);
+          let sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
           totalPointsAllSeasons.push(sum);
         }
         return totalPointsAllSeasons;
       }
 
-      let totalPoints = generateTotalPointsArray();
 
       function generateDataSetsCumualtive() {
         let singleDataSet = {
@@ -72,8 +77,9 @@ function TeamView(props) {
 
         <div>
             <h1>Stats for team {props.team.name}</h1>
+            <h2 className={styles["back-button"]} onClick={() => props.chooseTeam(null)}>Go Back</h2>
             <LineChart maxValue={10} titleContent={`Game-by-game points per season`} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(props.team.seasons)} />
-            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={`Cumulative points accross seasons`} dataSets={generateDataSetsCumualtive()} labels={generateLabelsCumulative()} />
+            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={`Cumulative points accross seasons`} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
         </div>
     );
 }

@@ -1,5 +1,7 @@
+body {
+    background-color: rgba(120, 241, 195, 0.459);
+}
 .general-view {
-    background-color: aqua;
     padding: 1%;
     text-align: center;
 }
@@ -54,3 +56,14 @@ canvas {
     border: 1px;
     border-style: solid;
   }
+
+.back-button {
+    background-color: red;
+    border: 1px;
+    border-style: solid;
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2x;
+    padding-bottom: 2px;
+}
