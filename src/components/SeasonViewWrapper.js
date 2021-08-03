@@ -21,7 +21,7 @@ function SeasonViewWrapper(props) {
     } else {
         return (
             <div>
-                <SeasonView season={activeSeason} teams={props.teams}/>
+                <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => {chooseSeason(chosenSeason);}}/>
             </div>
         )
     }

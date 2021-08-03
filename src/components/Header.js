@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from '../style.css';
 
-function Header(props) {
+function Header(props) { //Todo: Does not toggle.
     return(
         <div className={styles["header"]}>
             <ul>
