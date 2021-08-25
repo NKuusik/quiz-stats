@@ -5,7 +5,7 @@ import {parseData, getTeamResults, Team} from './scripts/readData.js'
 import styles from './style.css';
 import TeamViewWrapper from './components/TeamViewWrapper.js';
 import SeasonViewWrapper from './components/SeasonViewWrapper.js';
-import Header from './components/Header.js';
+import Header from './components/Header.tsx';
 
 class App extends React.Component {
   constructor(props) {
