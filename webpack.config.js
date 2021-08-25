@@ -10,13 +10,17 @@ module.exports = {
     output: {
         filename: 'bundle.[hash].js'
     },
-    devtool: 'inline-source-map',
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
+
+    },
+    devtool: 'source-map',
     module: {
         rules: [
             {
-                test: /\.(js)$/,
+                test: /\.(t|j)sx?$/,
                 exclude: /node_modules/,
-                use: ['babel-loader']
+                use: ['ts-loader']
             },
             {
                 test: /\.css$/,

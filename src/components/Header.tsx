@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import styles from '../style.css';
+import * as React from 'react';
+import * as styles from '../style.css';
 
 function Header(props) { //Todo: Does not toggle.
     return(
