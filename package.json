@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack serve",
     "vagrant": "webpack serve --host 0.0.0.0 --public 10.10.10.61:3000",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "eslint './src/**'"
   },
   "dependencies": {
     "axios": "^0.21.1",
