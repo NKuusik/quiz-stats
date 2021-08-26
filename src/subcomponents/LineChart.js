@@ -3,33 +3,31 @@ import Chart from 'chart.js/auto';
 import styles from '../style.css';
 
 class LineChart extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.myRef = React.createRef();
   }
 
-
-  componentDidMount() {
-    let myChart = new Chart(this.myRef.current, {
+  componentDidMount () {
+    const myChart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
         labels: this.props.labels,
         datasets: this.props.dataSets
       },
       options: {
-          scales: {
-              y: {
-                  max: this.props.maxValue,
-                  beginAtZero: true
-              }
+        scales: {
+          y: {
+            max: this.props.maxValue,
+            beginAtZero: true
           }
+        }
       }
     });
   }
 
-
-  render() {
-    return(
+  render () {
+    return (
       <>
       <div className='header'>
         <h1 className='title'>{this.props.titleContent}</h1>
@@ -43,20 +41,19 @@ class LineChart extends React.Component {
       <canvas ref={this.myRef} width="400" height="100"></canvas>
     </>
     );
-
   }
 }
 
-function calculateLabels(seasonsAsObject) {
+function calculateLabels (seasonsAsObject) {
   let longestSeason = null;
-  for (let seasonKey in seasonsAsObject) {
+  for (const seasonKey in seasonsAsObject) {
     if (longestSeason == null || seasonsAsObject[seasonKey].length > longestSeason.length) {
       longestSeason = seasonsAsObject[seasonKey];
     }
   }
-  let labels = []
+  const labels = [];
   for (let i = 1; i < longestSeason.length; i++) {
-      labels.push(`Game #${i}`);
+    labels.push(`Game #${i}`);
   }
   return labels;
 }

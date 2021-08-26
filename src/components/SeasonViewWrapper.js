@@ -1,31 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CategoryView from './CategoryView';
 import SeasonView from './SeasonView';
 
-function SeasonViewWrapper(props) {
-    const [activeSeason, setActiveSeason] = useState(null);
-    
-    function chooseSeason(chosenSeason) {
-        setActiveSeason(chosenSeason);
+function SeasonViewWrapper (props) {
+  const [activeSeason, setActiveSeason] = useState(null);
 
-    }
-    if (activeSeason == null) {
-        return (
+  function chooseSeason (chosenSeason) {
+    setActiveSeason(chosenSeason);
+  }
+  if (activeSeason == null) {
+    return (
             <div>
                 <h1>
                 Select which season you want to check.
                 </h1>
-                <CategoryView category={props.seasons} choice={(chosenSeason) => {chooseSeason(chosenSeason);}} />
+                <CategoryView category={props.seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
                 </div>
-        );
-    } else {
-        return (
+    );
+  } else {
+    return (
             <div>
-                <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => {chooseSeason(chosenSeason);}}/>
+                <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => { chooseSeason(chosenSeason); }}/>
             </div>
-        )
-    }
-    
+    );
+  }
 }
 
 export default SeasonViewWrapper;
