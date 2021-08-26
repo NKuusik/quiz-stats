@@ -14,7 +14,7 @@ class CategoryView extends React.Component {
             <div>
                 <div className={styles['select-category']}>
                 {Object.values(this.props.category).map(entryInCategory => (
-                <div className={styles['select-team']} onClick={() => this.props.choice(entryInCategory)}>
+                <div key={ entryInCategory.name }className={styles['select-team']} onClick={() => this.props.choice(entryInCategory)}>
                     {entryInCategory.name}
                 </div>
                 ))}

@@ -3,9 +3,6 @@ import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 
 function TeamView (props) {
-  const cumulativeLabels = generateLabelsCumulative();
-  const totalPoints = generateTotalPointsArray(cumulativeLabels);
-
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = null;
     for (const seasonKey in seasonsAsObject) {
@@ -56,6 +53,9 @@ function TeamView (props) {
     }
     return totalPointsAllSeasons;
   }
+
+  const cumulativeLabels = generateLabelsCumulative();
+  const totalPoints = generateTotalPointsArray(cumulativeLabels);
 
   function generateDataSetsCumualtive () {
     const singleDataSet = {

@@ -55,9 +55,9 @@ class App extends React.Component {
   render () {
     const activeView = this.state.activeView;
     let view;
-    if (activeView == 'season') {
+    if (activeView === 'season') {
       view = <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>;
-    } else if (activeView == 'team') {
+    } else if (activeView === 'team') {
       view = <TeamViewWrapper teams={this.state.teams}/>;
     }
     return (

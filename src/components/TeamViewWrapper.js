@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TeamView from './TeamView';
 import CategoryView from './CategoryView';
 
@@ -29,5 +30,9 @@ class TeamViewWrapper extends React.Component {
     }
   }
 }
+
+TeamViewWrapper.propTypes = {
+  teams: PropTypes.object
+};
 
 export default TeamViewWrapper;

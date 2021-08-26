@@ -1,5 +1,3 @@
-import season1_2 from './1-2.season.csv';
-import season3 from './3.season.csv';
 import season4 from './4.season.csv';
 import season5 from './5.season.csv';
 import season6 from './6.season.csv';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 
@@ -32,7 +32,7 @@ function SeasonView (props) {
     for (const teamName of Object.values(props.season.teams)) {
       const incrementalPoints = [];
       for (let i = 0; i < props.teams[teamName].seasons[props.season.name].length; i++) {
-        if (i == 0) {
+        if (i === 0) {
           incrementalPoints.push(parseInt(props.teams[teamName].seasons[props.season.name][i]));
         } else {
           const incrementedValue = parseInt(props.teams[teamName].seasons[props.season.name][i]) + incrementalPoints[i - 1];

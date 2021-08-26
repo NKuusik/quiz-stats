@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from '../style.css';
+import PropTypes from 'prop-types';
 
 function Header (props) { // Todo: Does not toggle.
   return (
@@ -11,5 +12,9 @@ function Header (props) { // Todo: Does not toggle.
         </div>
   );
 }
+
+Header.propTypes = {
+  choice: PropTypes.string
+};
 
 export default Header;

@@ -1,0 +1,5 @@
+**/*.json
+**/*.css
+**/*.csv
+**/*.txt
+src/tests

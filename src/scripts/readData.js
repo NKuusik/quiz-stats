@@ -11,7 +11,7 @@ class Team {
 }
 function normalizeGameScore (team) { // Todo: Refactor into pure function.
   for (let i = 0; i < team.latestSeasonScores.length; i++) {
-    if (team.latestSeasonScores[i] == '') {
+    if (team.latestSeasonScores[i] === '') {
       team.latestSeasonScores[i] = '0';
     }
   }
