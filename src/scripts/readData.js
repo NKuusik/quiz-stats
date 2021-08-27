@@ -38,4 +38,4 @@ function getTeamResults (teamData) {
   return team;
 }
 
-export { parseData, getTeamResults, Team };
+module.exports = { parseData, getTeamResults, Team };
