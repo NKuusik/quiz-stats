@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart from 'chart.js/auto';
-import styles from '../style.css';
 
 class LineChart extends React.Component {
   constructor (props) {
@@ -42,20 +41,6 @@ class LineChart extends React.Component {
     </>
     );
   }
-}
-
-function calculateLabels (seasonsAsObject) {
-  let longestSeason = null;
-  for (const seasonKey in seasonsAsObject) {
-    if (longestSeason == null || seasonsAsObject[seasonKey].length > longestSeason.length) {
-      longestSeason = seasonsAsObject[seasonKey];
-    }
-  }
-  const labels = [];
-  for (let i = 1; i < longestSeason.length; i++) {
-    labels.push(`Game #${i}`);
-  }
-  return labels;
 }
 
 export default LineChart;
