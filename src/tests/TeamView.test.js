@@ -11,7 +11,7 @@ it('renders correctly', async () => {
   const testTeam = new Team(teamData.place, teamData.name, teamData.latestSeasonScores, teamData.totalScore);
   testTeam.seasons[`season 1`] = testTeam.latestSeasonScores;
   const tree = renderer
-    .create(<TeamView team={testTeam}></TeamView>)
+    .create(<TeamView chooseTeam={testTeam} team={testTeam}></TeamView>)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

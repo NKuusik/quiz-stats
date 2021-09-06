@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Chart from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 class LineChart extends React.Component {
   constructor (props) {
