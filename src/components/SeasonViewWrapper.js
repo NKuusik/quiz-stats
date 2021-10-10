@@ -12,9 +12,9 @@ function SeasonViewWrapper(props) {
     if (activeSeason == null) {
         return (
             <div>
-                <h1>
+                <div>
                 Select which season you want to check.
-                </h1>
+                </div>
                 <CategoryView category={props.seasons} choice={(chosenSeason) => {chooseSeason(chosenSeason);}} />
                 </div>
         );

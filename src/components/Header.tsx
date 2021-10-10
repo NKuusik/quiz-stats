@@ -4,10 +4,8 @@ import styles from '../style.css';
 function Header(props) { //Todo: Does not toggle.
     return(
         <div className={styles["header"]}>
-            <ul>
-                <li><h2 onClick={() => {props.choice("team")}}>Check team</h2></li>
-                <li><h2 onClick={() => {props.choice("season")}}>Check season</h2></li>
-            </ul>
+               <div onClick={() => {props.choice("team")}}>Check team</div>
+               <div onClick={() => {props.choice("season")}}>Check season</div>
         </div>
     );
 }

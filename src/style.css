@@ -1,19 +1,17 @@
 body {
-    background-color: rgba(120, 241, 195, 0.459);
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: center;
 }
 .general-view {
-    padding: 1%;
-    text-align: center;
 }
 
-.select-category:hover > .select-team {
-    transition: 1000ms;
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 1s linear;
-
-
+.header {
+    color: red;
+    min-width: 100%;
 }
+
 .select-category > h1 {
     margin: auto;
     width: 50%;
@@ -22,48 +20,13 @@ body {
     border-style: groove;
 }
 
-.select-team {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 1s, opacity 1s linear;
-    padding: 1%;
-    border: 1px;
-    border-style: groove;
-    font-size: large;
-    background-color: rgba(185, 155, 174, 0.527);
-}
 
 canvas {
     background-color: antiquewhite;
 }
 
-.header > ul {
-    list-style-type: none;
-    margin: 10px;
-    padding: 15px;
-    overflow: hidden;
-    
-}
-
-.header > ul li {
-    display: inline;
-}
-
-.header > ul li h2 {
-    display: inline;
-    padding: 5px;
-    background-color: red;
-    border: 1px;
-    border-style: solid;
-  }
-
 .back-button {
     background-color: red;
     border: 1px;
     border-style: solid;
-    display: inline;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 2x;
-    padding-bottom: 2px;
 }
