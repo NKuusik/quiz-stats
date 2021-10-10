@@ -1,32 +1,4 @@
 body {
     display: flex;
-    flex: 0 1 auto;
-    align-items: center;
     justify-content: center;
-}
-.general-view {
-}
-
-.header {
-    color: red;
-    min-width: 100%;
-}
-
-.select-category > h1 {
-    margin: auto;
-    width: 50%;
-    background-color: red;
-    border: 1px;
-    border-style: groove;
-}
-
-
-canvas {
-    background-color: antiquewhite;
-}
-
-.back-button {
-    background-color: red;
-    border: 1px;
-    border-style: solid;
 }
