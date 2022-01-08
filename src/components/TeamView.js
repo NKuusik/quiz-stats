@@ -45,7 +45,6 @@ function TeamView (props) {
 
   function generateTotalPointsArray (labels) {
     const totalPointsAllSeasons = [];
-    console.log(labels);
     for (const seasonName of labels) {
       const pointsAsNumbers = props.team.seasons[seasonName].map(Number);
       const sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
