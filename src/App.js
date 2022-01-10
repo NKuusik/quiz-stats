@@ -1,7 +1,7 @@
 import React from 'react';
 import * as seasons from './resources/seasons.js';
 import axios from 'axios';
-import { parseData, getTeamResults, Team } from './scripts/readData.js';
+import { parseData, getTeamResults, Team } from './scripts/readData.ts';
 import styles from './style.css';
 import TeamViewWrapper from './components/TeamViewWrapper.js';
 import SeasonViewWrapper from './components/SeasonViewWrapper.js';
@@ -34,7 +34,7 @@ class App extends React.Component {
             const teamData = getTeamResults(parsedData.data[i]);
             seasonsData[currentSeason]['teams'].push(teamData.name);
             if (!(teamData.name in currentTeams)) {
-              const team = new Team(teamData.place, teamData.name,
+              const team = new Team(teamData.place, teamData.name, //Todo: No need to initialize Team anymore, refacture to use teamData all the way.
                 teamData.latestSeasonScores, teamData.totalScore);
               team.seasons[`season ${currentSeason}`] = team.latestSeasonScores;
               currentTeams[team.name] = team;

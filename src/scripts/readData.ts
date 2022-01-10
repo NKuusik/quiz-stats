@@ -1,7 +1,13 @@
 const papaparse = require('papaparse');
 
 class Team {
-  constructor (place, name, latestSeasonScores, totalScore) {
+  place: number;
+  name: string;
+  latestSeasonScores: Array<string>; 
+  totalScore: number;
+  seasons: Object;
+
+  constructor (place: number, name: string, latestSeasonScores: Array<string>, totalScore: number) {
     this.place = place;
     this.name = name;
     this.seasons = {};
@@ -9,7 +15,7 @@ class Team {
     this.totalScore = totalScore; // Todo: eraldi iga seasoni kohta.
   }
 }
-function normalizeGameScore (team) { // Todo: Refactor into pure function.
+function normalizeGameScore (team: Team) { // Todo: Refactor into pure function.
   for (let i = 0; i < team.latestSeasonScores.length; i++) {
     if (team.latestSeasonScores[i] === '') {
       team.latestSeasonScores[i] = '0';
@@ -17,7 +23,7 @@ function normalizeGameScore (team) { // Todo: Refactor into pure function.
   }
 }
 
-async function parseData (input) {
+async function parseData (input: string) {
   return new Promise((resolve, reject) => {
     papaparse.parse(input, {
       complete: function (results) {
@@ -27,13 +33,8 @@ async function parseData (input) {
   });
 }
 
-function getTeamResults (teamData) {
-  const team = {
-    place: teamData[0],
-    name: teamData[1],
-    latestSeasonScores: teamData.slice(2, -1),
-    totalScore: teamData[teamData.length - 1]
-  };
+function getTeamResults (teamData: Array<string>) {
+  const team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
   normalizeGameScore(team);
   return team;
 }

@@ -18,7 +18,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(t|j)sx?$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
                 use: ['ts-loader']
             },
@@ -47,7 +47,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'public/index.html',
-        })
+        }),
+        
     ],
     devServer: {
         host: 'localhost',
