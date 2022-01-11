@@ -2,15 +2,18 @@ import React from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 
+type myProps = {
+}
+
 function TeamView (props) {
   function generateLabelsSeason (seasonsAsObject) {
-    let longestSeason = null;
+    let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (longestSeason == null || seasonsAsObject[seasonKey].length > longestSeason.length) {
+      if (longestSeason == [] || seasonsAsObject[seasonKey].length > longestSeason.length) {
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
-    const labels = [];
+    const labels : Array<string> = [];
     for (let i = 1; i < longestSeason.length; i++) {
       labels.push(`Game #${i}`);
     }
@@ -18,7 +21,7 @@ function TeamView (props) {
   }
 
   function generateLabelsCumulative () {
-    const labels = [];
+    const labels : Array<string> = [];
     for (const season of Object.keys(props.team.seasons)) {
       const labelName = season;
       labels.push(labelName);
@@ -28,9 +31,9 @@ function TeamView (props) {
   }
 
   function generateDataSetsSeason () {
-    const arrayWithSeasonPoints = [];
+    const arrayWithSeasonPoints : Array<Object> = [];
     for (const season of Object.keys(props.team.seasons)) {
-      const singleDataSet = {
+      const singleDataSet : Object = {
         label: `# of points in ${season}`,
         data: props.team.seasons[season],
         backgroundColor: 'rgb(255, 99, 132)',
@@ -44,7 +47,7 @@ function TeamView (props) {
   }
 
   function generateTotalPointsArray (labels) {
-    const totalPointsAllSeasons = [];
+    const totalPointsAllSeasons : Array<number> = [];
     for (const seasonName of labels) {
       const pointsAsNumbers = props.team.seasons[seasonName].map(Number);
       const sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
@@ -69,7 +72,6 @@ function TeamView (props) {
   }
 
   return (
-
         <div>
             <h1>Stats for team {props.team.name}</h1>
             <h2 className={styles['back-button']} onClick={() => props.chooseTeam(null)}>Go Back</h2>
