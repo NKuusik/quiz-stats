@@ -2,9 +2,6 @@ import React from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 
-type myProps = {
-}
-
 function TeamView (props) {
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
@@ -13,7 +10,7 @@ function TeamView (props) {
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
-    const labels : Array<string> = [];
+    const labels : string[] = [];
     for (let i = 1; i < longestSeason.length; i++) {
       labels.push(`Game #${i}`);
     }
@@ -21,7 +18,7 @@ function TeamView (props) {
   }
 
   function generateLabelsCumulative () {
-    const labels : Array<string> = [];
+    const labels : string[] = [];
     for (const season of Object.keys(props.team.seasons)) {
       const labelName = season;
       labels.push(labelName);
@@ -59,7 +56,7 @@ function TeamView (props) {
   const cumulativeLabels = generateLabelsCumulative();
   const totalPoints = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive () {
+  function generateDataSetsCumualtive () { // Todo: convert to TS.
     const singleDataSet = {
       label: `Cumulative points for ${props.team.name}.`,
       data: totalPoints,
