@@ -20,14 +20,14 @@ test('Instance of Team has correct totalScore', async () => {
   const parsedData = await parseData(testData);
   const teamData = getTeamResults(parsedData.data[0]);
   const testTeam = new Team(teamData.place, teamData.name, teamData.latestSeasonScores, teamData.totalScore);
-  expect(testTeam.totalScore).toBe('54');
+  expect(testTeam.totalScore).toBe(54);
 });
 
 test('Instance of Team has correct place', async () => {
   const parsedData = await parseData(testData);
   const teamData = getTeamResults(parsedData.data[0]);
   const testTeam = new Team(teamData.place, teamData.name, teamData.latestSeasonScores, teamData.totalScore);
-  expect(testTeam.place).toBe('2');
+  expect(testTeam.place).toBe(2);
 });
 
 test('Instance of Team has correct latestSeasonScores when value is not 0', async () => {
