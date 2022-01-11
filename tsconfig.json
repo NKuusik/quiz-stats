@@ -9,6 +9,6 @@
         "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*", "decs.d.ts"
     ]
 }

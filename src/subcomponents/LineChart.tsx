@@ -1,7 +1,15 @@
 import * as React from 'react';
-import Chart from 'chart.js/auto'
+import Chart from 'chart.js/auto';
 
-class LineChart extends React.Component {
+type MyProps = {
+  labels: Array<string>;
+  dataSets: Object;
+  maxValue: number;
+  titleContent: string;
+}
+
+class LineChart extends React.Component<MyProps> {
+  private myRef =  React.createRef<HTMLCanvasElement>()
   constructor (props) {
     super(props);
     this.myRef = React.createRef();

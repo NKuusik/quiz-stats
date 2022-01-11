@@ -1,6 +1,7 @@
 import * as React from 'react';
 import LineChart from './LineChart';
 
+
 class DummyComponent extends React.Component {
     constructor (props) {
       super(props);
@@ -12,7 +13,7 @@ class DummyComponent extends React.Component {
                 <p>
                   "I am a simple dummy component for checking snapshots."
                 </p>
-                <LineChart titleContent={`I am a fake chart`}/>
+                <LineChart labels={[]} dataSets={{}} maxValue={0} titleContent={`I am a fake chart`}/>
               </div>
 
   
