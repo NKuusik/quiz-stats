@@ -1,13 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TeamView from './TeamView';
 import CategoryView from './CategoryView';
 
-class TeamViewWrapper extends React.Component {
+type MyProps = {
+  teams : Object
+
+}
+
+type MyState = {
+  activeTeam : Team
+}
+
+class TeamViewWrapper extends React.Component<MyProps, MyState> {
   constructor (props) {
     super(props);
     this.state = {
-      activeTeam: null
+      activeTeam: null as any 
     };
   };
 
@@ -30,9 +38,5 @@ class TeamViewWrapper extends React.Component {
     }
   }
 }
-
-TeamViewWrapper.propTypes = {
-  teams: PropTypes.object
-};
 
 export default TeamViewWrapper;

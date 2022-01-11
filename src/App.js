@@ -1,11 +1,11 @@
 import React from 'react';
-import * as seasons from './resources/seasons.js';
+import * as seasons from './resources/seasons';
 import axios from 'axios';
-import { parseData, getTeamResults, Team } from './scripts/readData.ts';
+import { parseData, getTeamResults, Team } from './scripts/readData';
 import styles from './style.css';
-import TeamViewWrapper from './components/TeamViewWrapper.js';
-import SeasonViewWrapper from './components/SeasonViewWrapper.js';
-import Header from './components/Header.tsx';
+import TeamViewWrapper from './components/TeamViewWrapper';
+import SeasonViewWrapper from './components/SeasonViewWrapper';
+import Header from './components/Header';
 
 class App extends React.Component {
   constructor (props) {
