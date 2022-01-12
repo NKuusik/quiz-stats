@@ -12,6 +12,4 @@ function Header (props) { // Todo: Does not toggle.
   );
 }
 
-
-
 export default Header;

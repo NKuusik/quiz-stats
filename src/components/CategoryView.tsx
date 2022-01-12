@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from '../style.css';
 
-class CategoryView extends React.Component {
+type MyProps = {
+  category : Object;
+  choice : any;
+}
+
+class CategoryView extends React.Component<MyProps> {
   constructor (props) {
     super(props);
     this.state = {
