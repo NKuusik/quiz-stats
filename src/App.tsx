@@ -7,13 +7,23 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
-class App extends React.Component {
+type MyProps = {
+
+}
+
+type MyState = {
+  teams: Object;
+  seasonsWithTeamNames: Object;
+  activeView: string;
+}
+
+class App extends React.Component<MyProps, MyState> {
   constructor (props) {
     super(props);
     this.state = {
       teams: {},
       seasonsWithTeamNames: {},
-      activeView: null
+      activeView: null as any
     };
   }
 

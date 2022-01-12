@@ -8,7 +8,7 @@ type MyProps = {
 }
 
 type MyState = {
-  activeTeam : Team
+  activeTeam : any //Todo: should be of type Team.
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {

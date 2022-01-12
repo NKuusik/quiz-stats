@@ -1,6 +1,6 @@
 const papaparse = require('papaparse');
 
-class Team {
+export class Team {
   place: number;
   name: string;
   latestSeasonScores: Array<string>; 
@@ -23,7 +23,7 @@ function normalizeGameScore (team: Team) { // Todo: Refactor into pure function.
   }
 }
 
-async function parseData (input: string) {
+export async function parseData (input: string) {
   return new Promise((resolve, reject) => {
     papaparse.parse(input, {
       complete: function (results) {
@@ -33,10 +33,8 @@ async function parseData (input: string) {
   });
 }
 
-function getTeamResults (teamData: Array<string>) {
+export function getTeamResults (teamData: Array<string>) {
   const team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
   normalizeGameScore(team);
   return team;
 }
-
-module.exports = { parseData, getTeamResults, Team };
