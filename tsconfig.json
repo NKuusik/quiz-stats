@@ -1,3 +1,5 @@
+// Typescript configuration file.
+
 {
     "compilerOptions": {
         "outDir": "./dist/",        // path to output directory

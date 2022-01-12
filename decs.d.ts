@@ -2,4 +2,3 @@
 
 declare module "chart.js/auto"
 declare module "axios"
-declare module "readData.ts"

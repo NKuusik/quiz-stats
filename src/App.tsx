@@ -7,8 +7,7 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
-type MyProps = {
-
+type MyProps = { //Todo: see if you can get rid of this as the component only has states.
 }
 
 type MyState = {

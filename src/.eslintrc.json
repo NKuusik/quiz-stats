@@ -1,3 +1,5 @@
+// Linter configuration
+
 {
   "env": {
     "browser": true,

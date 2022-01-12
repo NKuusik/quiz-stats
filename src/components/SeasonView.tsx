@@ -56,8 +56,11 @@ function SeasonView (props) {
   return (
         <div>
             <h2 className={styles['back-button']} onClick={() => props.chooseSeason(null)}>Go Back</h2>
-            <LineChart titleContent={`Game-by-game points for ${props.season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={200}/>
-            <LineChart titleContent={`Incremental points ${props.season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={200}/>
+            <LineChart titleContent={`Game-by-game points for ${props.season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
+            {
+              /*Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
+            }
+            <LineChart titleContent={`Incremental points ${props.season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
         </div>
   );
 }

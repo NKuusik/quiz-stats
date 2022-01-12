@@ -13,4 +13,4 @@ Requires Yarn: https://yarnpkg.com/
 
 And run "yarn vagrant".
 
-2. If you're not using vagrant, run "yarn start" (untested!)
+2. If you're not using vagrant, run "yarn start".
