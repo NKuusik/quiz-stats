@@ -43,10 +43,8 @@ class App extends React.Component<MyProps, MyState> {
             const teamData = getTeamResults(parsedData.data[i]);
             seasonsData[currentSeason]['teams'].push(teamData.name);
             if (!(teamData.name in currentTeams)) {
-              const team = new Team(teamData.place, teamData.name, //Todo: No need to initialize Team anymore, refacture to use teamData all the way.
-                teamData.latestSeasonScores, teamData.totalScore);
-              team.seasons[`season ${currentSeason}`] = team.latestSeasonScores;
-              currentTeams[team.name] = team;
+              teamData.seasons[`season ${currentSeason}`] = teamData.latestSeasonScores;
+              currentTeams[teamData.name] = teamData;
             } else {
               currentTeams[teamData.name].seasons[`season ${currentSeason}`] = teamData.latestSeasonScores;
             }
