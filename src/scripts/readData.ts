@@ -15,7 +15,7 @@ export class Team {
     this.totalScore = totalScore; // Todo: eraldi iga seasoni kohta.
   }
 }
-function normalizeGameScore (team: Team) {
+function normalizeGameScore (team: Team): Team {
   for (let i = 0; i < team.latestSeasonScores.length; i++) {
     if (team.latestSeasonScores[i] === '') {
       team.latestSeasonScores[i] = '0';
@@ -24,17 +24,17 @@ function normalizeGameScore (team: Team) {
   return team;
 }
 
-export async function parseData (input: string) {
+export async function parseData (input: string): Promise<Object> {
   return new Promise((resolve, reject) => {
     papaparse.parse(input, {
-      complete: function (results) {
+      complete: function (results : Object) {
         return resolve(results);
       }
     });
   });
 }
 
-export function getTeamResults (teamData: Array<string>) {
+export function getTeamResults (teamData: Array<string>): Team {
   let team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
   team = normalizeGameScore(team);
   return team;
