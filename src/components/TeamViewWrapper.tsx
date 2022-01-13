@@ -1,6 +1,7 @@
 import React from 'react';
 import TeamView from './TeamView';
 import CategoryView from './CategoryView';
+import {Team} from '../scripts/readData'
 
 type MyProps = {
   teams : Object
@@ -8,18 +9,18 @@ type MyProps = {
 }
 
 type MyState = {
-  activeTeam : any //Todo: should be of type Team.
+  activeTeam : Team
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {
   constructor (props) {
     super(props);
     this.state = {
-      activeTeam: null as any 
+      activeTeam: null as unknown as Team 
     };
   };
 
-  chooseTeam (chosenTeam) {
+  chooseTeam (chosenTeam : Team) {
     this.setState({
       activeTeam: chosenTeam
     });
