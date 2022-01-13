@@ -7,16 +7,13 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
-type MyProps = { //Todo: see if you can get rid of this as the component only has states.
-}
-
 type MyState = {
   teams: Object;
   seasonsWithTeamNames: Object;
   activeView: string;
 }
 
-class App extends React.Component<MyProps, MyState> {
+class App extends React.Component<{}, MyState> {
   constructor (props) {
     super(props);
     this.state = {
