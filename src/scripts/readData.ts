@@ -15,12 +15,13 @@ export class Team {
     this.totalScore = totalScore; // Todo: eraldi iga seasoni kohta.
   }
 }
-function normalizeGameScore (team: Team) { // Todo: Refactor into pure function.
+function normalizeGameScore (team: Team) {
   for (let i = 0; i < team.latestSeasonScores.length; i++) {
     if (team.latestSeasonScores[i] === '') {
       team.latestSeasonScores[i] = '0';
     }
   }
+  return team;
 }
 
 export async function parseData (input: string) {
@@ -34,7 +35,7 @@ export async function parseData (input: string) {
 }
 
 export function getTeamResults (teamData: Array<string>) {
-  const team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
-  normalizeGameScore(team);
+  let team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
+  team = normalizeGameScore(team);
   return team;
 }
