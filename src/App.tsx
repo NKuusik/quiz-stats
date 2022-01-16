@@ -1,7 +1,7 @@
 import React from 'react';
 import * as seasons from './resources/seasons';
 import axios from 'axios';
-import { parseData, getTeamResults, Team } from './scripts/readData';
+import { parseData, getTeamResults } from './scripts/readData';
 import styles from './style.css';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';

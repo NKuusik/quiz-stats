@@ -1,12 +1,18 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
+import { Team } from '../scripts/readData';
 
-function TeamView (props) {
+type MyProps = {
+  team: Team,
+  chooseTeam: any
+}
+
+const TeamView = ({ team, chooseTeam }: MyProps) => {
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (longestSeason == [] || seasonsAsObject[seasonKey].length > longestSeason.length) {
+      if (longestSeason === [] || seasonsAsObject[seasonKey].length > longestSeason.length) {
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -19,7 +25,7 @@ function TeamView (props) {
 
   function generateLabelsCumulative () {
     const labels : string[] = [];
-    for (const season of Object.keys(props.team.seasons)) {
+    for (const season of Object.keys(team.seasons)) {
       const labelName = season;
       labels.push(labelName);
     }
@@ -29,10 +35,10 @@ function TeamView (props) {
 
   function generateDataSetsSeason () {
     const arrayWithSeasonPoints : Array<Object> = [];
-    for (const season of Object.keys(props.team.seasons)) {
+    for (const season of Object.keys(team.seasons)) {
       const singleDataSet : Object = {
         label: `# of points in ${season}`,
-        data: props.team.seasons[season],
+        data: team.seasons[season],
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(0, 10, 12)',
         borderWidth: 1.5,
@@ -46,7 +52,7 @@ function TeamView (props) {
   function generateTotalPointsArray (labels) {
     const totalPointsAllSeasons : Array<number> = [];
     for (const seasonName of labels) {
-      const pointsAsNumbers = props.team.seasons[seasonName].map(Number);
+      const pointsAsNumbers = team.seasons[seasonName].map(Number);
       const sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
       totalPointsAllSeasons.push(sum);
     }
@@ -58,7 +64,7 @@ function TeamView (props) {
 
   function generateDataSetsCumualtive () { // Todo: convert to TS.
     const singleDataSet = {
-      label: `Cumulative points for ${props.team.name}.`,
+      label: `Cumulative points for ${team.name}.`,
       data: totalPoints,
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(0, 10, 12)',
@@ -70,12 +76,12 @@ function TeamView (props) {
 
   return (
         <div>
-            <h1>Stats for team {props.team.name}</h1>
-            <h2 className={styles['back-button']} onClick={() => props.chooseTeam(null)}>Go Back</h2>
-            <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(props.team.seasons)} />
+            <h1>Stats for team {team.name}</h1>
+            <h2 className={styles['back-button']} onClick={() => chooseTeam(null)}>Go Back</h2>
+            <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
             <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points accross seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
         </div>
   );
-}
+};
 
 export default TeamView;

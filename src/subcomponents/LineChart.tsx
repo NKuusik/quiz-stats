@@ -9,14 +9,14 @@ type MyProps = {
 }
 
 class LineChart extends React.Component<MyProps> {
-  private myRef =  React.createRef<HTMLCanvasElement>()
+  private myRef = React.createRef<HTMLCanvasElement>()
   constructor (props) {
     super(props);
     this.myRef = React.createRef();
   }
 
   componentDidMount () {
-    const myChart = new Chart(this.myRef.current, {
+    this.myRef = new Chart(this.myRef.current, {
       type: 'line',
       data: {
         labels: this.props.labels,

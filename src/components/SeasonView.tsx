@@ -2,10 +2,16 @@ import React from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 
-function SeasonView (props) {
+type MyProps = {
+  teams : any,
+  season : any,
+  chooseSeason : any
+}
+
+const SeasonView = ({ teams, season, chooseSeason }: MyProps) => {
   function calculateLabels () {
     const labels : string[] = [];
-    for (let i = 1; i < props.teams[props.season.teams[0]].seasons[props.season.name].length; i++) {
+    for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
       labels.push(`Game #${i}`);
     }
     return labels;
@@ -13,10 +19,10 @@ function SeasonView (props) {
 
   function generateDataSetsWithRunningPoints () {
     const dataSetsWithRunningPoints : Object[] = [];
-    for (const teamName of Object.values(props.season.teams)) {
+    for (const teamName of Object.values(season.teams)) {
       const singleDataSet : Object = {
         label: `${teamName}`,
-        data: props.teams[`${teamName}`].seasons[props.season.name],
+        data: teams[`${teamName}`].seasons[season.name],
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(0, 10, 12)',
         borderWidth: 1.5,
@@ -29,13 +35,13 @@ function SeasonView (props) {
 
   function generateDataSetsWithIncrementalPoints () {
     const dataSets : Object[] = [];
-    for (const teamName of Object.values(props.season.teams)) {
+    for (const teamName of Object.values(season.teams)) {
       const incrementalPoints : number[] = [];
-      for (let i = 0; i < props.teams[`${teamName}`].seasons[props.season.name].length; i++) {
+      for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
         if (i === 0) {
-          incrementalPoints.push(parseInt(props.teams[`${teamName}`].seasons[props.season.name][i]));
+          incrementalPoints.push(parseInt(teams[`${teamName}`].seasons[season.name][i]));
         } else {
-          const incrementedValue = parseInt(props.teams[`${teamName}`].seasons[props.season.name][i]) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(teams[`${teamName}`].seasons[season.name][i]) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
@@ -55,14 +61,14 @@ function SeasonView (props) {
   generateDataSetsWithIncrementalPoints();
   return (
         <div>
-            <h2 className={styles['back-button']} onClick={() => props.chooseSeason(null)}>Go Back</h2>
-            <LineChart titleContent={`Game-by-game points for ${props.season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
+            <h2 className={styles['back-button']} onClick={() => chooseSeason(null)}>Go Back</h2>
+            <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
             {
               /*Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
             }
-            <LineChart titleContent={`Incremental points ${props.season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
+            <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
         </div>
   );
-}
+};
 
 export default SeasonView;

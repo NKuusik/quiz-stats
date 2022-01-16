@@ -3,7 +3,7 @@ const papaparse = require('papaparse');
 export class Team {
   place: number;
   name: string;
-  latestSeasonScores: Array<string>; 
+  latestSeasonScores: Array<string>;
   totalScore: number;
   seasons: Object;
 
