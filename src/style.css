@@ -1,5 +1,5 @@
 body {
-    background-color: rgba(120, 241, 195, 0.459);
+    background-color: rgb(33, 35, 75)
 }
 .general-view {
     padding: 1%;
@@ -37,6 +37,10 @@ canvas {
     background-color: antiquewhite;
 }
 
+.header {
+    float: right;
+}
+
 .header > ul {
     list-style-type: none;
     margin: 10px;
@@ -45,16 +49,18 @@ canvas {
     
 }
 
-.header > ul li {
+.header li {
     display: inline;
+    padding: 10px;
 }
 
-.header > ul li h2 {
+.header h2 {
     display: inline;
-    padding: 5px;
-    background-color: red;
+    padding: 20px;
+    background-color: rgb(230, 46, 229);
     border: 1px;
     border-style: solid;
+    border-radius: 25%;
   }
 
 .back-button {
