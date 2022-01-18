@@ -6,7 +6,7 @@ type MyProps = {
   choice : any;
 }
 
-class CategoryView extends React.Component<MyProps> {
+class MenuBar extends React.Component<MyProps> {
   constructor (props) {
     super(props);
     this.state = {
@@ -17,7 +17,8 @@ class CategoryView extends React.Component<MyProps> {
   render () {
     return (
             <div>
-                <div className={styles['category-selection']}>
+              <h1>Choose which team/season you want to check.</h1>
+                <div >
                 {Object.values(this.props.category).map(entryInCategory => (
                 <div key={ entryInCategory.name }className={styles['entry-selection']} onClick={() => this.props.choice(entryInCategory)}>
                     {entryInCategory.name}
@@ -30,4 +31,4 @@ class CategoryView extends React.Component<MyProps> {
   }
 }
 
-export default CategoryView;
+export default MenuBar;

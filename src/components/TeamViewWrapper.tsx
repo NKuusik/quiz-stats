@@ -1,7 +1,8 @@
 import React from 'react';
 import TeamView from './TeamView';
-import CategoryView from './CategoryView';
+import MenuBar from './MenuBar';
 import { Team } from '../scripts/readData';
+import styles from '../style.css';
 
 type MyProps = {
   teams : Object
@@ -27,16 +28,20 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
   }
 
   render () {
-    if (this.state.activeTeam == null) {
-      return (
-            <div>
-                <h1>Choose which team you want to check.</h1>
-                <CategoryView choice={this.chooseTeam.bind(this)} category={this.props.teams}/>;
-            </div>
-      );
-    } else {
-      return <TeamView chooseTeam={this.chooseTeam.bind(this)} team={this.state.activeTeam} />;
+    let teamView;
+    if (this.state.activeTeam != null) {
+      teamView = <TeamView chooseTeam={this.chooseTeam.bind(this)} team={this.state.activeTeam} />;
     }
+    return (
+      <div className={styles['view-wrapper']}>
+        <div className={styles['category-selection']}>
+        <MenuBar choice={this.chooseTeam.bind(this)} category={this.props.teams}/>;
+        </div>
+        <div className={styles['chart-view']}>
+        {teamView}
+        </div>
+      </div>
+      )
   }
 }
 

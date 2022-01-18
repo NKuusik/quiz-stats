@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import CategoryView from './CategoryView';
+import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
+import styles from '../style.css';
 
 function SeasonViewWrapper (props) {
   const [activeSeason, setActiveSeason] = useState(null);
@@ -8,22 +9,21 @@ function SeasonViewWrapper (props) {
   function chooseSeason (chosenSeason) {
     setActiveSeason(chosenSeason);
   }
-  if (activeSeason == null) {
-    return (
-            <div>
-                <h1>
-                Select which season you want to check.
-                </h1>
-                <CategoryView category={props.seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
-                </div>
-    );
-  } else {
-    return (
-            <div>
-                <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => { chooseSeason(chosenSeason); }}/>
-            </div>
-    );
+  let seasonView;
+  if (activeSeason != null) {
+    seasonView = <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => { chooseSeason(chosenSeason); }}/>
   }
+  
+  return (
+    <div className={styles['view-wrapper']}>
+      <div className={styles['category-selection']}>
+        <MenuBar category={props.seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
+      </div>
+      <div className={styles['chart-view']}>
+        {seasonView}
+        </div>
+    </div>
+  );
 }
 
 export default SeasonViewWrapper;

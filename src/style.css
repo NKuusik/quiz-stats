@@ -2,30 +2,30 @@ body {
     background-color: rgb(33, 35, 75)
 }
 
-
-.category-selection > .entry-selection {
-    visibility: visible;
-    opacity: 1;
+.view-wrapper > div {
+    float: left;
 }
-.category-selection > h1 {
-    margin: auto;
-    background-color: red;
-    border: 1px;
-    border-style: groove;
+
+.category-selection {
+    width: 20%;
+}
+
+.chart-view {
+    width: 70%;
+    padding-left: 5%;
+}
+
+.view-wrapper {
+    background-color: yellow;
 }
 
 .entry-selection {
-    width: 20%;
-    opacity: 0;
+    visibility: visible;
     padding: 1%;
     border: 1px;
     border-style: groove;
     font-size: large;
     background-color: rgba(185, 155, 174, 0.527);
-}
-
-canvas {
-    background-color: antiquewhite;
 }
 
 .header {
@@ -63,4 +63,8 @@ canvas {
     padding-right: 10px;
     padding-top: 2px;
     padding-bottom: 2px;
+}
+
+canvas {
+    background-color: antiquewhite;
 }

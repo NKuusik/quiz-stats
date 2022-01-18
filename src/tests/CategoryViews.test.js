@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import CategoryView from '../components/CategoryView';
+import MenuBar from '../components/MenuBar';
 import {Team} from '../scripts/readData'
 
 const testTeam = new Team(1, "Fake team", [1, 2], 3);
@@ -22,7 +22,7 @@ const testSeasons = {
 it('renders correctly with Seasons', () => {
 
     const tree = renderer
-         .create(<CategoryView category={testSeasons} choice={testSeason}/>)
+         .create(<MenuBar category={testSeasons} choice={testSeason}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
@@ -30,7 +30,7 @@ it('renders correctly with Seasons', () => {
 it('renders correctly with Teams', () => {
 
     const tree = renderer
-         .create(<CategoryView category={testTeams} choice={testTeam}/>)
+         .create(<MenuBar category={testTeams} choice={testTeam}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
