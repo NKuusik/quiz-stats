@@ -1,31 +1,22 @@
 body {
     background-color: rgb(33, 35, 75)
 }
-.general-view {
-    padding: 1%;
-    text-align: center;
-}
 
-.select-category:hover > .select-team {
-    transition: 1000ms;
+
+.category-selection > .entry-selection {
     visibility: visible;
     opacity: 1;
-    transition: opacity 1s linear;
-
-
 }
-.select-category > h1 {
+.category-selection > h1 {
     margin: auto;
-    width: 50%;
     background-color: red;
     border: 1px;
     border-style: groove;
 }
 
-.select-team {
-    visibility: hidden;
+.entry-selection {
+    width: 20%;
     opacity: 0;
-    transition: visibility 0s 1s, opacity 1s linear;
     padding: 1%;
     border: 1px;
     border-style: groove;

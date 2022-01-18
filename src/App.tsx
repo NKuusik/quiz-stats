@@ -65,7 +65,7 @@ class App extends React.Component<{}, MyState> {
       view = <TeamViewWrapper teams={this.state.teams}/>;
     }
     return (
-      <div className={styles['general-view']}>
+      <div>
         <Header choice={this.chooseView.bind(this)}/>
         {view}
       </div>
