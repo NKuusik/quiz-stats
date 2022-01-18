@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="view-wrapper"
+>
+  <div
+    className="category-selection"
+  >
+    <div>
+      <h1>
+        Choose which team/season you want to check.
+      </h1>
+      <div>
+        <div
+          className="entry-selection"
+          onClick={[Function]}
+        >
+          SeasonNumber
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="chart-view"
+  />
+</div>
+`;

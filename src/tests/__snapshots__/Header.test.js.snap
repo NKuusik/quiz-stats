@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="header"
+>
+  <ul>
+    <li>
+      <h2
+        onClick={[Function]}
+      >
+        Check team
+      </h2>
+    </li>
+    <li>
+      <h2
+        onClick={[Function]}
+      >
+        Check season
+      </h2>
+    </li>
+  </ul>
+</div>
+`;

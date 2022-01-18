@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="team-view"
+>
+  <h1>
+    Stats for team 
+    Fake team
+  </h1>
+  <h2
+    className="back-button"
+    onClick={[Function]}
+  >
+    Go Back
+  </h2>
+  <./src/tests/mocks/MockChart.js />
+  <./src/tests/mocks/MockChart.js />
+</div>
+`;
