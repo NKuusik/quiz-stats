@@ -7,13 +7,17 @@ function SeasonViewWrapper (props) {
   const [activeSeason, setActiveSeason] = useState(null);
 
   function chooseSeason (chosenSeason) {
-    setActiveSeason(chosenSeason);
+    if (activeSeason === chosenSeason) {
+      setActiveSeason(null);
+    } else {
+      setActiveSeason(chosenSeason);
+    }
   }
   let seasonView;
   if (activeSeason != null) {
-    seasonView = <SeasonView season={activeSeason} teams={props.teams} chooseSeason={(chosenSeason) => { chooseSeason(chosenSeason); }}/>
+    seasonView = <SeasonView season={activeSeason} teams={props.teams} />
   }
-  
+
   return (
     <div className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>

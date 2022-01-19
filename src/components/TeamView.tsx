@@ -73,7 +73,6 @@ const TeamView = ({ team }: MyProps) => {
     return [singleDataSet];
   }
 
-  console.log(team);
   return (
         <div className={styles["team-view"]}>
             <h1>Stats for team {team.name}</h1>
