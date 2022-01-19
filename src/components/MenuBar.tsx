@@ -5,6 +5,7 @@ import SearchField from '../subcomponents/SearchField';
 type MyProps = {
   category : Object;
   choice : any;
+  viewType : string;
 }
 
 class MenuBar extends React.Component<MyProps> {
@@ -17,14 +18,23 @@ class MenuBar extends React.Component<MyProps> {
 
 
   render () {
-    const teamNames = Object.keys(this.props.category);
+    console.log(this.props.choice);
+    let entriesInMenuBar :  string[] = []; 
+    if (this.props.viewType === "teams") {
+      entriesInMenuBar = Object.keys(this.props.category);
+    } else if (this.props.viewType === "seasons") {
+      for (let season of Object.values(this.props.category)) {
+        entriesInMenuBar.push(season["name"]);
+      }
+    }
+
     return (
             <div>
               <h1>Choose which team/season you want to check.</h1>
-              <SearchField teamNames={teamNames}/>
+              <SearchField menuBarEntries={entriesInMenuBar}/>
                 <div >
                 {Object.values(this.props.category).map(entryInCategory => (
-                <div key={ entryInCategory.name }className={styles['entry-selection']} onClick={() => this.props.choice(entryInCategory)}>
+                <div key={entryInCategory.name} className={styles['entry-selection']} onClick={() => this.props.choice(entryInCategory)}>
                     {entryInCategory.name}
                 </div>
                 ))}
