@@ -5,10 +5,9 @@ import styles from '../style.css';
 type MyProps = {
   teams : any,
   season : any,
-  chooseSeason : any
 }
 
-const SeasonView = ({ teams, season, chooseSeason }: MyProps) => {
+const SeasonView = ({ teams, season }: MyProps) => {
   function calculateLabels () {
     const labels : string[] = [];
     for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
@@ -61,7 +60,6 @@ const SeasonView = ({ teams, season, chooseSeason }: MyProps) => {
   generateDataSetsWithIncrementalPoints();
   return (
         <div>
-            <h2 className={styles['back-button']} onClick={() => chooseSeason(null)}>Go Back</h2>
             <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
             {
               /*Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
