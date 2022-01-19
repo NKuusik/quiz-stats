@@ -4,11 +4,10 @@ import styles from '../style.css';
 import { Team } from '../scripts/readData';
 
 type MyProps = {
-  team: Team,
-  chooseTeam: any
+  team: Team
 }
 
-const TeamView = ({ team, chooseTeam }: MyProps) => {
+const TeamView = ({ team }: MyProps) => {
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
@@ -74,10 +73,10 @@ const TeamView = ({ team, chooseTeam }: MyProps) => {
     return [singleDataSet];
   }
 
+  console.log(team);
   return (
         <div className={styles["team-view"]}>
             <h1>Stats for team {team.name}</h1>
-            <h2 className={styles['back-button']} onClick={() => chooseTeam(null)}>Go Back</h2>
             <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
             <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points accross seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
         </div>

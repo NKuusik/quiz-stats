@@ -10,7 +10,7 @@ type MyProps = {
 }
 
 type MyState = {
-  activeTeam : Team
+  activeTeam : any
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {
@@ -21,16 +21,22 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
     };
   };
 
-  chooseTeam (chosenTeam : Team) {
-    this.setState({
-      activeTeam: chosenTeam
-    });
+  chooseTeam(chosenTeam : any) {
+    if (this.state.activeTeam === chosenTeam) {
+      this.setState({
+        activeTeam: null
+      });
+    } else {
+      this.setState({
+        activeTeam: chosenTeam
+      });
+    }
   }
 
   render () {
     let teamView;
     if (this.state.activeTeam != null) {
-      teamView = <TeamView chooseTeam={this.chooseTeam.bind(this)} team={this.state.activeTeam} />;
+      teamView = <TeamView team={this.state.activeTeam} />;
     }
     return (
       <div className={styles['view-wrapper']}>
