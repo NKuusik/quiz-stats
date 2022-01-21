@@ -6,6 +6,17 @@ exports[`renders correctly with Seasons 1`] = `
     Choose which team/season you want to check.
   </h1>
   <div>
+    <form>
+      <input
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Search..."
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+  <div>
     <div
       className="entry-selection"
       onClick={[Function]}
@@ -21,6 +32,17 @@ exports[`renders correctly with Teams 1`] = `
   <h1>
     Choose which team/season you want to check.
   </h1>
+  <div>
+    <form>
+      <input
+        onChange={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Search..."
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
   <div>
     <div
       className="entry-selection"

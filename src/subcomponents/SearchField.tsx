@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 type MyProps = {
-    menuBarEntries: string[]
+    menuBarEntries: string[],
+    onFieldValueChange: any
 }
 
-const SearchField = ({menuBarEntries: teamNames}: MyProps) => {
+const SearchField = ({menuBarEntries: menuBarEntries, onFieldValueChange: onFieldValueChange}: MyProps) => {
     const [searchFieldValue, setSearchFieldValue] = useState("");
 
     const handleChange = (event) => {
@@ -12,7 +13,8 @@ const SearchField = ({menuBarEntries: teamNames}: MyProps) => {
     }
     
     function search() {
-        findMatchingNames(searchFieldValue, teamNames); // Optimeerime nii, et ainult siis otsime, kui v2ljal rohkem kui 1 t2hte.
+        let matchedEntries = findMatchingNames(searchFieldValue, menuBarEntries); // Optimeerime nii, et ainult siis otsime, kui v2ljal rohkem kui 1 t2hte.
+        onFieldValueChange(matchedEntries);
     }
 
     function findMatchingNames(searchInput: string, names: string[]) { // Make case insensitive
@@ -22,8 +24,6 @@ const SearchField = ({menuBarEntries: teamNames}: MyProps) => {
                 foundMatches.push(entry);
             }
         }
-        console.log("Found following matches with " + searchInput);
-        console.log(foundMatches);
         return foundMatches;
     }
     return(

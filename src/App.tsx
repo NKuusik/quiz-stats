@@ -30,19 +30,19 @@ class App extends React.Component<{}, MyState> {
           return parseData(res.data);
         })
         .then(parsedData => {
-          const currentSeason = parsedData.data[0];
+          const currentSeason = `season ${parsedData.data[0]}`;
           seasonsData[currentSeason] = {};
-          seasonsData[currentSeason]['name'] = `season ${currentSeason}`;
+          seasonsData[currentSeason]['name'] = currentSeason;
           seasonsData[currentSeason]['teams'] = [];
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const currentTeams = { ...this.state.teams };
             const teamData = getTeamResults(parsedData.data[i]);
             seasonsData[currentSeason]['teams'].push(teamData.name);
             if (!(teamData.name in currentTeams)) {
-              teamData.seasons[`season ${currentSeason}`] = teamData.latestSeasonScores;
+              teamData.seasons[currentSeason] = teamData.latestSeasonScores;
               currentTeams[teamData.name] = teamData;
             } else {
-              currentTeams[teamData.name].seasons[`season ${currentSeason}`] = teamData.latestSeasonScores;
+              currentTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
             }
             this.setState({ teams: currentTeams });
             this.setState({ seasonsWithTeamNames: seasonsData });

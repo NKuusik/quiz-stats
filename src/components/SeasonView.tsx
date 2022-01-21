@@ -1,6 +1,5 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
-import styles from '../style.css';
 
 type MyProps = {
   teams : any,
