@@ -61,7 +61,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
         <div>
             <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
             {
-              /*Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
+              /* Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
             }
             <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
         </div>

@@ -22,7 +22,10 @@ exports[`renders correctly 1`] = `
           />
         </form>
       </div>
-      <div>
+      <div
+        id="menu-bar"
+        onMouseDown={[Function]}
+      >
         <div
           className="entry-selection"
           onClick={[Function]}

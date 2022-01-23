@@ -74,7 +74,7 @@ const TeamView = ({ team }: MyProps) => {
   }
 
   return (
-        <div className={styles["team-view"]}>
+        <div className={styles['team-view']}>
             <h1>Stats for team {team.name}</h1>
             <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
             <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points accross seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />

@@ -5,7 +5,7 @@ body {
 #menu-bar {
     cursor: grab;
     height: 90vh;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .view-wrapper > div {

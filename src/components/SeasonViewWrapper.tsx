@@ -3,7 +3,12 @@ import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import styles from '../style.css';
 
-function SeasonViewWrapper (props) {
+type MyProps = {
+  teams : Object,
+  seasons : Object,
+}
+
+function SeasonViewWrapper ({ teams, seasons } : MyProps) {
   const [activeSeason, setActiveSeason] = useState(null);
 
   function chooseSeason (chosenSeason) {
@@ -15,13 +20,13 @@ function SeasonViewWrapper (props) {
   }
   let seasonView;
   if (activeSeason != null) {
-    seasonView = <SeasonView season={activeSeason} teams={props.teams} />
+    seasonView = <SeasonView season={activeSeason} teams={teams} />;
   }
 
   return (
     <div className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>
-        <MenuBar viewType="seasons" category={props.seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
+        <MenuBar viewType="seasons" category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
       </div>
       <div className={styles['chart-view']}>
         {seasonView}

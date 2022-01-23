@@ -12,7 +12,6 @@ class LineChart extends React.Component<MyProps> {
   private myRef = React.createRef<HTMLCanvasElement>()
   private chart;
 
-
   componentDidMount () {
     this.chart = new Chart(this.myRef.current, {
       type: 'line',
@@ -32,7 +31,7 @@ class LineChart extends React.Component<MyProps> {
     this.myRef = this.chart;
   }
 
-  componentDidUpdate() { // Töötab, aga hacky ja annab konsoolis veateate. Vt ref forwarding ja tee eraldi funktsioon charti loomiseks.
+  componentDidUpdate () { // Töötab, aga hacky ja annab konsoolis veateate. Vt ref forwarding ja tee eraldi funktsioon charti loomiseks.
     this.chart.destroy();
     this.chart = new Chart(this.myRef.current, {
       type: 'line',
