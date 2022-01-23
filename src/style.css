@@ -2,6 +2,12 @@ body {
     background-color: rgb(33, 35, 75)
 }
 
+#menu-bar {
+    cursor: grab;
+    height: 90vh;
+    overflow: hidden;
+}
+
 .view-wrapper > div {
     float: left;
 }
