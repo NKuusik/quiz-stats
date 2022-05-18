@@ -28,7 +28,7 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
     onFieldValueChange(matchedEntries);
   }
 
-  return (
+  return ( // TODO: placeholder tekst dünaamiliseks.
     <div id={styles['search-field']}>
         <form>
             <input type="text" placeholder='Search...' value={searchFieldValue} onChange={handleChange} onKeyUp={search}/>

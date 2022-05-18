@@ -1,5 +1,7 @@
 body {
-    background-color: rgb(33, 35, 75)
+    background-color: rgb(33, 35, 75);
+    font-size: 18px;
+    color: #DCDEE6;
 }
 
 #menu-bar-container {
@@ -20,8 +22,9 @@ body {
     padding-bottom: 5%;
 }
 
-#search-field > form > input {
+#search-field input {
     width: 100%;
+    line-height: 200%;
     background-color: rgb(33, 35, 75);
     color: white;
     border-radius: 10px;
@@ -45,12 +48,20 @@ body {
 }
 
 .entry-selection {
+    margin-top: 5%;
+    margin-bottom: 5%;
     visibility: visible;
-    padding: 1%;
-    border: 1px;
-    border-style: groove;
-    font-size: large;
-    background-color: rgba(185, 155, 174, 0.527);
+    padding-top: 5%;
+    padding-bottom: 5%;
+
+    background-color: #161833;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.entry-selection:hover {
+    background-color: #424696;
 }
 
 .header {
@@ -70,25 +81,12 @@ body {
     padding: 10px;
 }
 
-.header h2 {
+.header p {
     display: inline;
     padding: 20px;
     background-color: rgb(230, 46, 229);
-    border: 1px;
-    border-style: solid;
     border-radius: 25%;
   }
-
-.back-button {
-    background-color: red;
-    border: 1px;
-    border-style: solid;
-    display: inline;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
 
 canvas {
     background-color: antiquewhite;

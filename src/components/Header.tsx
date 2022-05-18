@@ -9,8 +9,8 @@ const Header = ({ choice } : MyProps) => { // Todo: Does not toggle.
   return (
         <div className={styles['header']}>
             <ul>
-                <li><h2 onClick={() => { choice('team'); }}>Check team</h2></li>
-                <li><h2 onClick={() => { choice('season'); }}>Check season</h2></li>
+                <li><p onClick={() => { choice('team'); }}>Check team</p></li>
+                <li><p onClick={() => { choice('season'); }}>Check season</p></li>
             </ul>
         </div>
   );
