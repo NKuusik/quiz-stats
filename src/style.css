@@ -2,10 +2,29 @@ body {
     background-color: rgb(33, 35, 75)
 }
 
-#menu-bar {
+#menu-bar-container {
+    padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #060824;
+
+}
+
+#menu-bar-selection {
     cursor: grab;
     height: 90vh;
     overflow: auto;
+}
+
+#search-field {
+    padding-bottom: 5%;
+}
+
+#search-field > form > input {
+    width: 100%;
+    background-color: rgb(33, 35, 75);
+    color: white;
+    border-radius: 10px;
 }
 
 .view-wrapper > div {

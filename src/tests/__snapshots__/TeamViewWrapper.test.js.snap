@@ -23,7 +23,7 @@ exports[`renders correctly 1`] = `
         </form>
       </div>
       <div
-        id="menu-bar"
+        id="menu-bar-selection"
         onMouseDown={[Function]}
       >
         <div

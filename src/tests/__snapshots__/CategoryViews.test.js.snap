@@ -17,7 +17,7 @@ exports[`renders correctly with Seasons 1`] = `
     </form>
   </div>
   <div
-    id="menu-bar"
+    id="menu-bar-selection"
     onMouseDown={[Function]}
   >
     <div
@@ -47,7 +47,7 @@ exports[`renders correctly with Teams 1`] = `
     </form>
   </div>
   <div
-    id="menu-bar"
+    id="menu-bar-selection"
     onMouseDown={[Function]}
   >
     <div

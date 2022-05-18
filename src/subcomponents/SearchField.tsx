@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../style.css';
 
 type MyProps = {
     menuBarEntries: string[],
@@ -28,7 +29,7 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
   }
 
   return (
-    <div>
+    <div id={styles['search-field']}>
         <form>
             <input type="text" placeholder='Search...' value={searchFieldValue} onChange={handleChange} onKeyUp={search}/>
         </form>

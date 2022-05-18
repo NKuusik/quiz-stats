@@ -53,10 +53,9 @@ class MenuBar extends React.Component<MyProps, MyState> {
 
   render () {
     return (
-            <div>
-              <h1>Choose which team/season you want to check.</h1>
+            <div id={styles['menu-bar-container']}>
               <SearchField menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)}/>
-                <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} id={styles['menu-bar']}>
+                <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} id={styles['menu-bar-selection']}>
                 {
                 this.state.matchedEntries.map(entry => (
                     <div key={this.props.category[entry].name} className={styles['entry-selection']}
