@@ -7,6 +7,7 @@ type MyProps = {
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
+  const borderColor : String = '#AF79E7';
   function calculateLabels () {
     const labels : string[] = [];
     for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
@@ -21,8 +22,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       const singleDataSet : Object = {
         label: `${teamName}`,
         data: teams[`${teamName}`].seasons[season.name],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(0, 10, 12)',
+        backgroundColor: borderColor,
+        borderColor: borderColor,
         borderWidth: 1.5,
         tension: 0.5
       };
@@ -46,8 +47,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       const singleDataSet = {
         label: `${teamName}`,
         data: incrementalPoints,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(0, 10, 12)',
+        backgroundColor: borderColor,
+        borderColor: borderColor,
         borderWidth: 1.5,
         tension: 0.5
       };

@@ -23,7 +23,7 @@ class LineChart extends React.Component<MyProps> {
         scales: {
           y: {
             max: this.props.maxValue,
-            beginAtZero: true
+            beginAtZero: true,
           }
         }
       }

@@ -8,6 +8,7 @@ type MyProps = {
 }
 
 const TeamView = ({ team }: MyProps) => {
+  const borderColor : String = '#AF79E7';
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
@@ -38,8 +39,8 @@ const TeamView = ({ team }: MyProps) => {
       const singleDataSet : Object = {
         label: `# of points in ${season}`,
         data: team.seasons[season],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(0, 10, 12)',
+        backgroundColor: borderColor,
+        borderColor: borderColor,
         borderWidth: 1.5,
         tension: 0.5
       };
@@ -65,8 +66,8 @@ const TeamView = ({ team }: MyProps) => {
     const singleDataSet = {
       label: `Cumulative points for ${team.name}.`,
       data: totalPoints,
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(0, 10, 12)',
+      backgroundColor: borderColor,
+      borderColor: borderColor,
       borderWidth: 1.5,
       tension: 0.5
     };
