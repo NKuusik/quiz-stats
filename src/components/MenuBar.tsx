@@ -40,7 +40,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
       this.menuBarRef.current!.scrollTop = startCoordinateY + distanceMoved;
     };
 
-    const handleMouseUp = (event) => { // Miks siin argument "event"?
+    const handleMouseUp = () => {
       this.menuBarRef.current!.removeEventListener('mousemove', handleMouseMove);
       this.menuBarRef.current!.removeEventListener('mouseup', handleMouseUp);
     };
