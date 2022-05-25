@@ -1,4 +1,3 @@
-import { func } from 'prop-types';
 import React, { useState } from 'react';
 import styles from '../style.css';
 
@@ -20,11 +19,12 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
     }
   }
 
-  function findMatchingNames (searchInput: string, names: string[]) { // Make case insensitive
+  function findMatchingNames (searchInput: string, names: string[]) {
+    console.log(searchInput);
     const foundMatches : string[] = [];
     for (const entry of names) {
       let entryLowerCase = entry.toLowerCase();
-      if (entryLowerCase.includes(searchInput.trim().toLowerCase())) {
+      if (entryLowerCase.includes(searchInput.toLowerCase())) {
         foundMatches.push(entry);
       }
     }
@@ -32,7 +32,11 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
   }
 
   function search () {
-    const matchedEntries = findMatchingNames(searchFieldValue, menuBarEntries); // Optimeerime nii, et ainult siis otsime, kui v2ljal rohkem kui 1 t2hte.
+    let matchedEntries = menuBarEntries;
+    let trimmedInput = searchFieldValue.trim();
+    if (trimmedInput.length > 0) {
+      matchedEntries = findMatchingNames(trimmedInput, menuBarEntries); // Optimeerime nii, et ainult siis otsime, kui v2ljal rohkem kui 1 t2hte.
+    }
     onFieldValueChange(matchedEntries);
   }
 
