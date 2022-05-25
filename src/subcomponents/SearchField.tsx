@@ -1,9 +1,10 @@
+import { func } from 'prop-types';
 import React, { useState } from 'react';
 import styles from '../style.css';
 
 type MyProps = {
-    menuBarEntries: string[],
-    onFieldValueChange: any
+    menuBarEntries: string[];
+    onFieldValueChange: Function;
 }
 
 const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
@@ -12,6 +13,12 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
   const handleChange = (event) => {
     setSearchFieldValue(event.target.value);
   };
+
+  const preventSubmitWithEnter = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
 
   function findMatchingNames (searchInput: string, names: string[]) { // Make case insensitive
     const foundMatches : string[] = [];
@@ -29,10 +36,11 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
     onFieldValueChange(matchedEntries);
   }
 
+
   return ( // TODO: placeholder tekst dünaamiliseks.
     <div id={styles['search-field']}>
         <form>
-            <input type="text" placeholder='Search...' value={searchFieldValue} onChange={handleChange} onKeyUp={search}/>
+            <input type="text" placeholder='Search...' value={searchFieldValue} onChange={handleChange} onKeyUp={search} onKeyDown={preventSubmitWithEnter}/>
         </form>
     </div>
   );
