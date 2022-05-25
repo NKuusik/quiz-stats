@@ -5,7 +5,6 @@ import SearchField from '../subcomponents/SearchField';
 type MyProps = {
   category : Object;
   choice : any;
-  viewType : string; // Yleliigne
 }
 
 type MyState = {
