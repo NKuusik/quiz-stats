@@ -51,8 +51,12 @@ class App extends React.Component<{}, MyState> {
     }
   }
 
-  chooseView (chosenView) {
-    this.setState({ activeView: chosenView });
+  chooseView (chosenView : string) {
+    if (chosenView === this.state.activeView) {
+      this.setState({ activeView: "" });
+    } else {
+      this.setState({ activeView: chosenView });
+    }
   }
 
   render () {

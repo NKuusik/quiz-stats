@@ -5,7 +5,9 @@ type MyProps = {
   choice : any
 }
 
-const Header = ({ choice } : MyProps) => { // Todo: Does not toggle.
+
+
+const Header = ({ choice } : MyProps) => {
   return (
         <div className={styles['header']}>
             <ul>

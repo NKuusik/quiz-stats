@@ -5,7 +5,7 @@ import SearchField from '../subcomponents/SearchField';
 type MyProps = {
   category : Object;
   choice : any;
-  viewType : string;
+  viewType : string; // Yleliigne
 }
 
 type MyState = {
@@ -38,11 +38,10 @@ class MenuBar extends React.Component<MyProps, MyState> {
 
     const handleMouseMove = (event) => {
       const distanceMoved = startCoordinateY - event.clientY;
-      console.log(distanceMoved);
       this.menuBarRef.current!.scrollTop = startCoordinateY + distanceMoved;
     };
 
-    const handleMouseUp = (event) => {
+    const handleMouseUp = (event) => { // Miks siin argument "event"?
       this.menuBarRef.current!.removeEventListener('mousemove', handleMouseMove);
       this.menuBarRef.current!.removeEventListener('mouseup', handleMouseUp);
     };
