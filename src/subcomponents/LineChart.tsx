@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Chart from 'chart.js/auto';
+Chart.defaults.color = '#DCDEE6';
 
 type MyProps = {
   labels: Array<string>;
