@@ -26,7 +26,7 @@ function SeasonViewWrapper ({ teams, seasons } : MyProps) {
   return (
     <div className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>
-        <MenuBar category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
+        <MenuBar viewType={'season'} category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
       </div>
       <div className={styles['chart-view']}>
         {seasonView}

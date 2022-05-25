@@ -5,6 +5,7 @@ import SearchField from '../subcomponents/SearchField';
 type MyProps = {
   category : Object;
   choice : Function;
+  viewType : string;
 }
 
 type MyState = {
@@ -52,7 +53,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
   render () {
     return (
             <div id={styles['menu-bar-container']}>
-              <SearchField menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)}/>
+              <SearchField viewType={this.props.viewType} menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)}/>
                 <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} id={styles['menu-bar-selection']}>
                 {
                 this.state.matchedEntries.map(entry => (

@@ -4,9 +4,10 @@ import styles from '../style.css';
 type MyProps = {
     menuBarEntries: string[];
     onFieldValueChange: Function;
+    viewType: string;
 }
 
-const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
+const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) => {
   const [searchFieldValue, setSearchFieldValue] = useState('');
 
   const handleChange = (event) => {
@@ -35,16 +36,16 @@ const SearchField = ({ menuBarEntries, onFieldValueChange }: MyProps) => {
     let matchedEntries = menuBarEntries;
     let trimmedInput = searchFieldValue.trim();
     if (trimmedInput.length > 0) {
-      matchedEntries = findMatchingNames(trimmedInput, menuBarEntries); // Optimeerime nii, et ainult siis otsime, kui v2ljal rohkem kui 1 t2hte.
+      matchedEntries = findMatchingNames(trimmedInput, menuBarEntries);
     }
     onFieldValueChange(matchedEntries);
   }
 
 
-  return ( // TODO: placeholder tekst dünaamiliseks.
+  return (
     <div id={styles['search-field']}>
         <form>
-            <input type="text" placeholder='Search...' value={searchFieldValue} onChange={handleChange} onKeyUp={search} onKeyDown={preventSubmitWithEnter}/>
+            <input type="text" placeholder={`Search ${viewType}`} value={searchFieldValue} onChange={handleChange} onKeyUp={search} onKeyDown={preventSubmitWithEnter}/>
         </form>
     </div>
   );

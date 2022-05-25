@@ -41,7 +41,7 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
     return (
       <div className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
-        <MenuBar choice={this.chooseTeam.bind(this)} category={this.props.teams}/>
+        <MenuBar viewType={'team'} choice={this.chooseTeam.bind(this)} category={this.props.teams}/>
         </div>
         <div className={styles['chart-view']}>
         {teamView}
