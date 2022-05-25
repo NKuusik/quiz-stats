@@ -33,7 +33,7 @@ const TeamView = ({ team }: MyProps) => {
     return labels;
   }
 
-  function generateDataSetsSeason () {
+  function generateDataSetsSeason() {
     const arrayWithSeasonPoints : Array<Object> = [];
     for (const season of Object.keys(team.seasons)) {
       const singleDataSet : Object = {
@@ -49,7 +49,7 @@ const TeamView = ({ team }: MyProps) => {
     return arrayWithSeasonPoints;
   }
 
-  function generateTotalPointsArray (labels) {
+  function generateTotalPointsArray(labels) {
     const totalPointsAllSeasons : Array<number> = [];
     for (const seasonName of labels) {
       const pointsAsNumbers = team.seasons[seasonName].map(Number);
@@ -62,7 +62,7 @@ const TeamView = ({ team }: MyProps) => {
   const cumulativeLabels = generateLabelsCumulative();
   const totalPoints = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive () { // Todo: convert to TS.
+  function generateDataSetsCumualtive() { // Todo: convert to TS.
     const singleDataSet = {
       label: `Cumulative points for ${team.name}.`,
       data: totalPoints,
