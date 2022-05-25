@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from '../style.css';
 
 type MyProps = {
-  choice : any
+  choice : Function;
 }
 
 

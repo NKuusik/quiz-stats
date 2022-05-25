@@ -4,11 +4,11 @@ import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
   category : Object;
-  choice : any;
+  choice : Function;
 }
 
 type MyState = {
-  allEntries: string[]; // Parem kui see oleks juba tehtud kõrgemal tasemel ja siin props.
+  allEntries: string[];
   matchedEntries: string[];
 }
 
