@@ -7,7 +7,7 @@ import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
 type MyState = {
-  teams: {[teamName: string]: Team}; // Siin võiks väljenduda Team klass.
+  teams: {[teamName: string]: Team};
   seasonsWithTeamNames: {[seasonName: string]: {name: string, teams: string[]}};
   activeView: string;
 }

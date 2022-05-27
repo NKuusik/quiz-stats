@@ -5,23 +5,22 @@ import { Team } from '../scripts/readData';
 import styles from '../style.css';
 
 type MyProps = {
-  teams : Object
-
+  teams : {[teamName: string]: Team};
 }
 
 type MyState = {
-  activeTeam : any
+  activeTeam : Team | null
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {
   constructor (props) {
     super(props);
     this.state = {
-      activeTeam: null as unknown as Team
+      activeTeam: null
     };
   };
 
-  chooseTeam (chosenTeam : any) {
+  chooseTeam (chosenTeam : Team) {
     if (this.state.activeTeam === chosenTeam) {
       this.setState({
         activeTeam: null

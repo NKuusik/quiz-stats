@@ -1,6 +1,6 @@
 const papaparse = require('papaparse');
 
-export class Team {
+export class Team { // Eraldi moodul?
   place: number;
   name: string;
   latestSeasonScores: Array<string>;

@@ -3,7 +3,7 @@ import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
-  category : Object;
+  category : Object; // Objekti struktuur erineb sõltuvalt kas Team või Season vaade.
   choice : Function;
   viewType : string;
 }
