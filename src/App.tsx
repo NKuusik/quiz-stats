@@ -1,14 +1,14 @@
 import React from 'react';
 import * as seasons from './resources/seasons';
 import axios from 'axios';
-import { parseData, getTeamResults } from './scripts/readData';
+import { parseData, getTeamResults, Team } from './scripts/readData';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
 type MyState = {
-  teams: Object; // Siin võiks väljenduda Team klass.
-  seasonsWithTeamNames: Object;
+  teams: {[teamName: string]: Team}; // Siin võiks väljenduda Team klass.
+  seasonsWithTeamNames: {[seasonName: string]: {name: string, teams: string[]}};
   activeView: string;
 }
 
@@ -18,7 +18,7 @@ class App extends React.Component<{}, MyState> {
     this.state = {
       teams: {},
       seasonsWithTeamNames: {},
-      activeView: null as any
+      activeView: ""
     };
   }
 
