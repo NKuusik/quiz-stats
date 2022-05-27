@@ -12,7 +12,7 @@ const TeamView = ({ team }: MyProps) => {
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (longestSeason === [] || seasonsAsObject[seasonKey].length > longestSeason.length) {
+      if (seasonsAsObject[seasonKey].length > longestSeason.length) {
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -34,7 +34,7 @@ const TeamView = ({ team }: MyProps) => {
   }
 
   function generateDataSetsSeason() {
-    const arrayWithSeasonPoints : Array<Object> = [];
+    const arrayWithSeasonPoints : Array<Object> = []; // Eraldi Type?
     for (const season of Object.keys(team.seasons)) {
       const singleDataSet : Object = {
         label: `# of points in ${season}`,

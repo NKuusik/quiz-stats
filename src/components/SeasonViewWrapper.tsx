@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import styles from '../style.css';
+import {Team} from '../scripts/readData';
 
 type MyProps = {
-  teams : Object,
-  seasons : Object,
+  teams : {[teamName: string]: Team};
+  seasons : {[seasonName: string]: {name: string, teams: string[]}};
 }
 
 function SeasonViewWrapper ({ teams, seasons } : MyProps) {

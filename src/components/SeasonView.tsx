@@ -1,9 +1,10 @@
 import React from 'react';
 import LineChart from '../subcomponents/LineChart';
+import {Team} from '../scripts/readData';
 
 type MyProps = {
-  teams : any,
-  season : any,
+  teams : {[teamName: string]: Team};
+  season : {[seasonName: string]: {name: string, teams: string[]}};
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
