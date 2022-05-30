@@ -8,7 +8,7 @@ type MyProps = {
 }
 
 const TeamView = ({ team }: MyProps) => {
-  const borderColor : String = '#AF79E7';
+  const borderColor : string = '#AF79E7';
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {

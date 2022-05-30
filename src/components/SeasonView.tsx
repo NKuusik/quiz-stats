@@ -4,7 +4,7 @@ import {Team} from '../scripts/readData';
 
 type MyProps = {
   teams : {[teamName: string]: Team};
-  season : {[seasonName: string]: {name: string, teams: string[]}};
+  season : any; // vajab parandamist
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
