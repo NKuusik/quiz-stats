@@ -10,17 +10,18 @@ type MyProps = {
 }
 
 function SeasonViewWrapper ({ teams, seasons } : MyProps) {
-  const [activeSeason, setActiveSeason] = useState(null);
+  const defaultState = {name: "", teams: []} // Motle, kas on parem variant.
+  const [activeSeason, setActiveSeason] = useState(defaultState);
 
   function chooseSeason (chosenSeason) {
     if (activeSeason === chosenSeason) {
-      setActiveSeason(null);
+      setActiveSeason(defaultState);
     } else {
       setActiveSeason(chosenSeason);
     }
   }
   let seasonView;
-  if (activeSeason != null) {
+  if (activeSeason != defaultState) {
     seasonView = <SeasonView season={activeSeason} teams={teams} />;
   }
 
