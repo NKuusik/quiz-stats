@@ -69,7 +69,7 @@ class App extends React.Component<{}, MyState> {
     }
     return (
       <div>
-        <Header choice={this.chooseView.bind(this)}/>
+        <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
         {view}
       </div>
 
