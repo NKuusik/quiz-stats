@@ -61,14 +61,12 @@ body {
     background-color: #424696;
 }
 
-
 .header {
     float: right;
 }
 
 .header-vertical-alignment {
     padding: 15px;
-    overflow: hidden;   
 }
 
 .header ul {
