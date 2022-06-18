@@ -1,3 +1,5 @@
+/*TODO: Kuna kasutad CSS Modules teeki, muuda eraldi moodulite failideks*/
+
 body {
     background-color: rgb(33, 35, 75);
     font-size: 18px;
@@ -63,8 +65,13 @@ body {
     background-color: #424696;
 }
 
+
 .header {
     float: right;
+}
+
+.header-vertical-alignment {
+    margin-top: 10px;
 }
 
 .header ul {

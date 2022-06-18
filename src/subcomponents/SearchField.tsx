@@ -43,7 +43,7 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
 
 
   return (
-    <div id={styles['search-field']}>
+    <div id={styles['search-field']} className={styles['header-vertical-alignment']}>
         <form>
             <input type="text" placeholder={`Search ${viewType}`} value={searchFieldValue} onChange={handleChange} onKeyUp={search} onKeyDown={preventSubmitWithEnter}/>
         </form>
