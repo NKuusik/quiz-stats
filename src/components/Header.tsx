@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { act } from 'react-test-renderer';
 import styles from '../style.css';
 
 type MyProps = {
@@ -16,7 +17,7 @@ const Header = ({ choice, activeView } : MyProps) => {
   }
   return (
         <div className={[styles['header']].join(' ')}>
-            <h1>Stats for something</h1>
+            <h1>Stats for {activeView == '' ? 'something' : activeView}</h1>
             <ul>
                 <li><p className={styles[visualizeActiveButton('team')]} onClick={() => { choice('team'); }}>Check team</p></li>
                 <li><p className={styles[visualizeActiveButton('season')]} onClick={() => { choice('season'); }}>Check season</p></li>

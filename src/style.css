@@ -72,7 +72,7 @@ body {
 
 .header ul {
     list-style-type: none;
-    width: 60%; /* Modify this when adding buttons to header. */
+    width: 60%;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
