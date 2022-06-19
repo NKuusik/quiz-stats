@@ -72,31 +72,38 @@ body {
 
 .header ul {
     list-style-type: none;
-    width: 100%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    float: right;
+    justify-content: flex-end;
+    padding-right: 10px;
 }
 
 .header li {
-    display: inline;
-    padding: 10px;
-
+    display: inline-block;
 }
 
 .header li > * {
-    display: inline; 
+    display: inline-block; 
 }
 
 .header p {
-    padding: 8px;
     margin-left: 10px;
+    margin-bottom: 10px;
     border-color: rgb(230, 46, 229);
     border-radius: 15%;
     border-style: solid;
     border-width: 2px;
     float: right;
+    padding: 10px;
   }
 
 .header h1 {
-
+    display: inline-block;
+    padding-top: 25px;
+    padding-left: 10px;
 }
 
 .header-active {
