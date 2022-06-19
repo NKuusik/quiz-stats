@@ -72,21 +72,13 @@ body {
 
 .header ul {
     list-style-type: none;
-    width: 50%;
+    width: 60%; /* Modify this when adding buttons to header. */
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     float: right;
     justify-content: flex-end;
-    padding-right: 10px;
-}
-
-.header li {
-    display: inline-block;
-}
-
-.header li > * {
-    display: inline-block; 
+    padding-right: 20px;
 }
 
 .header p {
@@ -96,7 +88,6 @@ body {
     border-radius: 15%;
     border-style: solid;
     border-width: 2px;
-    float: right;
     padding: 10px;
   }
 
@@ -109,7 +100,6 @@ body {
 .header-active {
     background-color: rgb(230, 46, 229);
 }
-
 
 canvas {
     background-color: #161833;
