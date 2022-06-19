@@ -63,6 +63,8 @@ body {
 
 .header {
     float: right;
+    width: 80%;
+    
 }
 
 .header-vertical-alignment {
@@ -71,15 +73,21 @@ body {
 
 .header ul {
     list-style-type: none;
+    float: inherit;
+    width: 100%;
 }
 
 .header li {
     display: inline;
     padding: 10px;
+
+}
+
+.header li > * {
+    display: inline; 
 }
 
 .header p {
-    display: inline;
     padding: 8px;
     border-color: rgb(230, 46, 229);
     border-radius: 15%;
@@ -87,9 +95,14 @@ body {
     border-width: 2px;
   }
 
+.header h1 {
+    padding-right: 50%;
+}
+
 .header-active {
     background-color: rgb(230, 46, 229);
 }
+
 
 canvas {
     background-color: #161833;

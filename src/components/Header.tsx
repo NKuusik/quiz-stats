@@ -19,6 +19,7 @@ const Header = ({ choice, activeView } : MyProps) => {
   return (
         <div className={[styles['header'], styles['header-vertical-alignment']].join(' ')}>
             <ul>
+                <li><h1>Stats for something</h1></li>
                 <li><p className={styles[visualizeActiveButton('team')]} onClick={() => { choice('team'); }}>Check team</p></li>
                 <li><p className={styles[visualizeActiveButton('season')]} onClick={() => { choice('season'); }}>Check season</p></li>
             </ul>
