@@ -19,7 +19,6 @@ const Header = ({ choice, activeView } : MyProps) => {
         <div className={[styles['header']].join(' ')}>
             <h1>Stats for {activeView == '' ? 'something' : activeView}</h1>
             <ul>
-
                 <li><button id={styles[visualizeActiveButton('team')]} onClick={() => { choice('team'); }}>Check team</button></li>
                 <li><button id={styles[visualizeActiveButton('season')]} onClick={() => { choice('season'); }}>Check season</button></li>
             </ul>

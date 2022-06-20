@@ -19,7 +19,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
     super(props);
     this.state = {
       allEntries: Object.keys(this.props.category),
-      matchedEntries: Object.keys(this.props.category)
+      matchedEntries: Object.keys(this.props.category).sort()
     };
   }
 
