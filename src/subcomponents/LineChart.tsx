@@ -56,7 +56,7 @@ class LineChart extends React.Component<MyProps> {
           </a>
         </div>
       </div>
-      <canvas ref={this.myRef} width="400" height="100"></canvas>
+      <canvas ref={this.myRef} width="400" height="150"></canvas>
     </>
     );
   }
