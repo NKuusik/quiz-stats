@@ -8,6 +8,7 @@ type MyProps = {
 }
 
 const TeamView = ({ team }: MyProps) => {
+  const defaultDataSetsShown : number = 3
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
@@ -34,10 +35,17 @@ const TeamView = ({ team }: MyProps) => {
 
   function generateDataSetsSeason() {
     const arrayWithSeasonPoints : Array<Object> = []; // Eraldi Type?
+    let count : number = 0;
+    let defaultHide : boolean = false;
     for (const season of Object.keys(team.seasons)) {
+      count++;
+      if (count > defaultDataSetsShown) {
+        defaultHide = true;
+      }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       console.log(dataColor);
       const singleDataSet : Object = {
+        hidden: defaultHide,
         label: `# of points in ${season}`,
         data: team.seasons[season],
         backgroundColor: dataColor,

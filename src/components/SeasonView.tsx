@@ -8,6 +8,7 @@ type MyProps = {
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
+  const defaultDataSetsShown : number = 3
   function calculateLabels () {
     const labels : string[] = [];
     for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
@@ -18,9 +19,16 @@ const SeasonView = ({ teams, season }: MyProps) => {
 
   function generateDataSetsWithRunningPoints () {
     const dataSetsWithRunningPoints : Object[] = [];
+    let count : number = 0;
+    let defaultHide : boolean = false;
     for (const teamName of Object.values(season.teams)) {
+      count++;
+      if (count > defaultDataSetsShown) {
+        defaultHide = true;
+      }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       const singleDataSet : Object = {
+        hidden: defaultHide,
         label: `${teamName}`,
         data: teams[`${teamName}`].seasons[season.name],
         backgroundColor: dataColor,
@@ -34,9 +42,15 @@ const SeasonView = ({ teams, season }: MyProps) => {
   }
 
   function generateDataSetsWithIncrementalPoints () {
+    let count : number = 0;
+    let defaultHide : boolean = false;
     const dataSets : Object[] = [];
     for (const teamName of Object.values(season.teams)) {
-      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
+      count++;
+      if (count > defaultDataSetsShown) {
+        defaultHide = true;
+      }
+      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
       for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
         if (i === 0) {
@@ -47,6 +61,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
         }
       }
       const singleDataSet = {
+        hidden: defaultHide,
         label: `${teamName}`,
         data: incrementalPoints,
         backgroundColor: dataColor,
