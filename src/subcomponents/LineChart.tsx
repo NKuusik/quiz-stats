@@ -13,6 +13,7 @@ class LineChart extends React.Component<MyProps> {
   private myRef = React.createRef<HTMLCanvasElement>()
   private chart;
 
+
   componentDidMount () {
     this.chart = new Chart(this.myRef.current, {
       type: 'line',
@@ -38,6 +39,8 @@ class LineChart extends React.Component<MyProps> {
 
   componentDidUpdate () {
     this.chart.config.data.datasets = this.props.dataSets;
+    this.chart.config.data.labels = this.props.labels;
+    this.chart.config.options.scales.y.max = this.props.maxValue;
     this.chart.update();
   }
 

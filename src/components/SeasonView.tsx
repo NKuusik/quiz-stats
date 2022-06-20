@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import {Team} from '../scripts/readData';
 
@@ -9,6 +9,7 @@ type MyProps = {
 
 const SeasonView = ({ teams, season }: MyProps) => {
   const defaultDataSetsShown : number = 3
+  const [cumulativeView, setCumulativeView] = useState(false);
   function calculateLabels () {
     const labels : string[] = [];
     for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
@@ -77,11 +78,25 @@ const SeasonView = ({ teams, season }: MyProps) => {
   generateDataSetsWithIncrementalPoints();
   return (
         <div>
-            <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
+
+            <button onClick={() => setCumulativeView(false)}>
+              See game-by-game
+            </button>
+            <button onClick={() => setCumulativeView(true)}>
+              See incrementally
+            </button>
+
+
+            {
+            !cumulativeView 
+            ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
+
+            : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
+
+            }  
             {
               /* Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
             }
-            <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
         </div>
   );
 };

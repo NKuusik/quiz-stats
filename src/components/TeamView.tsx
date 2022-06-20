@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 import { Team } from '../scripts/readData';
@@ -9,6 +9,7 @@ type MyProps = {
 
 const TeamView = ({ team }: MyProps) => {
   const defaultDataSetsShown : number = 3
+  const [cumulativeView, setCumulativeView] = useState(false);
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
@@ -43,7 +44,6 @@ const TeamView = ({ team }: MyProps) => {
         defaultHide = true;
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-      console.log(dataColor);
       const singleDataSet : Object = {
         hidden: defaultHide,
         label: `# of points in ${season}`,
@@ -87,8 +87,18 @@ const TeamView = ({ team }: MyProps) => {
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {team.name}</h1>
-            <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
-            <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points accross seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+            <button onClick={() => setCumulativeView(false)}>
+              See points per season
+            </button>
+            <button onClick={() => setCumulativeView(true)}>
+              See points across seasons
+            </button>
+            
+            {
+            !cumulativeView 
+            ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
+            : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+            }            
         </div>
   );
 };
