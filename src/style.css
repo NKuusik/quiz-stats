@@ -101,6 +101,16 @@ body {
     background-color: rgb(230, 46, 229);
 }
 
+.button-chart-type {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 10%;
+    border: none;
+    color: white;
+    padding: 10px;
+    background-color: #362C60;
+}
+
 canvas {
     background-color: #161833;
 }

@@ -87,10 +87,10 @@ const TeamView = ({ team }: MyProps) => {
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {team.name}</h1>
-            <button onClick={() => setCumulativeView(false)}>
+            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See points per season
             </button>
-            <button onClick={() => setCumulativeView(true)}>
+            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
             

@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import {Team} from '../scripts/readData';
+import styles from '../style.css';
 
+//Todo: liiga palju korduvat koodi: äkki parem üks generic View komponent?
 type MyProps = {
   teams : {[teamName: string]: Team};
   season : {name: string, teams: string[]};
@@ -79,10 +81,10 @@ const SeasonView = ({ teams, season }: MyProps) => {
   return (
         <div>
 
-            <button onClick={() => setCumulativeView(false)}>
+            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See game-by-game
             </button>
-            <button onClick={() => setCumulativeView(true)}>
+            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See incrementally
             </button>
 
