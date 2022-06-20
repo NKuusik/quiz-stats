@@ -25,6 +25,11 @@ class LineChart extends React.Component<MyProps> {
           y: {
             max: this.props.maxValue,
             beginAtZero: true,
+          },
+        },
+        plugins: {
+          legend: {
+            position: 'right'
           }
         }
       }
