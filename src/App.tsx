@@ -5,10 +5,12 @@ import { parseData, getTeamResults, Team } from './scripts/readData';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
+import { parse } from '@babel/core';
 
 type MyState = {
   teams: {[teamName: string]: Team};
   seasonsWithTeamNames: {[seasonName: string]: {name: string, teams: string[]}};
+  seasonNames: Array<string>;
   activeView: string;
 }
 
@@ -18,12 +20,14 @@ class App extends React.Component<{}, MyState> {
     this.state = {
       teams: {},
       seasonsWithTeamNames: {},
+      seasonNames: [],
       activeView: ""
     };
   }
 
   componentDidMount () {
     const seasonsData = {};
+    let maxSeasons = 0;
     for (const season of Object.values(seasons)) {
       axios.get(season)
         .then(res => {
@@ -46,6 +50,10 @@ class App extends React.Component<{}, MyState> {
             }
             this.setState({ teams: currentTeams });
             this.setState({ seasonsWithTeamNames: seasonsData });
+            if (Object.keys(seasonsData).length > maxSeasons) { // Hacky, hooajad vajavad paremat andmestruktuuri.
+              this.setState( {seasonNames: Object.keys(seasonsData) })
+              maxSeasons = Object.keys(seasonsData).length
+            }
           }
         });
     }
@@ -65,7 +73,7 @@ class App extends React.Component<{}, MyState> {
     if (activeView === 'season') {
       view = <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>;
     } else if (activeView === 'team') {
-      view = <TeamViewWrapper teams={this.state.teams}/>;
+      view = <TeamViewWrapper teams={this.state.teams} seasonNames={this.state.seasonNames}/>;
     }
     return (
       <div>

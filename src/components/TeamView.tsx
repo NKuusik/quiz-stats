@@ -4,10 +4,11 @@ import styles from '../style.css';
 import { Team } from '../scripts/readData';
 
 type MyProps = {
-  team: Team
+  team: Team;
+  seasonNames: Array<string>
 }
 
-const TeamView = ({ team }: MyProps) => {
+const TeamView = ({ team, seasonNames }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
   function generateLabelsSeason (seasonsAsObject) {
@@ -24,13 +25,14 @@ const TeamView = ({ team }: MyProps) => {
     return labels;
   }
 
-  function generateLabelsCumulative () {
+  function generateLabelsCumulative() {
     const labels : string[] = [];
-    for (const season of Object.keys(team.seasons)) {
+    for (const season of seasonNames) {
       const labelName = season;
       labels.push(labelName);
     }
     labels.sort();
+    console.log(labels);
     return labels;
   }
 
@@ -61,8 +63,11 @@ const TeamView = ({ team }: MyProps) => {
   function generateTotalPointsArray(labels) {
     const totalPointsAllSeasons : Array<number> = [];
     for (const seasonName of labels) {
-      const pointsAsNumbers = team.seasons[seasonName].map(Number);
-      const sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
+      let sum = 0;
+      if (team.seasons[seasonName] !== undefined) {
+        const pointsAsNumbers = team.seasons[seasonName].map(Number);
+        sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
+      }
       totalPointsAllSeasons.push(sum);
     }
     return totalPointsAllSeasons;

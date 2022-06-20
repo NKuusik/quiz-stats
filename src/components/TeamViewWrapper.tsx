@@ -6,6 +6,7 @@ import styles from '../style.css';
 
 type MyProps = {
   teams : {[teamName: string]: Team};
+  seasonNames : Array<string>;
 }
 
 type MyState = {
@@ -35,7 +36,7 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
   render () {
     let teamView;
     if (this.state.activeTeam != null) {
-      teamView = <TeamView team={this.state.activeTeam} />;
+      teamView = <TeamView team={this.state.activeTeam} seasonNames={this.props.seasonNames} />;
     }
     return (
       <div className={styles['view-wrapper']}>
