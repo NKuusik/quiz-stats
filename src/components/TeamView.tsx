@@ -8,7 +8,6 @@ type MyProps = {
 }
 
 const TeamView = ({ team }: MyProps) => {
-  const borderColor : string = '#AF79E7';
   function generateLabelsSeason (seasonsAsObject) {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
@@ -36,11 +35,13 @@ const TeamView = ({ team }: MyProps) => {
   function generateDataSetsSeason() {
     const arrayWithSeasonPoints : Array<Object> = []; // Eraldi Type?
     for (const season of Object.keys(team.seasons)) {
+      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
+      console.log(dataColor);
       const singleDataSet : Object = {
         label: `# of points in ${season}`,
         data: team.seasons[season],
-        backgroundColor: borderColor,
-        borderColor: borderColor,
+        backgroundColor: dataColor,
+        borderColor: dataColor,
         borderWidth: 1.5,
         tension: 0.5
       };
@@ -63,11 +64,12 @@ const TeamView = ({ team }: MyProps) => {
   const totalPoints = generateTotalPointsArray(cumulativeLabels);
 
   function generateDataSetsCumualtive() { // Todo: convert to TS.
+    let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
     const singleDataSet = {
       label: `Cumulative points for ${team.name}.`,
       data: totalPoints,
-      backgroundColor: borderColor,
-      borderColor: borderColor,
+      backgroundColor: dataColor,
+      borderColor: dataColor,
       borderWidth: 1.5,
       tension: 0.5
     };

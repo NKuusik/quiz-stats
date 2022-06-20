@@ -8,7 +8,6 @@ type MyProps = {
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
-  const borderColor : String = '#AF79E7';
   function calculateLabels () {
     const labels : string[] = [];
     for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
@@ -20,11 +19,12 @@ const SeasonView = ({ teams, season }: MyProps) => {
   function generateDataSetsWithRunningPoints () {
     const dataSetsWithRunningPoints : Object[] = [];
     for (const teamName of Object.values(season.teams)) {
+      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       const singleDataSet : Object = {
         label: `${teamName}`,
         data: teams[`${teamName}`].seasons[season.name],
-        backgroundColor: borderColor,
-        borderColor: borderColor,
+        backgroundColor: dataColor,
+        borderColor: dataColor,
         borderWidth: 1.5,
         tension: 0.5
       };
@@ -36,6 +36,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
   function generateDataSetsWithIncrementalPoints () {
     const dataSets : Object[] = [];
     for (const teamName of Object.values(season.teams)) {
+      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       const incrementalPoints : number[] = [];
       for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
         if (i === 0) {
@@ -48,8 +49,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       const singleDataSet = {
         label: `${teamName}`,
         data: incrementalPoints,
-        backgroundColor: borderColor,
-        borderColor: borderColor,
+        backgroundColor: dataColor,
+        borderColor: dataColor,
         borderWidth: 1.5,
         tension: 0.5
       };
