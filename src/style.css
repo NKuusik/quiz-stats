@@ -54,10 +54,6 @@ canvas {
     width: 80%;
 }
 
-.header-vertical-alignment { /* Now obsolete as a class, refactor */
-    padding: 15px;
-}
-
 .header ul {
     list-style-type: none;
     width: 60%;
@@ -97,13 +93,16 @@ canvas {
     padding-left: 5%;
     padding-right: 5%;
     background-color: #060824;
-
 }
 
 #menu-bar-selection {
     cursor: grab;
     height: 90vh;
     overflow: auto;
+}
+
+#search-field {
+    padding: 15px;
 }
 
 #search-field input {
