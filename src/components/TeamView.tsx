@@ -76,7 +76,7 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
   const cumulativeLabels = generateLabelsCumulative();
   const totalPoints = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive() { // Todo: convert to TS.
+  function generateDataSetsCumualtive() { // Todo: convert to TS. // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
     let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
     const singleDataSet = {
       label: `Cumulative points for ${team.name}.`,
