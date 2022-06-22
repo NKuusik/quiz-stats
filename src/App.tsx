@@ -12,6 +12,7 @@ type MyState = {
   teams: {[teamName: string]: Team};
   seasonsWithTeamNames: {[seasonName: string]: {name: string, teams: string[]}};
   seasonNames: Array<string>;
+  seasons: {[seasonName: string]: Season};
   activeView: string;
 }
 
@@ -22,6 +23,7 @@ class App extends React.Component<{}, MyState> {
       teams: {},
       seasonsWithTeamNames: {},
       seasonNames: [],
+      seasons: {},
       activeView: ""
     };
   }
@@ -29,7 +31,6 @@ class App extends React.Component<{}, MyState> {
   componentDidMount () {
     const seasonsData = {};
     let seasonNames : Array<string> = [];
-    let maxSeasons = 0;
     for (const season of Object.values(seasons)) {
       axios.get(season)
         .then(res => {
@@ -56,10 +57,12 @@ class App extends React.Component<{}, MyState> {
             this.setState({ seasonsWithTeamNames: seasonsData });
           }
           let season = new Season(currentSeason, currentSeasonTeams);
+          seasonsData[currentSeason] = season;
           seasonNames.push(currentSeason);
           this.setState({ seasonNames: seasonNames});
         });
     }
+    this.setState({seasons: seasonsData});
   }
 
   chooseView (chosenView : string) {
@@ -74,7 +77,7 @@ class App extends React.Component<{}, MyState> {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
-      view = <SeasonViewWrapper seasons={this.state.seasonsWithTeamNames} teams={this.state.teams}/>;
+      view = <SeasonViewWrapper seasons={this.state.seasons} teams={this.state.teams}/>;
     } else if (activeView === 'team') {
       view = <TeamViewWrapper teams={this.state.teams} seasonNames={this.state.seasonNames}/>;
     }

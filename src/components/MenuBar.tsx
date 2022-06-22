@@ -29,11 +29,11 @@ class MenuBar extends React.Component<MyProps, MyState> {
     return entriesInMenuBar;
   }
 
-  filterEntries (entriesValue) {
+  filterEntries(entriesValue) {
     this.setState({ matchedEntries: entriesValue });
   }
 
-  handleMouseDown (event) {
+  handleMouseDown(event) {
     const startCoordinateY = event.clientY;
 
     const handleMouseMove = (event) => {

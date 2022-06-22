@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import { Team } from '../data_structures/Team';
+import { Season } from '../data_structures/Season';
 import styles from '../style.css';
 
 //Todo: liiga palju korduvat koodi: äkki parem üks generic View komponent?
 type MyProps = {
   teams : {[teamName: string]: Team};
-  season : {name: string, teams: string[]};
+  season : Season;
 }
 
 const SeasonView = ({ teams, season }: MyProps) => {
@@ -14,7 +15,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState(false);
   function calculateLabels () {
     const labels : string[] = [];
-    for (let i = 1; i < teams[season.teams[0]].seasons[season.name].length; i++) {
+    let someTeam = Object.values(season.teams)[0] // Ajutine hack, kasuta tulevikus Seasoni klassis number of games vms.
+    for (let i = 1; i < someTeam.latestSeasonScores.length; i++) {
       labels.push(`Game #${i}`);
     }
     return labels;
@@ -24,7 +26,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
     const dataSetsWithRunningPoints : Object[] = [];
     let count : number = 0;
     let defaultHide : boolean = false;
-    for (const teamName of Object.values(season.teams)) {
+    for (const team of Object.values(season.teams)) {
       count++;
       if (count > defaultDataSetsShown) {
         defaultHide = true;
@@ -32,8 +34,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       const singleDataSet : Object = {
         hidden: defaultHide,
-        label: `${teamName}`,
-        data: teams[`${teamName}`].seasons[season.name],
+        label: `${team.name}`,
+        data: teams[`${team.name}`].seasons[season.name],
         backgroundColor: dataColor,
         borderColor: dataColor,
         borderWidth: 1.5,
@@ -48,24 +50,25 @@ const SeasonView = ({ teams, season }: MyProps) => {
     let count : number = 0;
     let defaultHide : boolean = false;
     const dataSets : Object[] = [];
-    for (const teamName of Object.values(season.teams)) {
+    console.log(Object.values(season.teams));
+    for (const team of Object.values(season.teams)) {
       count++;
       if (count > defaultDataSetsShown) {
         defaultHide = true;
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
-      for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
+      for (let i = 0; i < teams[`${team.name}`].seasons[season.name].length; i++) {
         if (i === 0) {
-          incrementalPoints.push(parseInt(teams[`${teamName}`].seasons[season.name][i]));
+          incrementalPoints.push(parseInt(teams[`${team.name}`].seasons[season.name][i]));
         } else {
-          const incrementedValue = parseInt(teams[`${teamName}`].seasons[season.name][i]) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(teams[`${team.name}`].seasons[season.name][i]) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
       const singleDataSet = {
         hidden: defaultHide,
-        label: `${teamName}`,
+        label: `${team.name}`,
         data: incrementalPoints,
         backgroundColor: dataColor,
         borderColor: dataColor,
