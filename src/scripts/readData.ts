@@ -1,3 +1,4 @@
+import { Season } from '../data_structures/Season';
 import { Team } from '../data_structures/Team';
 
 const papaparse = require('papaparse');
@@ -12,7 +13,7 @@ function normalizeGameScore (team: Team): Team {
 }
 
 export async function parseData (input: string): Promise<Object> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     papaparse.parse(input, {
       complete: function (results : Object) {
         return resolve(results);

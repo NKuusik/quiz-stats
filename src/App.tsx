@@ -3,6 +3,7 @@ import * as seasons from './resources/seasons';
 import axios from 'axios';
 import { parseData, getTeamResults } from './scripts/readData';
 import { Team } from './data_structures/Team';
+import { Season } from './data_structures/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
@@ -27,6 +28,7 @@ class App extends React.Component<{}, MyState> {
 
   componentDidMount () {
     const seasonsData = {};
+    let seasonNames : Array<string> = [];
     let maxSeasons = 0;
     for (const season of Object.values(seasons)) {
       axios.get(season)
@@ -38,23 +40,24 @@ class App extends React.Component<{}, MyState> {
           seasonsData[currentSeason] = {};
           seasonsData[currentSeason]['name'] = currentSeason;
           seasonsData[currentSeason]['teams'] = [];
+          let currentSeasonTeams = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const currentTeams = { ...this.state.teams };
+            const allTeams = { ...this.state.teams };
             const teamData = getTeamResults(parsedData.data[i]);
             seasonsData[currentSeason]['teams'].push(teamData.name);
-            if (!(teamData.name in currentTeams)) {
+            if (!(teamData.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
               teamData.seasons[currentSeason] = teamData.latestSeasonScores;
-              currentTeams[teamData.name] = teamData;
+              allTeams[teamData.name] = teamData;
             } else {
-              currentTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
+              allTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
             }
-            this.setState({ teams: currentTeams });
+            currentSeasonTeams[teamData.name] = teamData;
+            this.setState({ teams: allTeams });
             this.setState({ seasonsWithTeamNames: seasonsData });
-            if (Object.keys(seasonsData).length > maxSeasons) { // Hacky, hooajad vajavad paremat andmestruktuuri.
-              this.setState( {seasonNames: Object.keys(seasonsData) })
-              maxSeasons = Object.keys(seasonsData).length
-            }
           }
+          let season = new Season(currentSeason, currentSeasonTeams);
+          seasonNames.push(currentSeason);
+          this.setState({ seasonNames: seasonNames});
         });
     }
   }
@@ -68,7 +71,6 @@ class App extends React.Component<{}, MyState> {
   }
 
   render () {
-    console.log(this.state.teams)
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {

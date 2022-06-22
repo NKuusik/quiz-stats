@@ -1,8 +1,7 @@
-export class Team { // Eraldi moodul?
+export class Team { 
     place: number;
     name: string;
     latestSeasonScores: Array<string>;
-    totalScore: number;
     seasons: Object;
   
     constructor (place: number, name: string, latestSeasonScores: Array<string>, totalScore: number) {
@@ -10,6 +9,5 @@ export class Team { // Eraldi moodul?
       this.name = name;
       this.seasons = {};
       this.latestSeasonScores = latestSeasonScores;
-      this.totalScore = totalScore; // Todo: eraldi iga seasoni kohta.
     }
   }
