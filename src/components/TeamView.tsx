@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
-import { Team } from '../scripts/readData';
+import { Team } from '../data_structures/Team';
 
 type MyProps = {
   team: Team;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
-import {Team} from '../scripts/readData';
+import { Team } from '../data_structures/Team';
 import styles from '../style.css';
 
 //Todo: liiga palju korduvat koodi: äkki parem üks generic View komponent?

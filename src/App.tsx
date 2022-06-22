@@ -1,11 +1,11 @@
 import React from 'react';
 import * as seasons from './resources/seasons';
 import axios from 'axios';
-import { parseData, getTeamResults, Team } from './scripts/readData';
+import { parseData, getTeamResults } from './scripts/readData';
+import { Team } from './data_structures/Team';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
-import { parse } from '@babel/core';
 
 type MyState = {
   teams: {[teamName: string]: Team};
@@ -68,6 +68,7 @@ class App extends React.Component<{}, MyState> {
   }
 
   render () {
+    console.log(this.state.teams)
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
