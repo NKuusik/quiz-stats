@@ -15,8 +15,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState(false);
   function calculateLabels () {
     const labels : string[] = [];
-    let someTeam = Object.values(season.teams)[0] // Ajutine hack, kasuta tulevikus Seasoni klassis number of games vms.
-    for (let i = 1; i < someTeam.latestSeasonScores.length; i++) {
+    for (let i = 1; i < season.total_games; i++) {
       labels.push(`Game #${i}`);
     }
     return labels;
@@ -50,7 +49,6 @@ const SeasonView = ({ teams, season }: MyProps) => {
     let count : number = 0;
     let defaultHide : boolean = false;
     const dataSets : Object[] = [];
-    console.log(Object.values(season.teams));
     for (const team of Object.values(season.teams)) {
       count++;
       if (count > defaultDataSetsShown) {

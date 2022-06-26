@@ -33,27 +33,31 @@ class App extends React.Component<{}, MyState> {
           return parseData(res.data);
         })
         .then(parsedData => {
-          const currentSeason = `season ${parsedData.data[0]}`;
-          seasonsData[currentSeason] = {};
-          seasonsData[currentSeason]['name'] = currentSeason;
-          seasonsData[currentSeason]['teams'] = [];
+          const currentSeasonName = `season ${parsedData.data[0]}`;
+          let currentSeasonLength;
+          seasonsData[currentSeasonName] = {};
+          seasonsData[currentSeasonName]['name'] = currentSeasonName;
+          seasonsData[currentSeasonName]['teams'] = [];
           let currentSeasonTeams = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const allTeams = { ...this.state.teams };
             const teamData = getTeamResults(parsedData.data[i]);
-            seasonsData[currentSeason]['teams'].push(teamData.name);
+            seasonsData[currentSeasonName]['teams'].push(teamData.name);
             if (!(teamData.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
-              teamData.seasons[currentSeason] = teamData.latestSeasonScores;
+              teamData.seasons[currentSeasonName] = teamData.latestSeasonScores;
               allTeams[teamData.name] = teamData;
             } else {
-              allTeams[teamData.name].seasons[currentSeason] = teamData.latestSeasonScores;
+              allTeams[teamData.name].seasons[currentSeasonName] = teamData.latestSeasonScores;
             }
+            currentSeasonLength = teamData.latestSeasonScores.length - 1; //Vajab testi
             currentSeasonTeams[teamData.name] = teamData;
             this.setState({ teams: allTeams });
           }
-          let season = new Season(currentSeason, currentSeasonTeams);
-          seasonsData[currentSeason] = season;
-          seasonNames.push(currentSeason);
+          let season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength);
+          
+          console.log(season);
+          seasonsData[currentSeasonName] = season;
+          seasonNames.push(currentSeasonName);
         });
     }
     this.setState({seasons: seasonsData});
