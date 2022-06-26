@@ -10,7 +10,6 @@ import Header from './components/Header';
 
 type MyState = {
   teams: {[teamName: string]: Team};
-  seasonsWithTeamNames: {[seasonName: string]: {name: string, teams: string[]}};
   seasons: {[seasonName: string]: Season};
   activeView: string;
 }
@@ -20,7 +19,6 @@ class App extends React.Component<{}, MyState> {
     super(props);
     this.state = {
       teams: {},
-      seasonsWithTeamNames: {},
       seasons: {},
       activeView: ""
     };
@@ -52,7 +50,6 @@ class App extends React.Component<{}, MyState> {
             }
             currentSeasonTeams[teamData.name] = teamData;
             this.setState({ teams: allTeams });
-            this.setState({ seasonsWithTeamNames: seasonsData });
           }
           let season = new Season(currentSeason, currentSeasonTeams);
           seasonsData[currentSeason] = season;
