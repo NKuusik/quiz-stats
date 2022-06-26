@@ -25,7 +25,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
     const dataSetsWithRunningPoints : Object[] = [];
     let count : number = 0;
     let defaultHide : boolean = false;
-    for (const team of Object.values(season.teams)) {
+    for (const teamName of season.ranking) {
       count++;
       if (count > defaultDataSetsShown) {
         defaultHide = true;
@@ -33,8 +33,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
       const singleDataSet : Object = {
         hidden: defaultHide,
-        label: `${team.name}`,
-        data: teams[`${team.name}`].seasons[season.name],
+        label: `${teamName}`,
+        data: teams[`${teamName}`].seasons[season.name], // Muuda season andmestruktuuri nii: teams {teamName : Team} ja saab teams propsist lahti
         backgroundColor: dataColor,
         borderColor: dataColor,
         borderWidth: 1.5,
@@ -49,24 +49,24 @@ const SeasonView = ({ teams, season }: MyProps) => {
     let count : number = 0;
     let defaultHide : boolean = false;
     const dataSets : Object[] = [];
-    for (const team of Object.values(season.teams)) {
+    for (const teamName of season.ranking) {
       count++;
       if (count > defaultDataSetsShown) {
         defaultHide = true;
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
-      for (let i = 0; i < teams[`${team.name}`].seasons[season.name].length; i++) {
+      for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
         if (i === 0) {
-          incrementalPoints.push(parseInt(teams[`${team.name}`].seasons[season.name][i]));
+          incrementalPoints.push(parseInt(teams[`${teamName}`].seasons[season.name][i]));
         } else {
-          const incrementedValue = parseInt(teams[`${team.name}`].seasons[season.name][i]) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(teams[`${teamName}`].seasons[season.name][i]) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
       const singleDataSet = {
         hidden: defaultHide,
-        label: `${team.name}`,
+        label: `${teamName}`,
         data: incrementalPoints,
         backgroundColor: dataColor,
         borderColor: dataColor,

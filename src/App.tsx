@@ -33,6 +33,9 @@ class App extends React.Component<{}, MyState> {
           return parseData(res.data);
         })
         .then(parsedData => {
+
+          let currentSeasonRanking: string[];
+          currentSeasonRanking = [];
           const currentSeasonName = `season ${parsedData.data[0]}`;
           let currentSeasonLength;
           seasonsData[currentSeasonName] = {};
@@ -51,11 +54,10 @@ class App extends React.Component<{}, MyState> {
             }
             currentSeasonLength = teamData.latestSeasonScores.length - 1; //Vajab testi
             currentSeasonTeams[teamData.name] = teamData;
+            currentSeasonRanking[teamData.place - 1] = teamData.name; // Testi
             this.setState({ teams: allTeams });
           }
-          let season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength);
-          
-          console.log(season);
+          let season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
           seasonsData[currentSeasonName] = season;
           seasonNames.push(currentSeasonName);
         });

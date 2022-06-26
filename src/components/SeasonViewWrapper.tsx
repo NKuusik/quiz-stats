@@ -11,7 +11,7 @@ type MyProps = {
 }
 
 function SeasonViewWrapper ({ teams, seasons } : MyProps) {
-  const defaultState = new Season("", "", 0) // Motle, kas on parem variant. = muuda vajadusel klasside struktuure
+  const defaultState = new Season("", "", 0, []) // Motle, kas on parem variant. = muuda vajadusel klasside struktuure
   const [activeSeason, setActiveSeason] = useState(defaultState);
 
   function chooseSeason(chosenSeason) {  // tyybid puudu
