@@ -1,5 +1,5 @@
-import { Season } from '../data_structures/Season';
-import { Team } from '../data_structures/Team';
+import { Season } from '../classes/Season';
+import { Team } from '../classes/Team';
 
 const papaparse = require('papaparse');
 

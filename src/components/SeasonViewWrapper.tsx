@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import styles from '../style.css';
-import { Team}  from '../data_structures/Team';
-import { Season } from '../data_structures/Season';
+import { Team}  from '../classes/Team';
+import { Season } from '../classes/Season';
 
 type MyProps = {
   teams : {[teamName: string]: Team};
