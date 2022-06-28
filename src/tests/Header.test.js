@@ -1,11 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Header from '../components/Header';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 
 
 // Todo: testi evente Enzyme'iga
 it('default renders correctly', () => {
- const tree = renderer
+  const tree = renderer
       .create(<Header activeView="" choice={""} />)
       .toJSON();
     expect(tree).toMatchSnapshot(); 
