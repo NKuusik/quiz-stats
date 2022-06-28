@@ -6,10 +6,17 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Header from '../components/Header';
 import {screen} from '@testing-library/dom';
-import {cleanup, fireEvent, render, within} from '@testing-library/react';
+import {render} from '@testing-library/react';
 
 
-// Todo: testi evente Enzyme'iga
+function chooseViewTest (chosenView, activeView) {
+  if (chosenView === activeView) {
+    return "";
+  } else {
+    return chosenView;
+  }
+}
+
 it('default renders correctly', () => {
   const tree = renderer
       .create(<Header activeView="" choice={""} />)
@@ -31,9 +38,17 @@ it('team renders correctly', () => {
     expect(tree).toMatchSnapshot(); 
    });
 
-
-test('Header displays "Stats for something"', () => {
+test('Header displays "Stats for something" when no active view', () => {
   render(<Header activeView="" choice={""} />);
   expect(screen.getByRole("heading")).toHaveTextContent("Stats for something");
 });
 
+test('Header displays "Stats for teams" when no active view', () => {
+  render(<Header activeView="team" choice={""} />);
+  expect(screen.getByRole("heading")).toHaveTextContent("Stats for team");
+});
+
+test('Header displays "Stats for seasons" when no active view', () => {
+  render(<Header activeView="season" choice={""} />);
+  expect(screen.getByRole("heading")).toHaveTextContent("Stats for season");
+});
