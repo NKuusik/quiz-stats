@@ -1,11 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`default renders correctly 1`] = `
 <div
   className="header"
 >
   <h1>
     Stats for 
+    something
   </h1>
   <ul>
     <li>
@@ -19,6 +20,64 @@ exports[`renders correctly 1`] = `
     <li>
       <button
         id=""
+        onClick={[Function]}
+      >
+        Check season
+      </button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`season renders correctly 1`] = `
+<div
+  className="header"
+>
+  <h1>
+    Stats for 
+    season
+  </h1>
+  <ul>
+    <li>
+      <button
+        id=""
+        onClick={[Function]}
+      >
+        Check team
+      </button>
+    </li>
+    <li>
+      <button
+        id="header-active"
+        onClick={[Function]}
+      >
+        Check season
+      </button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`team renders correctly 1`] = `
+<div
+  className="header"
+>
+  <h1>
+    Stats for 
+    season
+  </h1>
+  <ul>
+    <li>
+      <button
+        id=""
+        onClick={[Function]}
+      >
+        Check team
+      </button>
+    </li>
+    <li>
+      <button
+        id="header-active"
         onClick={[Function]}
       >
         Check season

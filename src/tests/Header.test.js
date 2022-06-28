@@ -2,9 +2,24 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Header from '../components/Header';
 
-it('renders correctly', () => {
+// Todo: testi evente Enzyme'iga
+it('default renders correctly', () => {
  const tree = renderer
-      .create(<Header />)
+      .create(<Header activeView="" choice={""} />)
       .toJSON();
     expect(tree).toMatchSnapshot(); 
   });
+
+  it('season renders correctly', () => {
+    const tree = renderer
+         .create(<Header activeView="season" choice={""} />)
+         .toJSON();
+       expect(tree).toMatchSnapshot(); 
+     });
+
+  it('team renders correctly', () => {
+    const tree = renderer
+         .create(<Header activeView="season" choice={""} />)
+         .toJSON();
+       expect(tree).toMatchSnapshot(); 
+     });

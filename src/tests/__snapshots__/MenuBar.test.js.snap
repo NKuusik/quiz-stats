@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`default renders correctly 1`] = `
+<div
+  id="menu-bar-container"
+>
+  <div
+    className="header-vertical-alignment"
+    id="search-field"
+  >
+    <form>
+      <input
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Search season"
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+  <div
+    id="menu-bar-selection"
+    onMouseDown={[Function]}
+  />
+</div>
+`;
+
+exports[`renders correctly 1`] = `
+<div
+  id="menu-bar-container"
+>
+  <div
+    className="header-vertical-alignment"
+    id="search-field"
+  >
+    <form>
+      <input
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Search season"
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+  <div
+    id="menu-bar-selection"
+    onMouseDown={[Function]}
+  />
+</div>
+`;
