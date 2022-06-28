@@ -23,12 +23,6 @@ class MenuBar extends React.Component<MyProps, MyState> {
     };
   }
 
-  initializeEntries () {
-    let entriesInMenuBar : string[] = [];
-    entriesInMenuBar = Object.keys(this.props.category);
-    return entriesInMenuBar;
-  }
-
   filterEntries(entriesValue) {
     this.setState({ matchedEntries: entriesValue });
   }
