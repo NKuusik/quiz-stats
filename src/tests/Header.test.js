@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Header from '../components/Header';
 
+
 // Todo: testi evente Enzyme'iga
 it('default renders correctly', () => {
  const tree = renderer
