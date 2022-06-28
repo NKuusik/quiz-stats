@@ -1,4 +1,3 @@
-import { Season } from '../classes/Season';
 import { Team } from '../classes/Team';
 
 const papaparse = require('papaparse');

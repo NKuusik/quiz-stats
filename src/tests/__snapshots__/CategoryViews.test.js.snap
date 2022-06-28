@@ -1,16 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly with Seasons 1`] = `
-<div>
-  <h1>
-    Choose which team/season you want to check.
-  </h1>
-  <div>
+<div
+  id="menu-bar-container"
+>
+  <div
+    className="header-vertical-alignment"
+    id="search-field"
+  >
     <form>
       <input
         onChange={[Function]}
+        onKeyDown={[Function]}
         onKeyUp={[Function]}
-        placeholder="Search..."
+        placeholder="Search undefined"
         type="text"
         value=""
       />
@@ -24,23 +27,26 @@ exports[`renders correctly with Seasons 1`] = `
       className="entry-selection"
       onClick={[Function]}
     >
-      SeasonNumber
+      Test Season
     </div>
   </div>
 </div>
 `;
 
 exports[`renders correctly with Teams 1`] = `
-<div>
-  <h1>
-    Choose which team/season you want to check.
-  </h1>
-  <div>
+<div
+  id="menu-bar-container"
+>
+  <div
+    className="header-vertical-alignment"
+    id="search-field"
+  >
     <form>
       <input
         onChange={[Function]}
+        onKeyDown={[Function]}
         onKeyUp={[Function]}
-        placeholder="Search..."
+        placeholder="Search undefined"
         type="text"
         value=""
       />

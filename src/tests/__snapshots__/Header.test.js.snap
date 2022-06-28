@@ -4,20 +4,25 @@ exports[`renders correctly 1`] = `
 <div
   className="header"
 >
+  <h1>
+    Stats for 
+  </h1>
   <ul>
     <li>
-      <h2
+      <button
+        id=""
         onClick={[Function]}
       >
         Check team
-      </h2>
+      </button>
     </li>
     <li>
-      <h2
+      <button
+        id=""
         onClick={[Function]}
       >
         Check season
-      </h2>
+      </button>
     </li>
   </ul>
 </div>

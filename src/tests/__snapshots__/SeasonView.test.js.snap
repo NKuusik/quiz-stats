@@ -2,7 +2,18 @@
 
 exports[`renders correctly 1`] = `
 <div>
-  <./src/tests/mocks/MockChart.js />
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See game-by-game
+  </button>
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See incrementally
+  </button>
   <./src/tests/mocks/MockChart.js />
 </div>
 `;

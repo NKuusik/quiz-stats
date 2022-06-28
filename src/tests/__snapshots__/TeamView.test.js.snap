@@ -8,7 +8,18 @@ exports[`renders correctly 1`] = `
     Stats for team 
     Fake team
   </h1>
-  <./src/tests/mocks/MockChart.js />
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See points per season
+  </button>
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See points across seasons
+  </button>
   <./src/tests/mocks/MockChart.js />
 </div>
 `;

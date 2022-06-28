@@ -11,8 +11,9 @@ type MyProps = {
 const TeamView = ({ team, seasonNames }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
-  function generateLabelsSeason (seasonsAsObject) {
-    let longestSeason = [];
+  function generateLabelsSeason (seasonsAsObject) { 
+    console.log(seasonsAsObject);
+    let longestSeason = []; //Todo: siin midagi paremat longestSeasoniga
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) {
         longestSeason = seasonsAsObject[seasonKey];
@@ -32,7 +33,6 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
       labels.push(labelName);
     }
     labels.sort();
-    console.log(labels);
     return labels;
   }
 
