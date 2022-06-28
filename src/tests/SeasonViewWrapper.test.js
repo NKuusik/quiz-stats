@@ -1,8 +1,14 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SeasonViewWrapper from '../components/SeasonViewWrapper';
 import { Team } from '../classes/Team';
 import { Season } from '../classes/Season';
+import {screen} from '@testing-library/dom';
+import {render, fireEvent} from '@testing-library/react';
 
 // Todo: Test state change with Enzyme
 
@@ -26,3 +32,12 @@ it('default renders correctly', () => {
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
+
+/*
+test("Active season is changed in menu bar", () => {
+  const element = render(<SeasonViewWrapper seasons={testSeasons} teams={testTeams}/>);
+  const entriesInMenuBar = element.container.querySelector('.entry-selection');
+  fireEvent.click(entriesInMenuBar);
+  // Siit edasi kui Seasoni komponenti muuta veits vt TeamViewWrapperi testi.
+});     
+**/

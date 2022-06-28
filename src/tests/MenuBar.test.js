@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import MenuBar from '../components/MenuBar';
-import {cleanup, fireEvent, render} from '@testing-library/react';
 
 const category = {};
 const choice = () => {};

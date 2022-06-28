@@ -14,7 +14,7 @@ exports[`default renders correctly 1`] = `
   >
     See incrementally
   </button>
-  <./src/tests/mocks/MockChart.js />
+  &lt;MockChart /&gt;
 </div>
 `;
 
@@ -32,6 +32,6 @@ exports[`only 3 teams are shown 1`] = `
   >
     See incrementally
   </button>
-  <./src/tests/mocks/MockChart.js />
+  &lt;MockChart /&gt;
 </div>
 `;

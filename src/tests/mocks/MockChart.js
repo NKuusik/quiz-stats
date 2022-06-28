@@ -14,4 +14,4 @@ class MockChart extends React.Component {
     }
   }
   
-  export default MockChart;
+export default MockChart;
