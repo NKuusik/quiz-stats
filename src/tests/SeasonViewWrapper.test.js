@@ -4,8 +4,10 @@ import SeasonViewWrapper from '../components/SeasonViewWrapper';
 import { Team } from '../classes/Team';
 import { Season } from '../classes/Season';
 
+// Todo: Test state change with Enzyme
+
 const testTeam = new Team(1, "Fake team", [1, 2], 3);
-testTeam.seasons["SeasonNumber"] = [3, 4]
+testTeam.seasons["Test Season"] = [3, 4]
 
 let testTeams = {
   "Fake team": testTeam
@@ -17,7 +19,7 @@ const testSeasons = {
     "Test Season": testSeason
 }
 
-it('renders correctly', () => {
+it('default renders correctly', () => {
 
     const tree = renderer
          .create(<SeasonViewWrapper seasons={testSeasons} teams={testTeams}/>)

@@ -34,13 +34,10 @@ let secondTestTeams = {
   "Fourth team": fourthTeam
 }
 
-
-
 testTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 secondTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 thirdTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 fourthTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
-
 
 const secondSeason = new Season("Second Season", {secondSeason}, 5, ["Fake team", "Second team", "Third team", "Fourth team"]);
 
