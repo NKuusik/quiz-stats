@@ -13,7 +13,7 @@ exports[`default renders correctly 1`] = `
         onChange={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
-        placeholder="Search season"
+        placeholder="Search "
         type="text"
         value=""
       />
@@ -26,7 +26,7 @@ exports[`default renders correctly 1`] = `
 </div>
 `;
 
-exports[`renders correctly 1`] = `
+exports[`season renders correctly 1`] = `
 <div
   id="menu-bar-container"
 >
@@ -40,6 +40,32 @@ exports[`renders correctly 1`] = `
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         placeholder="Search season"
+        type="text"
+        value=""
+      />
+    </form>
+  </div>
+  <div
+    id="menu-bar-selection"
+    onMouseDown={[Function]}
+  />
+</div>
+`;
+
+exports[`team renders correctly 1`] = `
+<div
+  id="menu-bar-container"
+>
+  <div
+    className="header-vertical-alignment"
+    id="search-field"
+  >
+    <form>
+      <input
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        placeholder="Search team"
         type="text"
         value=""
       />

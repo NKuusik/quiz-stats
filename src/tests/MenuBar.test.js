@@ -4,12 +4,28 @@ import MenuBar from '../components/MenuBar';
 
 const category = {};
 const choice = () => {};
-const viewType = "season";
+const viewTypeSeason = "season";
+const viewTypeTeam = "team";
 
+// Todo: test state change with Enzyme
 
 it('default renders correctly', () => {
     const tree = renderer
-         .create(<MenuBar viewType={viewType} category={category} choice={choice}/>)
+         .create(<MenuBar viewType="" category={category} choice={choice}/>)
+         .toJSON();
+       expect(tree).toMatchSnapshot(); 
+     });
+
+it('season renders correctly', () => {
+    const tree = renderer
+         .create(<MenuBar viewType={viewTypeSeason} category={category} choice={choice}/>)
+         .toJSON();
+       expect(tree).toMatchSnapshot(); 
+     });
+
+it('team renders correctly', () => {
+    const tree = renderer
+         .create(<MenuBar viewType={viewTypeTeam} category={category} choice={choice}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
      });

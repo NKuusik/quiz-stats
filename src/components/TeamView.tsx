@@ -12,7 +12,6 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
   function generateLabelsSeason (seasonsAsObject) { 
-    console.log(seasonsAsObject);
     let longestSeason = []; //Todo: siin midagi paremat longestSeasoniga
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) {

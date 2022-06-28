@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`default renders correctly 1`] = `
+<div>
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See game-by-game
+  </button>
+  <button
+    className="button-chart-type"
+    onClick={[Function]}
+  >
+    See incrementally
+  </button>
+  <./src/tests/mocks/MockChart.js />
+</div>
+`;
+
+exports[`only 3 teams are shown 1`] = `
 <div>
   <button
     className="button-chart-type"
