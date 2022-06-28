@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { act } from 'react-test-renderer';
 import styles from '../style.css';
 
 type MyProps = {
