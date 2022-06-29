@@ -7,8 +7,6 @@ type MyProps = {
     viewType: string;
 }
 
-//Todo: menu bar vaartuste j'rjekord muutub pärast kirjutamist
-
 const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) => {
   const [searchFieldValue, setSearchFieldValue] = useState('');
 

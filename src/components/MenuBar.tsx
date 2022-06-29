@@ -24,7 +24,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
   }
 
   filterEntries(entriesValue) {
-    this.setState({ matchedEntries: entriesValue });
+    this.setState({ matchedEntries: entriesValue.sort() });
   }
 
   handleMouseDown(event) {
