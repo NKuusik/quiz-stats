@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import App  from '../App';
-import { Team }  from '../classes/Team';
-import { Season } from '../classes/Season';
+
+// Just a placeholder for now.
 
 it('default renders correctly', () => {
     const tree = renderer
