@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 import { Team } from '../classes/Team';
+import { ChartDataSet } from '../classes/ChartDataSet';
 
 type MyProps = {
   team: Team;
-  seasonNames: Array<string>
+  seasonNames: string[]
 }
 
 const TeamView = ({ team, seasonNames }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
-  function generateLabelsSeason (seasonsAsObject) { 
-    let longestSeason = []; //Todo: siin midagi paremat longestSeasoniga
+
+  function generateLabelsSeason(seasonsAsObject: Object): string[] { 
+    let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (seasonsAsObject[seasonKey].length > longestSeason.length) {
+      if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -25,67 +27,53 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
     return labels;
   }
 
-  function generateLabelsCumulative() {
+  function generateLabelsCumulative(): string[] {
     const labels : string[] = [];
     for (const season of seasonNames) {
-      const labelName = season;
-      labels.push(labelName);
+      labels.push(season);
     }
     labels.sort();
     return labels;
   }
 
-  function generateDataSetsSeason() {
-    const arrayWithSeasonPoints : Array<Object> = []; // Eraldi Type?
+  function generateDataSetsSeason(): ChartDataSet[] {
+    const arrayWithSeasonPoints : ChartDataSet[] = [];
     let count : number = 0;
-    let defaultHide : boolean = false;
+    let isHidden : boolean = false;
     for (const season of Object.keys(team.seasons)) {
       count++;
       if (count > defaultDataSetsShown) {
-        defaultHide = true;
+        isHidden = true;
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-      const singleDataSet : Object = {
-        hidden: defaultHide,
-        label: `# of points in ${season}`,
-        data: team.seasons[season],
-        backgroundColor: dataColor,
-        borderColor: dataColor,
-        borderWidth: 1.5,
-        tension: 0.5
-      };
-      arrayWithSeasonPoints.push(singleDataSet);
+      const label = `# of points in ${season}`;
+      const chartDataSet = new ChartDataSet(isHidden, label, team.seasons[season], dataColor, dataColor, 1.5, 0.5);
+      arrayWithSeasonPoints.push(chartDataSet);
     }
     return arrayWithSeasonPoints;
   }
 
-  function generateTotalPointsArray(labels) {
-    const totalPointsAllSeasons : Array<number> = [];
+  function generateTotalPointsArray(labels: string[]): number[] {
+    const totalPointsAllSeasons : number[] = [];
     for (const seasonName of labels) {
-      let sum = 0;
+      let sum: number = 0;
       if (team.seasons[seasonName] !== undefined) {
         const pointsAsNumbers = team.seasons[seasonName].map(Number);
-        sum = pointsAsNumbers.reduce((a, b) => a + b, 0);
+        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0);
       }
       totalPointsAllSeasons.push(sum);
     }
     return totalPointsAllSeasons;
   }
 
-  const cumulativeLabels = generateLabelsCumulative();
-  const totalPoints = generateTotalPointsArray(cumulativeLabels);
+  const cumulativeLabels: string[] = generateLabelsCumulative();
+  const totalPoints: number[] = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive() { // Todo: convert to TS. // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
+  function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: convert to TS. // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
     let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-    const singleDataSet = {
-      label: `Cumulative points for ${team.name}.`,
-      data: totalPoints,
-      backgroundColor: dataColor,
-      borderColor: dataColor,
-      borderWidth: 1.5,
-      tension: 0.5
-    };
-    return [singleDataSet];
+    let label = `Cumulative points for ${team.name}.`;
+    const chartDataSet = new ChartDataSet(false, label, totalPoints, dataColor, dataColor, 1.5, 0.5);
+    return [chartDataSet];
   }
 
   return (
