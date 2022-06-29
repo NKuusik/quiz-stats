@@ -23,7 +23,6 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
   }
 
   function findMatchingNames (searchInput: string, names: string[]) {
-    console.log(searchInput);
     const foundMatches : string[] = [];
     for (const entry of names) {
       let entryLowerCase = entry.toLowerCase();

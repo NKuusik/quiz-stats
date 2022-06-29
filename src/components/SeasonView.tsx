@@ -81,7 +81,7 @@ const SeasonView = ({ teams, season }: MyProps) => {
   generateDataSetsWithIncrementalPoints();
   return (
         <div>
-
+            <h1>Stats for {season.name}</h1>
             <button className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See game-by-game
             </button>

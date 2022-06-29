@@ -13,8 +13,6 @@ const choice = () => {};
 const viewTypeSeason = "season";
 const viewTypeTeam = "team";
 
-// Todo: test state change with Enzyme
-
 it('default renders correctly', () => {
     const tree = renderer
          .create(<MenuBar viewType="" category={category} choice={choice}/>)
@@ -64,5 +62,52 @@ test('entries are shown', () => {
 });
 
 test('entries correspond to value on SearchField input', () => {
+  const firstTeam = new Team(1, "Fake team", [1, 2], 3);
+  firstTeam.seasons["SeasonNumber"] = [3, 4]
 
+  const secondTeam = new Team(1, "secondTeam", [1, 2], 3);
+  firstTeam.seasons["SeasonNumber"] = [3, 4]
+  secondTeam.seasons["SeasonNumber"] = [3, 4]
+  
+  let testTeams = {
+    "Fake team": firstTeam,
+    "secondTeam": secondTeam
+  };
+  const menuBar = render((<MenuBar viewType="team" category={testTeams} choice={choice}/>));
+  const entriesAsDOM = menuBar.container.getElementsByClassName('entry-selection');
+  expect(entriesAsDOM.length).toBe(2);
+  expect(entriesAsDOM[0].textContent).toBe('Fake team');
+  expect(entriesAsDOM[1].textContent).toBe('secondTeam');
+  const searchField = menuBar.container.querySelector('input');
+  // No result
+  fireEvent.change(searchField, {target: {value: 'boo'}});
+  fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  expect(entriesAsDOM.length).toBe(0);
+
+  //One result
+  fireEvent.change(searchField, {target: {value: 'Fake'}});
+  fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  expect(entriesAsDOM.length).toBe(1);
+
+  //Two results, case insensitive
+  fireEvent.change(searchField, {target: {value: 'team'}});
+  fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  expect(entriesAsDOM.length).toBe(2);
+
+  //Two results, whitespaces and tab
+  fireEvent.change(searchField, {target: {value: '  team  '}});
+  fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  expect(entriesAsDOM.length).toBe(2);
 });
+
+/* Todo: Uuri, kuidas kontrollida, kas form submission toimus või mitte
+
+test('Default submission with Enter is disabled for SearchField input', () => {
+  const menuBar = render((<MenuBar viewType="" category={category} choice={choice}/>));
+  const searchField = menuBar.container.querySelector('input');
+  expect(searchField.value).toBe('');
+  fireEvent.change(searchField, {target: {value: 'gad'}});
+  fireEvent.keyDown(searchField, {key: 'Enter', code: 'Enter', charCode: 13})
+  expect(menuBar.handleMouseUp).toHaveBeenCalled();
+});
+**/

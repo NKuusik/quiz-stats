@@ -33,11 +33,10 @@ it('default renders correctly', () => {
        expect(tree).toMatchSnapshot(); 
     });
 
-/*
+
 test("Active season is changed in menu bar", () => {
   const element = render(<SeasonViewWrapper seasons={testSeasons} teams={testTeams}/>);
   const entriesInMenuBar = element.container.querySelector('.entry-selection');
   fireEvent.click(entriesInMenuBar);
-  // Siit edasi kui Seasoni komponenti muuta veits vt TeamViewWrapperi testi.
+  expect(element.getByRole('heading')).toHaveTextContent('Stats for Test Season');
 });     
-**/
