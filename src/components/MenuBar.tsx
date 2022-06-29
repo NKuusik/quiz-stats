@@ -1,4 +1,4 @@
-import React, { Ref } from 'react';
+import React from 'react';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -15,7 +15,7 @@ type MyState = {
 
 class MenuBar extends React.Component<MyProps, MyState> {
   private menuBarRef = React.createRef<HTMLDivElement>();
-  constructor (props) {
+  constructor (props: MyProps) {
     super(props);
     this.state = {
       allEntries: Object.keys(this.props.category),
@@ -23,14 +23,14 @@ class MenuBar extends React.Component<MyProps, MyState> {
     };
   }
 
-  filterEntries(entriesValue) {
+  filterEntries(entriesValue: string[]) {
     this.setState({ matchedEntries: entriesValue.sort() });
   }
 
-  handleMouseDown(event) {
+  handleMouseDown(event: MouseEvent) {
     const startCoordinateY = event.clientY;
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: MouseEvent) => {
       const distanceMoved = startCoordinateY - event.clientY;
       this.menuBarRef.current!.scrollTop = startCoordinateY + distanceMoved;
     };
