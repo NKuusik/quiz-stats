@@ -9,6 +9,7 @@ class MockChart extends React.Component {
       return (
         <div>
           <p>I am a mock chart.</p>
+          <canvas width="400" height="150"></canvas>
         </div>
       );
     }
