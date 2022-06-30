@@ -23,7 +23,7 @@ function SeasonViewWrapper ({ teams, seasons } : MyProps) {
   }
   let seasonView;
   if (activeSeason != defaultState) {
-    seasonView = <SeasonView season={activeSeason} teams={teams} />;
+    seasonView = <SeasonView season={activeSeason} />;
   }
 
   return (

@@ -7,11 +7,10 @@ import { ChartDataSet } from '../classes/ChartDataSet';
 
 //Todo: liiga palju korduvat koodi: äkki parem üks generic View komponent?
 type MyProps = {
-  teams : {[teamName: string]: Team};
   season : Season;
 }
 
-const SeasonView = ({ teams, season }: MyProps) => {
+const SeasonView = ({ season }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
 
@@ -23,7 +22,6 @@ const SeasonView = ({ teams, season }: MyProps) => {
     return labels;
   }
 
-  // Propsist saab lahti kui season.teams[teamName].seasons[season.name], aga Teams.season praegu katki. 
   function generateDataSetsWithRunningPoints(): ChartDataSet[] {
     const dataSetsWithRunningPoints : ChartDataSet[] = [];
     let count : number = 0;
@@ -37,9 +35,8 @@ const SeasonView = ({ teams, season }: MyProps) => {
       console.log(`Season prop for ${teamName}:`);
       console.log(season.teams[teamName].seasons[season.name]);
       console.log(`Team prop for ${teamName}:`);
-      console.log(teams[`${teamName}`].seasons[season.name]);
       const label = `${teamName}`
-      const chartDataSet = new ChartDataSet(isHidden, label, teams[`${teamName}`].seasons[season.name], dataColor, dataColor, 1.5, 0.5);
+      const chartDataSet = new ChartDataSet(isHidden, label, season.teams[teamName].seasons[season.name], dataColor, dataColor, 1.5, 0.5);
       dataSetsWithRunningPoints.push(chartDataSet);
     }
     return dataSetsWithRunningPoints;
@@ -56,11 +53,11 @@ const SeasonView = ({ teams, season }: MyProps) => {
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
-      for (let i = 0; i < teams[`${teamName}`].seasons[season.name].length; i++) {
+      for (let i = 0; i < season.teams[teamName].seasons[season.name].length; i++) {
         if (i === 0) {
-          incrementalPoints.push(parseInt(teams[`${teamName}`].seasons[season.name][i]));
+          incrementalPoints.push(parseInt(season.teams[teamName].seasons[season.name][i])); // m22ra muutuja season.teams[teamName].seasons[season.name]-le, on parem aru saada
         } else {
-          const incrementedValue = parseInt(teams[`${teamName}`].seasons[season.name][i]) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(season.teams[teamName].seasons[season.name][i]) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
