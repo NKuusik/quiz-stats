@@ -34,9 +34,9 @@ const SeasonView = ({ teams, season }: MyProps) => {
         isHidden = true;
       }
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-      console.log('Season prop:');
+      console.log(`Season prop for ${teamName}:`);
       console.log(season.teams[teamName].seasons[season.name]);
-      console.log('Team prop:');
+      console.log(`Team prop for ${teamName}:`);
       console.log(teams[`${teamName}`].seasons[season.name]);
       const label = `${teamName}`
       const chartDataSet = new ChartDataSet(isHidden, label, teams[`${teamName}`].seasons[season.name], dataColor, dataColor, 1.5, 0.5);

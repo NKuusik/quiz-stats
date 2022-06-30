@@ -46,8 +46,8 @@ class App extends React.Component<{}, MyState> {
             const allTeams = { ...this.state.teams };
             const teamData = getTeamResults(parsedData.data[i]);
             seasonsData[currentSeasonName]['teams'].push(teamData.name);
+            teamData.seasons[currentSeasonName] = teamData.latestSeasonScores;
             if (!(teamData.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
-              teamData.seasons[currentSeasonName] = teamData.latestSeasonScores;
               allTeams[teamData.name] = teamData;
             } else {
               allTeams[teamData.name].seasons[currentSeasonName] = teamData.latestSeasonScores;
