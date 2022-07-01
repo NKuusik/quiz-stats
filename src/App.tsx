@@ -24,6 +24,15 @@ class App extends React.Component<{}, MyState> {
     };
   }
 
+  addTeam(previousTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string) {
+    if (!(currentTeam.name in previousTeams)) { 
+      previousTeams[currentTeam.name] = currentTeam;
+    } else {
+      previousTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
+    }
+    return previousTeams;
+  }
+
   componentDidMount () {
     const parsedSeasons: {[seasonName: string]: Season} = {};
     let seasonNames : string[] = [];
@@ -38,14 +47,9 @@ class App extends React.Component<{}, MyState> {
           let currentSeasonLength: number = 0;
           let currentSeasonTeams: {[teamName: string]: Team} = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const allTeams: {[teamName: string]: Team} = { ...this.state.teams };
             const team: Team = getTeamResults(parsedData.data[i]);
+            const allTeams = this.addTeam({ ...this.state.teams }, team, currentSeasonName);
             team.seasons[currentSeasonName] = team.latestSeasonScores;
-            if (!(team.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
-              allTeams[team.name] = team;
-            } else {
-              allTeams[team.name].seasons[currentSeasonName] = team.latestSeasonScores;
-            }
             currentSeasonLength = team.latestSeasonScores.length - 1; //Vajab testi
             currentSeasonTeams[team.name] = team;
             currentSeasonRanking[team.place - 1] = team.name; // Testi
