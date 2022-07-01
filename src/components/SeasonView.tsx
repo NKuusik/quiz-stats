@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
-import { Team } from '../classes/Team';
 import { Season } from '../classes/Season';
 import styles from '../style.css';
 import { ChartDataSet } from '../classes/ChartDataSet';
@@ -14,7 +13,7 @@ const SeasonView = ({ season }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
 
-  function calculateLabels(): string[] {
+  function generateLabels(): string[] {
     const labels : string[] = [];
     for (let i = 1; i < season.total_games; i++) {
       labels.push(`Game #${i}`);
@@ -22,42 +21,44 @@ const SeasonView = ({ season }: MyProps) => {
     return labels;
   }
 
+  function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
+    if (currentCount > defaultDataSetsShown) {
+      return true;
+    }
+    return false;
+  }
+
   function generateDataSetsWithRunningPoints(): ChartDataSet[] {
     const dataSetsWithRunningPoints : ChartDataSet[] = [];
-    let count : number = 0;
+    let dataSetCount : number = 0;
     let isHidden : boolean = false;
     for (const teamName of season.ranking) {
-      count++;
-      if (count > defaultDataSetsShown) {
-        isHidden = true;
-      }
+      dataSetCount++;
+      isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-      console.log(`Season prop for ${teamName}:`);
-      console.log(season.teams[teamName].seasons[season.name]);
-      console.log(`Team prop for ${teamName}:`);
+      const teamPoints = season.teams[teamName].seasons[season.name];
       const label = `${teamName}`
-      const chartDataSet = new ChartDataSet(isHidden, label, season.teams[teamName].seasons[season.name], dataColor, dataColor, 1.5, 0.5);
+      const chartDataSet = new ChartDataSet(isHidden, label, teamPoints, dataColor, dataColor, 1.5, 0.5);
       dataSetsWithRunningPoints.push(chartDataSet);
     }
     return dataSetsWithRunningPoints;
   }
 
   function generateDataSetsWithIncrementalPoints(): ChartDataSet[] {
-    let count : number = 0;
+    let dataSetCount : number = 0;
     let isHidden : boolean = false;
     const dataSets : ChartDataSet[] = [];
     for (const teamName of season.ranking) {
-      count++;
-      if (count > defaultDataSetsShown) {
-        isHidden = true;
-      }
+      dataSetCount++;
+      isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
       for (let i = 0; i < season.teams[teamName].seasons[season.name].length; i++) {
+        const teamPoints = season.teams[teamName].seasons[season.name];
         if (i === 0) {
-          incrementalPoints.push(parseInt(season.teams[teamName].seasons[season.name][i])); // m22ra muutuja season.teams[teamName].seasons[season.name]-le, on parem aru saada
+          incrementalPoints.push(parseInt(teamPoints[i]));
         } else {
-          const incrementedValue = parseInt(season.teams[teamName].seasons[season.name][i]) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(teamPoints) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
@@ -78,12 +79,11 @@ const SeasonView = ({ season }: MyProps) => {
               See incrementally
             </button>
 
-
             {
             !cumulativeView 
-            ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={calculateLabels()} maxValue={10}/>
+            ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabels()} maxValue={10}/>
 
-            : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={calculateLabels()} maxValue={300}/>
+            : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={350}/>
 
             }  
             {
