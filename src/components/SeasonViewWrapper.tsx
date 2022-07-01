@@ -6,15 +6,14 @@ import { Team }  from '../classes/Team';
 import { Season } from '../classes/Season';
 
 type MyProps = {
-  teams : {[teamName: string]: Team};
   seasons : {[seasonName: string]: Season};
 }
 
-function SeasonViewWrapper ({ teams, seasons } : MyProps) {
+function SeasonViewWrapper ({ seasons } : MyProps) {
   const defaultState = new Season("", "", 0, []) // Motle, kas on parem variant. = muuda vajadusel klasside struktuure
   const [activeSeason, setActiveSeason] = useState(defaultState);
 
-  function chooseSeason(chosenSeason) {  // tyybid puudu
+  function chooseSeason(chosenSeason: Season) {
     if (activeSeason === chosenSeason) {
       setActiveSeason(defaultState);
     } else {
