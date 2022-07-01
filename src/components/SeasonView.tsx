@@ -20,6 +20,24 @@ const SeasonView = ({ season }: MyProps) => {
     return false;
   }
 
+  function calculateIncrementalPoints(teamName: string, isHidden: boolean): ChartDataSet {
+    let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
+    const incrementalPoints : number[] = [];
+    const teamPoints: string[] = season.teams[teamName].seasons[season.name];
+    for (let i = 0; i < teamPoints.length; i++) {
+      if (i === 0) {
+        incrementalPoints.push(parseInt(teamPoints[i]));
+      } else {
+        const incrementedValue = parseInt(teamPoints[i]) + incrementalPoints[i - 1];
+        incrementalPoints.push(incrementedValue);
+      }
+    }
+    const label = `${teamName}`;
+    const chartDataSet = new ChartDataSet(isHidden, label, incrementalPoints, dataColor, dataColor, 1.5, 0.5);
+    return chartDataSet;
+
+  }
+
   function generateLabels(): string[] {
     const labels : string[] = [];
     for (let i = 1; i < season.total_games; i++) {
@@ -51,19 +69,7 @@ const SeasonView = ({ season }: MyProps) => {
     for (const teamName of season.ranking) {
       dataSetCount++;
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
-      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
-      const incrementalPoints : number[] = [];
-      const teamPoints: string[] = season.teams[teamName].seasons[season.name];
-      for (let i = 0; i < teamPoints.length; i++) {
-        if (i === 0) {
-          incrementalPoints.push(parseInt(teamPoints[i]));
-        } else {
-          const incrementedValue = parseInt(teamPoints[i]) + incrementalPoints[i - 1];
-          incrementalPoints.push(incrementedValue);
-        }
-      }
-      const label = `${teamName}`;
-      const chartDataSet = new ChartDataSet(isHidden, label, incrementalPoints, dataColor, dataColor, 1.5, 0.5);
+      const chartDataSet = calculateIncrementalPoints(teamName, isHidden);
       dataSets.push(chartDataSet);
     }
     return dataSets;
