@@ -1,5 +1,5 @@
 import React from 'react';
-import * as seasons from './resources/seasons';
+import * as rawData from './resources/seasons';
 import axios from 'axios';
 import { parseData, getTeamResults } from './scripts/readData';
 import { Team } from './classes/Team';
@@ -15,7 +15,7 @@ type MyState = {
 }
 
 class App extends React.Component<{}, MyState> {
-  constructor (props) {
+  constructor (props: Object) {
     super(props);
     this.state = {
       teams: {},
@@ -25,44 +25,38 @@ class App extends React.Component<{}, MyState> {
   }
 
   componentDidMount () {
-    const seasonsData = {};
-    let seasonNames : Array<string> = [];
-    for (const season of Object.values(seasons)) {
+    const parsedSeasons: {[seasonName: string]: Season} = {};
+    let seasonNames : string[] = [];
+    for (const season of Object.values(rawData)) {
       axios.get(season)
-        .then(res => {
+        .then((res: { data: string; }) => {
           return parseData(res.data);
         })
-        .then(parsedData => {
-
-          let currentSeasonRanking: string[];
-          currentSeasonRanking = [];
-          const currentSeasonName = `season ${parsedData.data[0]}`;
-          let currentSeasonLength;
-          seasonsData[currentSeasonName] = {};
-          seasonsData[currentSeasonName]['name'] = currentSeasonName;
-          seasonsData[currentSeasonName]['teams'] = [];
-          let currentSeasonTeams = {};
+        .then((parsedData: { data: any[]; }) => {
+          let currentSeasonRanking: string[] = [];
+          const currentSeasonName : string = `season ${parsedData.data[0]}`;
+          let currentSeasonLength: number = 0;
+          let currentSeasonTeams: {[teamName: string]: Team} = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const allTeams = { ...this.state.teams };
-            const teamData = getTeamResults(parsedData.data[i]);
-            seasonsData[currentSeasonName]['teams'].push(teamData.name);
-            teamData.seasons[currentSeasonName] = teamData.latestSeasonScores;
-            if (!(teamData.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
-              allTeams[teamData.name] = teamData;
+            const allTeams: {[teamName: string]: Team} = { ...this.state.teams };
+            const team: Team = getTeamResults(parsedData.data[i]);
+            team.seasons[currentSeasonName] = team.latestSeasonScores;
+            if (!(team.name in allTeams)) { // Äkki see eraldi meetod: paneb õiged punktid õigesse hooaega.
+              allTeams[team.name] = team;
             } else {
-              allTeams[teamData.name].seasons[currentSeasonName] = teamData.latestSeasonScores;
+              allTeams[team.name].seasons[currentSeasonName] = team.latestSeasonScores;
             }
-            currentSeasonLength = teamData.latestSeasonScores.length - 1; //Vajab testi
-            currentSeasonTeams[teamData.name] = teamData;
-            currentSeasonRanking[teamData.place - 1] = teamData.name; // Testi
+            currentSeasonLength = team.latestSeasonScores.length - 1; //Vajab testi
+            currentSeasonTeams[team.name] = team;
+            currentSeasonRanking[team.place - 1] = team.name; // Testi
             this.setState({ teams: allTeams });
           }
           let season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
-          seasonsData[currentSeasonName] = season;
+          parsedSeasons[currentSeasonName] = season;
           seasonNames.push(currentSeasonName);
         });
     }
-    this.setState({seasons: seasonsData});
+    this.setState({seasons: parsedSeasons});
   }
 
   chooseView (chosenView : string) {
