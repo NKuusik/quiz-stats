@@ -13,19 +13,19 @@ const SeasonView = ({ season }: MyProps) => {
   const defaultDataSetsShown : number = 3
   const [cumulativeView, setCumulativeView] = useState(false);
 
+  function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
+    if (currentCount > defaultDataSetsShown) {
+      return true;
+    }
+    return false;
+  }
+
   function generateLabels(): string[] {
     const labels : string[] = [];
     for (let i = 1; i < season.total_games; i++) {
       labels.push(`Game #${i}`);
     }
     return labels;
-  }
-
-  function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
-    if (currentCount > defaultDataSetsShown) {
-      return true;
-    }
-    return false;
   }
 
   function generateDataSetsWithRunningPoints(): ChartDataSet[] {
@@ -36,7 +36,7 @@ const SeasonView = ({ season }: MyProps) => {
       dataSetCount++;
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-      const teamPoints = season.teams[teamName].seasons[season.name];
+      const teamPoints: number[] = season.teams[teamName].seasons[season.name];
       const label = `${teamName}`
       const chartDataSet = new ChartDataSet(isHidden, label, teamPoints, dataColor, dataColor, 1.5, 0.5);
       dataSetsWithRunningPoints.push(chartDataSet);
@@ -53,7 +53,7 @@ const SeasonView = ({ season }: MyProps) => {
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
-      const teamPoints = season.teams[teamName].seasons[season.name];
+      const teamPoints: string[] = season.teams[teamName].seasons[season.name];
       for (let i = 0; i < teamPoints.length; i++) {
         if (i === 0) {
           incrementalPoints.push(parseInt(teamPoints[i]));
