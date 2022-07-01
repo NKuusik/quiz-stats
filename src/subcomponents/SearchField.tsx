@@ -20,7 +20,7 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
     }
   }
 
-  function findMatchingNames (searchInput: string, names: string[]) {
+  function findMatchingNames (searchInput: string, names: string[]): string[] {
     const foundMatches : string[] = [];
     for (const entry of names) {
       let entryLowerCase = entry.toLowerCase();
@@ -31,7 +31,7 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
     return foundMatches;
   }
 
-  function search () {
+  function search(): void {
     let matchedEntries = menuBarEntries;
     let trimmedInput = searchFieldValue.trim();
     if (trimmedInput.length > 0) {
