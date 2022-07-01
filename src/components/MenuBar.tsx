@@ -1,9 +1,11 @@
 import React from 'react';
+import { Season } from '../classes/Season';
+import { Team } from '../classes/Team';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
-  category : Object; // Objekti struktuur erineb sõltuvalt kas Team või Season vaade.
+  category : {[seasonName: string]: Season} | {[teamName: string]: Team};
   choice : Function;
   viewType : string;
 }
@@ -23,11 +25,11 @@ class MenuBar extends React.Component<MyProps, MyState> {
     };
   }
 
-  filterEntries(entriesValue: string[]) {
+  filterEntries(entriesValue: string[]): void {
     this.setState({ matchedEntries: entriesValue.sort() });
   }
 
-  handleMouseDown(event: MouseEvent) {
+  handleMouseDown(event: MouseEvent): void {
     const startCoordinateY = event.clientY;
 
     const handleMouseMove = (event: MouseEvent) => {
