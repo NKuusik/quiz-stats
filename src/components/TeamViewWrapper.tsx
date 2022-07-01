@@ -14,14 +14,14 @@ type MyState = {
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {
-  constructor (props) {
+  constructor (props: MyProps) {
     super(props);
     this.state = {
       activeTeam: null
     };
   };
 
-  chooseTeam (chosenTeam : Team) {
+  chooseTeam(chosenTeam: Team) {
     if (this.state.activeTeam === chosenTeam) {
       this.setState({
         activeTeam: null
