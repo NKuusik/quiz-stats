@@ -53,12 +53,12 @@ const SeasonView = ({ season }: MyProps) => {
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
       const incrementalPoints : number[] = [];
-      for (let i = 0; i < season.teams[teamName].seasons[season.name].length; i++) {
-        const teamPoints = season.teams[teamName].seasons[season.name];
+      const teamPoints = season.teams[teamName].seasons[season.name];
+      for (let i = 0; i < teamPoints.length; i++) {
         if (i === 0) {
           incrementalPoints.push(parseInt(teamPoints[i]));
         } else {
-          const incrementedValue = parseInt(teamPoints) + incrementalPoints[i - 1];
+          const incrementedValue = parseInt(teamPoints[i]) + incrementalPoints[i - 1];
           incrementalPoints.push(incrementedValue);
         }
       }
