@@ -3,7 +3,7 @@ import {Team} from '../classes/Team';
 import * as rawData from '../resources/seasons';
 
 
-// No snapshot for App. 
+// No snapshot of App for now. 
 // Just test functionality of individual methods.
 
 
