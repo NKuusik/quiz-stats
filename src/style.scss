@@ -1,0 +1,119 @@
+/*TODO: Kuna kasutad CSS Modules teeki, muuda eraldi moodulite failideks*/
+
+body {
+    background-color: rgb(33, 35, 75);
+    font-size: 18px;
+    color: #DCDEE6;
+}
+
+button {
+    margin-bottom: 10px;
+    border-radius: 15%;
+    padding: 10px;
+}
+
+canvas {
+    background-color: #161833;
+}
+
+.view-wrapper > div {
+    float: left;
+}
+
+.category-selection {
+    width: 20%;
+}
+
+.chart-view {
+    width: 70%;
+    padding-left: 5%;
+}
+
+.view-wrapper {
+    background-color: yellow;
+}
+
+.entry-selection {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    visibility: visible;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color: #161833;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.entry-selection:hover {
+    background-color: #424696;
+}
+
+.header {
+    float: right;
+    width: 80%;
+}
+
+.header ul {
+    list-style-type: none;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    float: right;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.header button {
+    margin-left: 10px;
+    border-color: rgb(230, 46, 229);
+    background-color: transparent;
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+  }
+
+.header h1 {
+    display: inline-block;
+    padding-top: 25px;
+    padding-left: 10px;
+}
+
+
+.button-chart-type {
+    margin-right: 10px;
+    border: none;
+    color: white;
+    background-image: linear-gradient(#433A65, #302A62);
+}
+
+#menu-bar-container {
+    padding-top: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #060824;
+}
+
+#menu-bar-selection {
+    cursor: grab;
+    height: 90vh;
+    overflow: auto;
+}
+
+#search-field {
+    padding: 15px;
+}
+
+#search-field input {
+    width: 100%;
+    line-height: 200%;
+    background-color: rgb(33, 35, 75);
+    color: white;
+    border-radius: 10px;
+}
+
+#header-active {
+    background-color: rgb(230, 46, 229);
+}
+

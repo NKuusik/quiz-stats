@@ -34,9 +34,18 @@ module.exports = {
                             modules: true,
                             sourceMap: true
                         }
-                    }
+                    },
+
                 ]
             },
+            {    test: /\.scss$/,
+                use: [                    
+                    {
+                        loader: 'sass-loader'
+                    },
+                    ]
+        
+            },   
             {
                 test: /\.csv$/,
                 loader: 'file-loader',
