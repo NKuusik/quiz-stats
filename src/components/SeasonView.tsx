@@ -38,7 +38,7 @@ const SeasonView = ({ season }: MyProps) => {
 
   }
 
-  function generateLabels(): string[] {
+  function generateLabelsTeam(): string[] {
     const labels : string[] = [];
     for (let i = 1; i <= season.total_games; i++) {
       labels.push(`Game #${i}`);
@@ -87,9 +87,9 @@ const SeasonView = ({ season }: MyProps) => {
 
             {
             !cumulativeView 
-            ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabels()} maxValue={10}/>
+            ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabelsTeam()} maxValue={10}/>
 
-            : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={350}/>
+            : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabelsTeam()} maxValue={350}/>
 
             }  
             {

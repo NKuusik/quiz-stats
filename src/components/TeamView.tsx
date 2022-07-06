@@ -16,7 +16,7 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
   function generateLabelsSeason(seasonsAsObject: Object): string[] { 
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i
+      if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i -> vajaks uuesti Season propsi
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -69,9 +69,9 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
   const cumulativeLabels: string[] = generateLabelsCumulative();
   const totalPoints: number[] = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: convert to TS. // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
+  function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
     let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-    let label = `Cumulative points for ${team.name}.`;
+    let label: string = `Cumulative points for ${team.name}.`;
     const chartDataSet = new ChartDataSet(false, label, totalPoints, dataColor, dataColor, 1.5, 0.5);
     return [chartDataSet];
   }
