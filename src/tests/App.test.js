@@ -60,6 +60,18 @@ test('error is thrown for incorrect seasonLength', () => {
   seasonLength = app.setAndValidateSeasonLength(seasonLength, testTeam.latestSeasonScores);
   const secondTeam = new Team(1, "Second team", [2, 3, 4], 3);
   expect(() => 
-    {app.setAndValidateSeasonLength(seasonLength, 
-    secondTeam.latestSeasonScores)}).toThrow();
+    app.setAndValidateSeasonLength(seasonLength, 
+    secondTeam.latestSeasonScores)).toThrow();
+});
+
+test('No error is thrown for valid season ranking', () => {
+  const app = new App(rawData);
+  const testTeam = new Team(1, "Fake team", [1, 2], 3);
+  const secondTeam = new Team(2, "Second team", [2, 3], 3);
+  const seasonRanking = ["Fake team", "Second team"];
+  const teamsInSeason = {
+    "Fake team": testTeam,
+    "Second team": secondTeam
+  }
+  expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason)).not.toThrow();
 });
