@@ -17,12 +17,12 @@ let testTeams = {
 
 testTeam.seasons["Test Season"] = [1, 2, 4, 5, 6];
 
-const testSeason = new Season("Test Season", {testTeams}, 5, ["Fake team"]);
+const testSeason = new Season("Test Season", testTeams, 5, ["Fake team"]);
 
 it('default renders correctly', () => {
 
     const tree = renderer
-         .create(<SeasonView season={testSeason} teams={testTeams}/>)
+         .create(<SeasonView season={testSeason} />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
@@ -39,12 +39,12 @@ secondTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 thirdTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 fourthTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
 
-const secondSeason = new Season("Second Season", {secondSeason}, 5, ["Fake team", "Second team", "Third team", "Fourth team"]);
+const secondSeason = new Season("Second Season", secondTestTeams, 5, ["Fake team", "Second team", "Third team", "Fourth team"]);
 
 it('only 3 teams are shown', () => {
 
     const tree = renderer
-         .create(<SeasonView season={secondSeason} teams={secondTestTeams}/>)
+         .create(<SeasonView season={secondSeason} />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });

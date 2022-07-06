@@ -24,7 +24,7 @@ class App extends React.Component<{}, MyState> {
     };
   }
 
-  addTeam(previousTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string) {
+  updateTeamData(previousTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team}{
     if (!(currentTeam.name in previousTeams)) { 
       previousTeams[currentTeam.name] = currentTeam;
     } else {
@@ -43,12 +43,12 @@ class App extends React.Component<{}, MyState> {
         })
         .then((parsedData: { data: any[]; }) => {
           let currentSeasonRanking: string[] = [];
-          const currentSeasonName : string = `season ${parsedData.data[0]}`;
+          const currentSeasonName: string = `season ${parsedData.data[0]}`;
           let currentSeasonLength: number = 0;
           let currentSeasonTeams: {[teamName: string]: Team} = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const team: Team = getTeamResults(parsedData.data[i]);
-            const allTeams = this.addTeam({ ...this.state.teams }, team, currentSeasonName);
+            const allTeams = this.updateTeamData({ ...this.state.teams }, team, currentSeasonName);
             team.seasons[currentSeasonName] = team.latestSeasonScores;
             currentSeasonLength = team.latestSeasonScores.length - 1; //Vajab testi
             currentSeasonTeams[team.name] = team;
