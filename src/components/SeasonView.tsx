@@ -40,7 +40,7 @@ const SeasonView = ({ season }: MyProps) => {
 
   function generateLabels(): string[] {
     const labels : string[] = [];
-    for (let i = 1; i < season.total_games; i++) {
+    for (let i = 1; i <= season.total_games; i++) {
       labels.push(`Game #${i}`);
     }
     return labels;

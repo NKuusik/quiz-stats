@@ -28,13 +28,31 @@ class App extends React.Component<MyProps, MyState> {
     };
   }
 
-  updateTeamData(previousTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team}{
-    if (!(currentTeam.name in previousTeams)) { 
-      previousTeams[currentTeam.name] = currentTeam;
-    } else {
-      previousTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
+  updateTeamData(allTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team}{
+    if (!(currentTeam.name in allTeams)) { 
+      allTeams[currentTeam.name] = currentTeam;
     }
-    return previousTeams;
+    allTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
+    return allTeams;
+  }
+
+  setAndValidateSeasonLength(currentSeasonLength: number, 
+    latestSeasonScores: string[]): number {
+    if (currentSeasonLength === 0) {
+      currentSeasonLength = latestSeasonScores.length;
+    } else {
+      try {
+        if (currentSeasonLength !== latestSeasonScores.length) {
+          throw (`Invalid team data: 
+                season length has already 
+                been determined, 
+                but does not match with the provided length`);
+        }
+      } catch {
+
+      }
+    }
+    return currentSeasonLength;
   }
 
   componentDidMount () {
@@ -52,9 +70,9 @@ class App extends React.Component<MyProps, MyState> {
           let currentSeasonTeams: {[teamName: string]: Team} = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const team: Team = getTeamResults(parsedData.data[i]);
-            const allTeams = this.updateTeamData({ ...this.state.teams }, team, currentSeasonName);
             team.seasons[currentSeasonName] = team.latestSeasonScores;
-            currentSeasonLength = team.latestSeasonScores.length - 1; //Vajab testi
+            const allTeams = this.updateTeamData({ ...this.state.teams }, team, currentSeasonName);
+            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, team.latestSeasonScores);
             currentSeasonTeams[team.name] = team;
             currentSeasonRanking[team.place - 1] = team.name; // Testi
             this.setState({ teams: allTeams });
