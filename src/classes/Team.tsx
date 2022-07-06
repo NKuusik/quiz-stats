@@ -2,7 +2,7 @@ export class Team {
     place: number;
     name: string;
     latestSeasonScores: Array<string>;
-    seasons: Object;
+    seasons: {[seasonName: string]: any[]};
     totalScore: number
   
     constructor (place: number, name: string, latestSeasonScores: Array<string>, totalScore: number) {
