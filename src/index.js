@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as rawData from './resources/seasons';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App rawData={rawData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

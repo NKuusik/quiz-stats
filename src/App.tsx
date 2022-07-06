@@ -1,5 +1,4 @@
 import React from 'react';
-import * as rawData from './resources/seasons';
 import axios from 'axios';
 import { parseData, getTeamResults } from './scripts/readData';
 import { Team } from './classes/Team';
@@ -8,14 +7,19 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 
+
+type MyProps = {
+  rawData: any;
+}
+
 type MyState = {
   teams: {[teamName: string]: Team};
   seasons: {[seasonName: string]: Season};
   activeView: string;
 }
 
-class App extends React.Component<{}, MyState> {
-  constructor (props: Object) {
+class App extends React.Component<MyProps, MyState> {
+  constructor (props: MyProps) {
     super(props);
     this.state = {
       teams: {},
@@ -36,7 +40,7 @@ class App extends React.Component<{}, MyState> {
   componentDidMount () {
     const parsedSeasons: {[seasonName: string]: Season} = {};
     let seasonNames : string[] = [];
-    for (const season of Object.values(rawData)) {
+    for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
         .then((res: { data: string; }) => {
           return parseData(res.data);
