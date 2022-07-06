@@ -1,4 +1,3 @@
-/*TODO: Kuna kasutad CSS Modules teeki, muuda eraldi moodulite failideks*/
 body {
   background-color: #21234b;
   font-size: 18px;
@@ -12,6 +11,30 @@ button {
 canvas {
   background-color: #161833; }
 
+.header {
+  float: right;
+  width: 80%; }
+  .header ul {
+    list-style-type: none;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    float: right;
+    justify-content: flex-end;
+    padding-right: 20px; }
+  .header button {
+    margin-left: 10px;
+    border-color: #e62ee5;
+    background-color: transparent;
+    color: white;
+    border-style: solid;
+    border-width: 2px; }
+  .header h1 {
+    display: inline-block;
+    padding-top: 25px;
+    padding-left: 10px; }
+
 .view-wrapper > div {
   float: left; }
 
@@ -21,9 +44,6 @@ canvas {
 .chart-view {
   width: 70%;
   padding-left: 5%; }
-
-.view-wrapper {
-  background-color: yellow; }
 
 .entry-selection {
   margin-top: 5%;
@@ -35,36 +55,8 @@ canvas {
   border-radius: 10px;
   text-align: center;
   font-size: 20px; }
-
-.entry-selection:hover {
-  background-color: #424696; }
-
-.header {
-  float: right;
-  width: 80%; }
-
-.header ul {
-  list-style-type: none;
-  width: 60%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  float: right;
-  justify-content: flex-end;
-  padding-right: 20px; }
-
-.header button {
-  margin-left: 10px;
-  border-color: #e62ee5;
-  background-color: transparent;
-  color: white;
-  border-style: solid;
-  border-width: 2px; }
-
-.header h1 {
-  display: inline-block;
-  padding-top: 25px;
-  padding-left: 10px; }
+  .entry-selection :hover {
+    background-color: #424696; }
 
 .button-chart-type {
   margin-right: 10px;

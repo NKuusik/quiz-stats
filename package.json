@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve",
-    "vagrant": "webpack serve --host 0.0.0.0 --public 10.10.10.61:3000",
+    "start": "yarn scss && webpack && serve",
+    "vagrant": "yarn scss && webpack serve --host 0.0.0.0 --public 10.10.10.61:3000",
     "test": "clear && jest --coverage",
     "snap": "clear && jest --updateSnapshot",
-    "lint": "eslint './src/**'"
+    "lint": "eslint './src/**'",
+    "scss": "node-sass src/ -o src/"
   },
   "dependencies": {
     "axios": "^0.21.1",
