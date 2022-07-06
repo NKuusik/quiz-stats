@@ -40,17 +40,8 @@ class App extends React.Component<MyProps, MyState> {
     latestSeasonScores: string[]): number {
     if (currentSeasonLength === 0) {
       currentSeasonLength = latestSeasonScores.length;
-    } else {
-      try {
-        if (currentSeasonLength !== latestSeasonScores.length) {
-          throw (`Invalid team data: 
-                season length has already 
-                been determined, 
-                but does not match with the provided length`);
-        }
-      } catch {
-
-      }
+    } else if (currentSeasonLength !== latestSeasonScores.length) {
+      throw new Error(`Invalid team data: season length has already been determined, but does not match with the provided length`);
     }
     return currentSeasonLength;
   }

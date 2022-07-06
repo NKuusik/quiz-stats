@@ -47,9 +47,19 @@ test('correct seasonLength is validated', () => {
   const app = new App(rawData);
   let seasonLength = 0;
   const testTeam = new Team(1, "Fake team", [1, 2], 3);
-  seasonLength = app.setAndValidateSeasonLength(0, testTeam.latestSeasonScores);
+  seasonLength = app.setAndValidateSeasonLength(seasonLength, testTeam.latestSeasonScores);
   const secondTeam = new Team(1, "Second team", [2, 3], 3);
-  seasonLength = app.setAndValidateSeasonLength(0, secondTeam.latestSeasonScores);
+  seasonLength = app.setAndValidateSeasonLength(seasonLength, secondTeam.latestSeasonScores);
   expect(seasonLength).toBe(2);
 });
 
+test('error is thrown for incorrect seasonLength', () => {
+  const app = new App(rawData);
+  let seasonLength = 0;
+  const testTeam = new Team(1, "Fake team", [1, 2], 3);
+  seasonLength = app.setAndValidateSeasonLength(seasonLength, testTeam.latestSeasonScores);
+  const secondTeam = new Team(1, "Second team", [2, 3, 4], 3);
+  expect(() => 
+    {app.setAndValidateSeasonLength(seasonLength, 
+    secondTeam.latestSeasonScores)}).toThrow();
+});
