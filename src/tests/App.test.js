@@ -75,3 +75,31 @@ test('No error is thrown for valid season ranking', () => {
   }
   expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason)).not.toThrow();
 });
+
+test('Error is thrown due to a mismatch between the length of seasonRanking and teams in season', 
+  () => {
+    const app = new App(rawData);
+    const testTeam = new Team(1, "Fake team", [1, 2], 3);
+    const secondTeam = new Team(2, "Second team", [2, 3], 3);
+    const seasonRanking = ["Fake team", "Second team", "Third team"];
+    const teamsInSeason = {
+      "Fake team": testTeam,
+      "Second team": secondTeam
+    }
+    expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason))
+    .toThrow('The number of teams in season rankings does not match ' 
+    + 'with the actual number of teams');
+  });
+
+  test('Error is thrown due to a team being present in season but not in seasonRanking', 
+  () => {
+    const app = new App(rawData);
+    const testTeam = new Team(1, "Fake team", [1, 2], 3);
+    const secondTeam = new Team(2, "Second team", [2, 3], 3);
+    const seasonRanking = ["Second team"];
+    const teamsInSeason = {
+      "Fake team": testTeam
+    }
+    expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason))
+    .toThrow(`Fake team is not in place 1`);
+  });

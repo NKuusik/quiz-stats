@@ -54,7 +54,7 @@ class App extends React.Component<MyProps, MyState> {
       }
       for (const teamName of Object.keys(currentSeasonTeams)) {
         if (currentSeasonRanking[currentSeasonTeams[teamName].place - 1] !== teamName) {
-          throw new Error(`${teamName} is not in place ${currentSeasonTeams.place}.
+          throw new Error(`${teamName} is not in place ${currentSeasonTeams[teamName].place}.
           Found ${currentSeasonRanking[currentSeasonTeams[teamName].place - 1]} instead.`)
         }
       }
