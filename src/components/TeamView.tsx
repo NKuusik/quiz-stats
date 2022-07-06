@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
-import { Team } from '../classes/Team';
-import { ChartDataSet } from '../classes/ChartDataSet';
+import {Team} from '../classes/Team';
+import {ChartDataSet} from '../classes/ChartDataSet';
 
 type MyProps = {
   team: Team;
   seasonNames: string[]
 }
 
-const TeamView = ({ team, seasonNames }: MyProps) => {
-  const defaultDataSetsShown : number = 3
+const TeamView = ({team, seasonNames}: MyProps) => {
+  const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
 
-  function generateLabelsSeason(seasonsAsObject: Object): string[] { 
+  function generateLabelsSeason(seasonsAsObject: Object): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i -> vajaks uuesti Season propsi
@@ -45,7 +45,7 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
       if (count > defaultDataSetsShown) {
         isHidden = true;
       }
-      let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
+      const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16);
       const label = `# of points in ${season}`;
       const chartDataSet = new ChartDataSet(isHidden, label, team.seasons[season], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);
@@ -70,8 +70,8 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
   const totalPoints: number[] = generateTotalPointsArray(cumulativeLabels);
 
   function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
-    let dataColor : string = '#' + Math.floor(Math.random()*16777215).toString(16);
-    let label: string = `Cumulative points for ${team.name}.`;
+    const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    const label: string = `Cumulative points for ${team.name}.`;
     const chartDataSet = new ChartDataSet(false, label, totalPoints, dataColor, dataColor, 1.5, 0.5);
     return [chartDataSet];
   }
@@ -85,12 +85,12 @@ const TeamView = ({ team, seasonNames }: MyProps) => {
             <button className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
-            
+
             {
-            !cumulativeView 
-            ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
-            : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
-            }            
+            !cumulativeView
+              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
+              : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+            }
         </div>
   );
 };

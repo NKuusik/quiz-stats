@@ -1,6 +1,6 @@
 import React from 'react';
-import { Season } from '../classes/Season';
-import { Team } from '../classes/Team';
+import {Season} from '../classes/Season';
+import {Team} from '../classes/Team';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -17,7 +17,7 @@ type MyState = {
 
 class MenuBar extends React.Component<MyProps, MyState> {
   private menuBarRef = React.createRef<HTMLDivElement>();
-  constructor (props: MyProps) {
+  constructor(props: MyProps) {
     super(props);
     this.state = {
       allEntries: Object.keys(this.props.category),
@@ -26,7 +26,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
   }
 
   filterEntries(entriesValue: string[]): void {
-    this.setState({ matchedEntries: entriesValue.sort() });
+    this.setState({matchedEntries: entriesValue.sort()});
   }
 
   handleMouseDown(event: MouseEvent): void {
@@ -46,7 +46,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
     this.menuBarRef.current!.addEventListener('mouseup', handleMouseUp);
   }
 
-  render () {
+  render() {
     return (
             <div id={styles['menu-bar-container']}>
               <SearchField viewType={this.props.viewType} menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)}/>

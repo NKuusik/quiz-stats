@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import styles from '../style.css';
-import { Season } from '../classes/Season';
+import {Season} from '../classes/Season';
 
 type MyProps = {
   seasons : {[seasonName: string]: Season};
 }
 
-function SeasonViewWrapper ({ seasons } : MyProps) {
+function SeasonViewWrapper({seasons} : MyProps) {
   const [activeSeason, setActiveSeason] = useState<Season | null>(null);
 
   function chooseSeason(chosenSeason: Season) {

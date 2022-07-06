@@ -1,12 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { parseData, getTeamResults } from './scripts/readData';
-import { Team } from './classes/Team';
-import { Season } from './classes/Season';
+import {parseData, getTeamResults} from './scripts/readData';
+import {Team} from './classes/Team';
+import {Season} from './classes/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
-
 
 type MyProps = {
   rawData: any;
@@ -19,71 +18,71 @@ type MyState = {
 }
 
 class App extends React.Component<MyProps, MyState> {
-  constructor (props: MyProps) {
+  constructor(props: MyProps) {
     super(props);
     this.state = {
       teams: {},
       seasons: {},
-      activeView: ""
+      activeView: ''
     };
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team}{
-    if (!(currentTeam.name in allTeams)) { 
+  updateTeamData(allTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team} {
+    if (!(currentTeam.name in allTeams)) {
       allTeams[currentTeam.name] = currentTeam;
     }
     allTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
     return allTeams;
   }
 
-  setAndValidateSeasonLength(currentSeasonLength: number, 
+  setAndValidateSeasonLength(currentSeasonLength: number,
     latestSeasonScores: string[]): number {
     if (currentSeasonLength === 0) {
       currentSeasonLength = latestSeasonScores.length;
     } else if (currentSeasonLength !== latestSeasonScores.length) {
-      throw new Error(`Invalid team data: season length has already been determined, but does not match with the provided length`);
+      throw new Error('Invalid team data: season length has already been determined, but does not match with the provided length');
     }
     return currentSeasonLength;
   }
 
-  validateCurrentSeasonRanking(currentSeasonRanking: string[], 
+  validateCurrentSeasonRanking(currentSeasonRanking: string[],
     currentSeasonTeams: {[teamName: string]: Team}) {
-      if (currentSeasonRanking.length !== Object.keys(currentSeasonTeams).length) {
-        throw new Error('The number of teams in season rankings does not match ' 
-        + 'with the actual number of teams');
+    if (currentSeasonRanking.length !== Object.keys(currentSeasonTeams).length) {
+      throw new Error('The number of teams in season rankings does not match ' +
+        'with the actual number of teams');
+    }
+    for (const teamName of Object.keys(currentSeasonTeams)) {
+      if (currentSeasonRanking[currentSeasonTeams[teamName].place - 1] !== teamName) {
+        throw new Error(`${teamName} is not in place ${currentSeasonTeams[teamName].place}.
+          Found ${currentSeasonRanking[currentSeasonTeams[teamName].place - 1]} instead.`);
       }
-      for (const teamName of Object.keys(currentSeasonTeams)) {
-        if (currentSeasonRanking[currentSeasonTeams[teamName].place - 1] !== teamName) {
-          throw new Error(`${teamName} is not in place ${currentSeasonTeams[teamName].place}.
-          Found ${currentSeasonRanking[currentSeasonTeams[teamName].place - 1]} instead.`)
-        }
-      }
+    }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    let seasonNames : string[] = [];
+    const seasonNames : string[] = [];
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
         .then((res: { data: string; }) => {
           return parseData(res.data);
         })
         .then((parsedData: { data: any[]; }) => {
-          let currentSeasonRanking: string[] = [];
+          const currentSeasonRanking: string[] = [];
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           let currentSeasonLength: number = 0;
-          let currentSeasonTeams: {[teamName: string]: Team} = {};
+          const currentSeasonTeams: {[teamName: string]: Team} = {};
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const team: Team = getTeamResults(parsedData.data[i]);
             team.seasons[currentSeasonName] = team.latestSeasonScores;
-            const allTeams = this.updateTeamData({ ...this.state.teams }, team, currentSeasonName);
+            const allTeams = this.updateTeamData({...this.state.teams}, team, currentSeasonName);
             currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, team.latestSeasonScores);
             currentSeasonTeams[team.name] = team;
             currentSeasonRanking[team.place - 1] = team.name;
-            this.setState({ teams: allTeams });
+            this.setState({teams: allTeams});
           }
           this.validateCurrentSeasonRanking(currentSeasonRanking, currentSeasonTeams);
-          let season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
+          const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
           parsedSeasons[currentSeasonName] = season;
           seasonNames.push(currentSeasonName);
         });
@@ -91,15 +90,15 @@ class App extends React.Component<MyProps, MyState> {
     this.setState({seasons: parsedSeasons});
   }
 
-  chooseView (chosenView : string) {
+  chooseView(chosenView : string) {
     if (chosenView === this.state.activeView) {
-      this.setState({ activeView: "" });
+      this.setState({activeView: ''});
     } else {
-      this.setState({ activeView: chosenView });
+      this.setState({activeView: chosenView});
     }
   }
 
-  render () {
+  render() {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {

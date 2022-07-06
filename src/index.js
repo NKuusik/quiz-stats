@@ -4,7 +4,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as rawData from './resources/seasons';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App rawData={rawData}/>

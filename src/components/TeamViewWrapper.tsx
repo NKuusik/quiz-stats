@@ -1,7 +1,7 @@
 import React from 'react';
 import TeamView from './TeamView';
 import MenuBar from './MenuBar';
-import { Team } from '../classes/Team';
+import {Team} from '../classes/Team';
 import styles from '../style.css';
 
 type MyProps = {
@@ -14,7 +14,7 @@ type MyState = {
 }
 
 class TeamViewWrapper extends React.Component<MyProps, MyState> {
-  constructor (props: MyProps) {
+  constructor(props: MyProps) {
     super(props);
     this.state = {
       activeTeam: null
@@ -33,7 +33,7 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
     }
   }
 
-  render () {
+  render() {
     let teamView;
     if (this.state.activeTeam != null) {
       teamView = <TeamView team={this.state.activeTeam} seasonNames={this.props.seasonNames} />;

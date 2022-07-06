@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styles from '../style.css';
 
 type MyProps = {
@@ -7,7 +7,7 @@ type MyProps = {
     viewType: string;
 }
 
-const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) => {
+const SearchField = ({menuBarEntries, onFieldValueChange, viewType}: MyProps) => {
   const [searchFieldValue, setSearchFieldValue] = useState('');
 
   const handleChange = (event) => {
@@ -18,12 +18,12 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
     if (event.key === 'Enter') {
       event.preventDefault();
     }
-  }
+  };
 
-  function findMatchingNames (searchInput: string, names: string[]): string[] {
+  function findMatchingNames(searchInput: string, names: string[]): string[] {
     const foundMatches : string[] = [];
     for (const entry of names) {
-      let entryLowerCase = entry.toLowerCase();
+      const entryLowerCase = entry.toLowerCase();
       if (entryLowerCase.includes(searchInput.toLowerCase())) {
         foundMatches.push(entry);
       }
@@ -33,13 +33,12 @@ const SearchField = ({ menuBarEntries, onFieldValueChange, viewType }: MyProps) 
 
   function search(): void {
     let matchedEntries = menuBarEntries;
-    let trimmedInput = searchFieldValue.trim();
+    const trimmedInput = searchFieldValue.trim();
     if (trimmedInput.length > 0) {
       matchedEntries = findMatchingNames(trimmedInput, menuBarEntries);
     }
     onFieldValueChange(matchedEntries);
   }
-
 
   return (
     <div id={styles['search-field']} className={styles['header-vertical-alignment']}>
