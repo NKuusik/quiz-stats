@@ -4,6 +4,7 @@ import {Team} from '../classes/Team';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
+
 type MyProps = {
   category : {[seasonName: string]: Season} | {[teamName: string]: Team};
   choice : Function;
@@ -21,7 +22,7 @@ class MenuBar extends React.Component<MyProps, MyState> {
     super(props);
     this.state = {
       allEntries: Object.keys(this.props.category),
-      matchedEntries: Object.keys(this.props.category).sort()
+      matchedEntries: Object.keys(this.props.category).sort(),
     };
   }
 
@@ -46,9 +47,10 @@ class MenuBar extends React.Component<MyProps, MyState> {
     this.menuBarRef.current!.addEventListener('mouseup', handleMouseUp);
   }
 
+
   render() {
     return (
-            <div id={styles['menu-bar-container']}>
+            <div className={styles['menu-bar-container']}>
               <SearchField viewType={this.props.viewType} menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)}/>
                 <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} id={styles['menu-bar-selection']}>
                 {

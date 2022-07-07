@@ -6,9 +6,10 @@ import {Season} from '../classes/Season';
 
 type MyProps = {
   seasons : {[seasonName: string]: Season};
+  fadeOut: string;
 }
 
-function SeasonViewWrapper({seasons} : MyProps) {
+function SeasonViewWrapper({seasons, fadeOut: classNameProp} : MyProps) {
   const [activeSeason, setActiveSeason] = useState<Season | null>(null);
 
   function chooseSeason(chosenSeason: Season) {
@@ -24,7 +25,7 @@ function SeasonViewWrapper({seasons} : MyProps) {
   }
 
   return (
-    <div className={styles['view-wrapper']}>
+    <div id={styles[classNameProp]} className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>
         <MenuBar viewType={'season'} category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
       </div>

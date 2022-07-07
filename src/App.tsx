@@ -6,6 +6,7 @@ import {Season} from './classes/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
+import { Transition } from 'react-transition-group';
 
 type MyProps = {
   rawData: any;
@@ -15,6 +16,7 @@ type MyState = {
   teams: {[teamName: string]: Team};
   seasons: {[seasonName: string]: Season};
   activeView: string;
+  viewTransition: boolean
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -23,7 +25,8 @@ class App extends React.Component<MyProps, MyState> {
     this.state = {
       teams: {},
       seasons: {},
-      activeView: ''
+      activeView: '',
+      viewTransition: false
     };
   }
 
@@ -92,9 +95,18 @@ class App extends React.Component<MyProps, MyState> {
 
   chooseView(chosenView : string) {
     if (chosenView === this.state.activeView) {
-      this.setState({activeView: ''});
+      this.setState({viewTransition: false})
     } else {
       this.setState({activeView: chosenView});
+      this.setState({viewTransition: true})
+    }
+  }
+
+  fadeoutView(): string { // Halb kood aga töötab, vaata üle
+    if (this.state.viewTransition === false) {
+      return 'fade-out';
+    } else {
+      return '';
     }
   }
 
@@ -102,16 +114,24 @@ class App extends React.Component<MyProps, MyState> {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
-      view = <SeasonViewWrapper seasons={this.state.seasons} />;
+      view = <SeasonViewWrapper fadeOut={this.fadeoutView()} seasons={this.state.seasons} />;
     } else if (activeView === 'team') {
-      view = <TeamViewWrapper teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)}/>;
+      view = <TeamViewWrapper fadeOut={this.fadeoutView()} teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)}/>;
     }
     return (
       <div>
         <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
-        {view}
+        <Transition
+          in={this.state.viewTransition}
+          timeout={450}
+          onEnter={() => console.log('I enter')}
+          onExit={() => console.log('I exit')}
+          onExited={() => this.setState({activeView: ''})}
+        >
+          {() => view}
+        </Transition>
+                   
       </div>
-
     );
   }
 }

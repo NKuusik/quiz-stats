@@ -7,6 +7,7 @@ import styles from '../style.css';
 type MyProps = {
   teams : {[teamName: string]: Team};
   seasonNames : Array<string>;
+  fadeOut: string;
 }
 
 type MyState = {
@@ -39,7 +40,7 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
       teamView = <TeamView team={this.state.activeTeam} seasonNames={this.props.seasonNames} />;
     }
     return (
-      <div className={styles['view-wrapper']}>
+      <div id={styles[this.props.fadeOut]} className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
         <MenuBar viewType={'team'} choice={this.chooseTeam.bind(this)} category={this.props.teams}/>
         </div>

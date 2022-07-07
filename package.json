@@ -12,12 +12,14 @@
     "scss": "node-sass src/ -o src/"
   },
   "dependencies": {
+    "@types/react-transition-group": "^4.4.5",
     "axios": "^0.21.1",
     "chart.js": "^3.8.0",
     "papaparse": "^5.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
+    "react-transition-group": "^4.4.2",
     "semantic-ui-react": "^2.1.3",
     "source-map-loader": "^3.0.0",
     "web-vitals": "^2.1.4"
@@ -37,6 +39,7 @@
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "add": "^2.0.6",
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.5",
     "css-loader": "^5.2.7",
@@ -62,7 +65,8 @@
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-serve": "^4.0.0"
+    "webpack-serve": "^4.0.0",
+    "yarn": "^1.22.19"
   },
   "jest": {
     "globals": {
