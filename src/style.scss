@@ -9,6 +9,7 @@ body {
     background-color: $default-background-color;
     font-size: 18px;
     color: #DCDEE6;
+    font-family:'Poppins', sans-serif;
 }
 
 button {
@@ -51,7 +52,6 @@ canvas {
         padding-left: 10px;
         color: $secondary-color;
         font-size: 34px;
-        font-family:'Poppins', sans-serif;
         font-weight: 400;
     }
 }
