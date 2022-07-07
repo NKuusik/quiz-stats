@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
+
 $default-background-color: rgb(33, 35, 75);
 $canvas-menu-bar-background-color: #161833;
 $header-button-color: rgb(230, 46, 229);
+$secondary-color: #B1B5EF;
 
 body {
     background-color: $default-background-color;
@@ -46,6 +49,10 @@ canvas {
         display: inline-block;
         padding-top: 25px;
         padding-left: 10px;
+        color: $secondary-color;
+        font-size: 34px;
+        font-family:'Poppins', sans-serif;
+        font-weight: 400;
     }
 }
 
