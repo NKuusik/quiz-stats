@@ -74,13 +74,22 @@ const SeasonView = ({season}: MyProps) => {
     return dataSets;
   }
 
+  function visualizeActiveButton(activeButton : string): string {
+    if ((cumulativeView === false && activeButton === 'game-by-game') || 
+        (cumulativeView === true && activeButton === 'cumulative')) {
+      return 'chart-button-active';
+    } else {
+      return '';
+    }
+  }
+
   return (
         <div>
             <h1>Stats for {season.name}</h1>
-            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
+            <button id={styles[visualizeActiveButton('game-by-game')]} className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See game-by-game
             </button>
-            <button className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
+            <button id={styles[visualizeActiveButton('cumulative')]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See incrementally
             </button>
 
