@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {parseData, getTeamResults} from './scripts/readData';
+import {parseData, getTeamResults, normalizeGameScore} from './scripts/readData';
 import {Team} from './classes/Team';
 import {Season} from './classes/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
@@ -30,12 +30,12 @@ class App extends React.Component<MyProps, MyState> {
     };
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, currentTeam: Team, currentSeasonName: string): {[teamName: string]: Team} {
-    if (!(currentTeam.name in allTeams)) {
-      allTeams[currentTeam.name] = currentTeam;
+  updateTeamData(allTeams: {[teamName: string]: Team}, rawTeamData: string[], currentSeasonName: string): {[teamName: string]: Team} {
+    if (!(rawTeamData[1] in allTeams)) {
+      allTeams[rawTeamData[1]] = getTeamResults(rawTeamData);
     }
-    allTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
-    allTeams[currentTeam.name].rankings[currentSeasonName] = currentTeam.rankings[currentSeasonName];
+    allTeams[rawTeamData[1]].seasons[currentSeasonName] = normalizeGameScore(rawTeamData.slice(2, -1));
+    allTeams[rawTeamData[1]].rankings[currentSeasonName] = rawTeamData[0];
     return allTeams;
   }
 
@@ -79,15 +79,13 @@ class App extends React.Component<MyProps, MyState> {
           let currentSeasonTeams: {[teamName: string]: Team} = {};
           let currentSeasonTeamNames: string[] = [];
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const team: Team = getTeamResults(parsedData.data[i]);
-            team.rankings[currentSeasonName] = parsedData.data[i][0];
-            team.seasons[currentSeasonName] = team.latestSeasonScores;
-            const allTeams = this.updateTeamData({...this.state.teams}, team, currentSeasonName);
-            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, team.latestSeasonScores);
+            let rawTeamData: any[] =  parsedData.data[i];
+            let teamName = rawTeamData[1];
+            const allTeams = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
             this.setState({teams: allTeams});
-            currentSeasonTeamNames.push(team.name);
-            currentSeasonRanking[team.rankings[currentSeasonName]- 1] = team.name;
-
+            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, this.state.teams[teamName].seasons[currentSeasonName]);
+            currentSeasonTeamNames.push(teamName);
+            currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName]- 1] = teamName;
           }
           this.validateCurrentSeasonRanking(currentSeasonName, currentSeasonRanking, currentSeasonTeamNames);
           for (const teamName of currentSeasonTeamNames) {
