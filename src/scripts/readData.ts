@@ -22,7 +22,7 @@ export async function parseData(input: string): Promise<Object> {
 }
 
 export function getTeamResults(teamData: Array<string>): Team {
-  let team = new Team(parseInt(teamData[0]), teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
+  let team = new Team(teamData[1], teamData.slice(2, -1), parseInt(teamData[teamData.length - 1]));
   team = normalizeGameScore(team);
   return team;
 }

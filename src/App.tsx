@@ -35,6 +35,7 @@ class App extends React.Component<MyProps, MyState> {
       allTeams[currentTeam.name] = currentTeam;
     }
     allTeams[currentTeam.name].seasons[currentSeasonName] = currentTeam.latestSeasonScores;
+    allTeams[currentTeam.name].rankings[currentSeasonName] = currentTeam.rankings[currentSeasonName];
     return allTeams;
   }
 
@@ -48,23 +49,24 @@ class App extends React.Component<MyProps, MyState> {
     return currentSeasonLength;
   }
 
-  validateCurrentSeasonRanking(currentSeasonRanking: string[],
-    currentSeasonTeams: {[teamName: string]: Team}) {
-    if (currentSeasonRanking.length !== Object.keys(currentSeasonTeams).length) {
+  validateCurrentSeasonRanking(currentSeasonName: string, currentSeasonRanking: string[],
+    currentSeasonTeams: string[]) {
+    if (currentSeasonRanking.length !== currentSeasonTeams.length) {
+      console.log(currentSeasonTeams);
       throw new Error('The number of teams in season rankings does not match ' +
         'with the actual number of teams');
+
     }
-    for (const teamName of Object.keys(currentSeasonTeams)) {
-      if (currentSeasonRanking[currentSeasonTeams[teamName].place - 1] !== teamName) {
-        throw new Error(`${teamName} is not in place ${currentSeasonTeams[teamName].place}.
-          Found ${currentSeasonRanking[currentSeasonTeams[teamName].place - 1]} instead.`);
+    for (const teamName of currentSeasonTeams) {
+      if (currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
+        throw new Error(`${teamName} is not in place ${this.state.teams[teamName].rankings[currentSeasonName]}.
+          Found ${currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1]} instead.`);
       }
     }
   }
 
   componentDidMount() {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    const seasonNames : string[] = [];
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
         .then((res: { data: string; }) => {
@@ -74,20 +76,25 @@ class App extends React.Component<MyProps, MyState> {
           const currentSeasonRanking: string[] = [];
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           let currentSeasonLength: number = 0;
-          const currentSeasonTeams: {[teamName: string]: Team} = {};
+          let currentSeasonTeams: {[teamName: string]: Team} = {};
+          let currentSeasonTeamNames: string[] = [];
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const team: Team = getTeamResults(parsedData.data[i]);
+            team.rankings[currentSeasonName] = parsedData.data[i][0];
             team.seasons[currentSeasonName] = team.latestSeasonScores;
             const allTeams = this.updateTeamData({...this.state.teams}, team, currentSeasonName);
             currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, team.latestSeasonScores);
-            currentSeasonTeams[team.name] = team;
-            currentSeasonRanking[team.place - 1] = team.name;
             this.setState({teams: allTeams});
+            currentSeasonTeamNames.push(team.name);
+            currentSeasonRanking[team.rankings[currentSeasonName]- 1] = team.name;
+
           }
-          this.validateCurrentSeasonRanking(currentSeasonRanking, currentSeasonTeams);
+          this.validateCurrentSeasonRanking(currentSeasonName, currentSeasonRanking, currentSeasonTeamNames);
+          for (const teamName of currentSeasonTeamNames) {
+            currentSeasonTeams[teamName] = this.state.teams[teamName];
+          }
           const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
           parsedSeasons[currentSeasonName] = season;
-          seasonNames.push(currentSeasonName);
         });
     }
     this.setState({seasons: parsedSeasons});

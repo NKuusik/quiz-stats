@@ -21,7 +21,7 @@ const SeasonView = ({season}: MyProps) => {
   }
 
   function calculateIncrementalPoints(teamName: string, isHidden: boolean): ChartDataSet {
-    const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16); // Todo: at least in SeasonView, the colors on two charts should match
+    const dataColor : string = season.teams[teamName].color;
     const incrementalPoints : number[] = [];
     const teamPoints: string[] = season.teams[teamName].seasons[season.name];
     for (let i = 0; i < teamPoints.length; i++) {
@@ -52,7 +52,7 @@ const SeasonView = ({season}: MyProps) => {
     for (const teamName of season.ranking) {
       dataSetCount++;
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
-      const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16);
+      const dataColor : string = season.teams[teamName].color;
       const teamPoints: number[] = season.teams[teamName].seasons[season.name];
       const label = `${teamName}`;
       const chartDataSet = new ChartDataSet(isHidden, label, teamPoints, dataColor, dataColor, 1.5, 0.5);
