@@ -1,5 +1,5 @@
 export class Team {
-    rankings: any;
+    rankings: {[seasonName: string]: number};
     name: string;
     latestSeasonScores: Array<string>;
     seasons: {[seasonName: string]: any[]};

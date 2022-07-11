@@ -35,7 +35,7 @@ class App extends React.Component<MyProps, MyState> {
       allTeams[rawTeamData[1]] = getTeamResults(rawTeamData);
     }
     allTeams[rawTeamData[1]].seasons[currentSeasonName] = normalizeGameScore(rawTeamData.slice(2, -1));
-    allTeams[rawTeamData[1]].rankings[currentSeasonName] = rawTeamData[0];
+    allTeams[rawTeamData[1]].rankings[currentSeasonName] = parseInt(rawTeamData[0]);
     return allTeams;
   }
 
@@ -52,7 +52,6 @@ class App extends React.Component<MyProps, MyState> {
   validateCurrentSeasonRanking(currentSeasonName: string, currentSeasonRanking: string[],
     currentSeasonTeams: string[]) {
     if (currentSeasonRanking.length !== currentSeasonTeams.length) {
-      console.log(currentSeasonTeams);
       throw new Error('The number of teams in season rankings does not match ' +
         'with the actual number of teams');
 
@@ -79,9 +78,9 @@ class App extends React.Component<MyProps, MyState> {
           let currentSeasonTeams: {[teamName: string]: Team} = {};
           let currentSeasonTeamNames: string[] = [];
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            let rawTeamData: any[] =  parsedData.data[i];
-            let teamName = rawTeamData[1];
-            const allTeams = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
+            let rawTeamData: string[] =  parsedData.data[i];
+            let teamName: string = rawTeamData[1];
+            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
             this.setState({teams: allTeams});
             currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, this.state.teams[teamName].seasons[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
@@ -129,8 +128,6 @@ class App extends React.Component<MyProps, MyState> {
         <Transition
           in={this.state.viewTransition}
           timeout={450}
-          onEnter={() => console.log('I enter')}
-          onExit={() => console.log('I exit')}
           onExited={() => this.setState({activeView: ''})}
         >
           {() => view}
