@@ -23,7 +23,7 @@ const SeasonView = ({season}: MyProps) => {
   function calculateIncrementalPoints(teamName: string, isHidden: boolean): ChartDataSet {
     const dataColor : string = season.teams[teamName].color;
     const incrementalPoints : number[] = [];
-    const teamPoints: string[] = season.teams[teamName].seasons[season.name];
+    const teamPoints: string[] = season.teams[teamName].results[season.name];
     for (let i = 0; i < teamPoints.length; i++) {
       if (i === 0) {
         incrementalPoints.push(parseInt(teamPoints[i]));
@@ -53,7 +53,7 @@ const SeasonView = ({season}: MyProps) => {
       dataSetCount++;
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       const dataColor : string = season.teams[teamName].color;
-      const teamPoints: number[] = season.teams[teamName].seasons[season.name];
+      const teamPoints: number[] = season.teams[teamName].results[season.name];
       const label = `${teamName}`;
       const chartDataSet = new ChartDataSet(isHidden, label, teamPoints, dataColor, dataColor, 1.5, 0.5);
       dataSetsWithRunningPoints.push(chartDataSet);

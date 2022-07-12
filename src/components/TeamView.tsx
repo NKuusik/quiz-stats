@@ -45,7 +45,7 @@ const TeamView = ({team, seasonNames}: MyProps) => {
       if (count > defaultDataSetsShown) {
         isHidden = true;
       }
-      const dataColor : string = team.seasons[seasonName].color;
+      const dataColor : string = team.teamSeasons[seasonName].color;
       const label = `# of points in ${seasonName}`;
       const chartDataSet = new ChartDataSet(isHidden, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);

@@ -90,9 +90,9 @@ class App extends React.Component<MyProps, MyState> {
           for (const teamName of currentSeasonTeamNames) {
             currentSeasonTeams[teamName] = this.state.teams[teamName];
           }
-          const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
+          const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking); // siin refaktoreeri nagu esmalt idee oli, season initiated enne esimest loopi
           for (const teamName of currentSeasonTeamNames) {
-            this.state.teams[teamName].seasons[currentSeasonName] = season; 
+            this.state.teams[teamName].teamSeasons[currentSeasonName] = season; 
           }
           parsedSeasons[currentSeasonName] = season;
         });

@@ -5,7 +5,7 @@ export class Team {
     name: string;
     latestSeasonScores: Array<string>;
     results: {[seasonName: string]: any[]};
-    seasons: {[seasonName: string]: Season}
+    teamSeasons: {[seasonName: string]: Season}
     totalScore: number;
     color: string;
 
@@ -13,7 +13,7 @@ export class Team {
       this.rankings = {};
       this.name = name;
       this.results = {};
-      this.seasons = {};
+      this.teamSeasons = {};
       this.latestSeasonScores = latestSeasonScores;
       this.totalScore = totalScore; // Todo: totalscore iga hooaja kohta eraldi... akki season klassis?
       this.color = this.assignColor(this.color);
