@@ -32,7 +32,7 @@ test('updateTeamData modifies data of existing Team', () => {
   testTeam.latestSeasonScores = [3, 4];
   const secondSeason = "SecondSeason";
   teamsState = app.updateTeamData(app.state.teams, testTeam, secondSeason);
-  expect(teamsState["Fake team"].seasons["SecondSeason"]).toStrictEqual([3, 4]);
+  expect(teamsState["Fake team"].results["SecondSeason"]).toStrictEqual([3, 4]);
 });
 
 test('seasonLength is initially set', () => {

@@ -1,14 +1,18 @@
+import { Season } from "./Season";
+
 export class Team {
     rankings: {[seasonName: string]: number};
     name: string;
     latestSeasonScores: Array<string>;
-    seasons: {[seasonName: string]: any[]};
-    totalScore: number
-    color: string
+    results: {[seasonName: string]: any[]};
+    seasons: {[seasonName: string]: Season}
+    totalScore: number;
+    color: string;
 
     constructor(name: string, latestSeasonScores: Array<string>, totalScore: number) {
       this.rankings = {};
       this.name = name;
+      this.results = {};
       this.seasons = {};
       this.latestSeasonScores = latestSeasonScores;
       this.totalScore = totalScore; // Todo: totalscore iga hooaja kohta eraldi... akki season klassis?

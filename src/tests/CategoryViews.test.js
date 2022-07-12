@@ -5,7 +5,7 @@ import { Team }  from '../classes/Team';
 import { Season } from '../classes/Season';
 
 const testTeam = new Team(1, "Fake team", [1, 2], 3);
-testTeam.seasons["SeasonNumber"] = [3, 4]
+testTeam.results["SeasonNumber"] = [3, 4]
 
 let testTeams = {
   "Fake team": testTeam

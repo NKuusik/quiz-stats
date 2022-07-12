@@ -13,7 +13,7 @@ import {render, fireEvent} from '@testing-library/react';
 // Todo: Test state change with Enzyme
 
 const testTeam = new Team(1, "Fake team", [1, 2], 3);
-testTeam.seasons["Test Season"] = [3, 4]
+testTeam.results["Test Season"] = [3, 4]
 
 let testTeams = {
   "Fake team": testTeam

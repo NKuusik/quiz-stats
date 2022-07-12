@@ -34,7 +34,7 @@ class App extends React.Component<MyProps, MyState> {
     if (!(rawTeamData[1] in allTeams)) {
       allTeams[rawTeamData[1]] = getTeamResults(rawTeamData);
     }
-    allTeams[rawTeamData[1]].seasons[currentSeasonName] = normalizeGameScore(rawTeamData.slice(2, -1));
+    allTeams[rawTeamData[1]].results[currentSeasonName] = normalizeGameScore(rawTeamData.slice(2, -1));
     allTeams[rawTeamData[1]].rankings[currentSeasonName] = parseInt(rawTeamData[0]);
     return allTeams;
   }
@@ -82,7 +82,7 @@ class App extends React.Component<MyProps, MyState> {
             let teamName: string = rawTeamData[1];
             const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
             this.setState({teams: allTeams});
-            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, this.state.teams[teamName].seasons[currentSeasonName]);
+            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, this.state.teams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
             currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName]- 1] = teamName;
           }
@@ -91,6 +91,9 @@ class App extends React.Component<MyProps, MyState> {
             currentSeasonTeams[teamName] = this.state.teams[teamName];
           }
           const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking);
+          for (const teamName of currentSeasonTeamNames) {
+            this.state.teams[teamName].seasons[currentSeasonName] = season; 
+          }
           parsedSeasons[currentSeasonName] = season;
         });
     }

@@ -40,14 +40,14 @@ const TeamView = ({team, seasonNames}: MyProps) => {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
     let count : number = 0;
     let isHidden : boolean = false;
-    for (const season of Object.keys(team.seasons)) {
+    for (const seasonName of Object.keys(team.results)) {
       count++;
       if (count > defaultDataSetsShown) {
         isHidden = true;
       }
-      const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16);
-      const label = `# of points in ${season}`;
-      const chartDataSet = new ChartDataSet(isHidden, label, team.seasons[season], dataColor, dataColor, 1.5, 0.5);
+      const dataColor : string = team.seasons[seasonName].color;
+      const label = `# of points in ${seasonName}`;
+      const chartDataSet = new ChartDataSet(isHidden, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);
     }
     return arrayWithSeasonPoints;
@@ -57,8 +57,8 @@ const TeamView = ({team, seasonNames}: MyProps) => {
     const totalPointsAllSeasons : number[] = [];
     for (const seasonName of labels) {
       let sum: number = 0;
-      if (team.seasons[seasonName] !== undefined) {
-        const pointsAsNumbers = team.seasons[seasonName].map(Number);
+      if (team.results[seasonName] !== undefined) {
+        const pointsAsNumbers = team.results[seasonName].map(Number);
         sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0);
       }
       totalPointsAllSeasons.push(sum);
@@ -70,7 +70,7 @@ const TeamView = ({team, seasonNames}: MyProps) => {
   const totalPoints: number[] = generateTotalPointsArray(cumulativeLabels);
 
   function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
-    const dataColor : string = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    const dataColor : string = team.color;
     const label: string = `Cumulative points for ${team.name}.`;
     const chartDataSet = new ChartDataSet(false, label, totalPoints, dataColor, dataColor, 1.5, 0.5);
     return [chartDataSet];
@@ -97,7 +97,7 @@ const TeamView = ({team, seasonNames}: MyProps) => {
 
             {
             !cumulativeView
-              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.seasons)} />
+              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.results)} />
               : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
             }
         </div>

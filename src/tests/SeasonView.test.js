@@ -15,7 +15,7 @@ let testTeams = {
   "Fake team": testTeam
 };
 
-testTeam.seasons["Test Season"] = [1, 2, 4, 5, 6];
+testTeam.results["Test Season"] = [1, 2, 4, 5, 6];
 
 const testSeason = new Season("Test Season", testTeams, 5, ["Fake team"]);
 
@@ -34,10 +34,10 @@ let secondTestTeams = {
   "Fourth team": fourthTeam
 }
 
-testTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
-secondTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
-thirdTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
-fourthTeam.seasons["Second Season"] = [1, 2, 4, 5, 6];
+testTeam.results["Second Season"] = [1, 2, 4, 5, 6];
+secondTeam.results["Second Season"] = [1, 2, 4, 5, 6];
+thirdTeam.results["Second Season"] = [1, 2, 4, 5, 6];
+fourthTeam.results["Second Season"] = [1, 2, 4, 5, 6];
 
 const secondSeason = new Season("Second Season", secondTestTeams, 5, ["Fake team", "Second team", "Third team", "Fourth team"]);
 

@@ -6,7 +6,7 @@ import { Team } from '../classes/Team';
 // Todo: State change with enzyme.
 
 const testTeam = new Team(1, "Fake team", [1, 2, 4], 3);
-testTeam.seasons["SeasonNumber"] = ["3", "4", "2"];
+testTeam.results["SeasonNumber"] = ["3", "4", "2"];
 
 it('default renders correctly', () => {
     const tree = renderer
@@ -16,9 +16,9 @@ it('default renders correctly', () => {
      });
 
 
-testTeam.seasons["SecondSeason"] = ["3", "4", "2"];
-testTeam.seasons["ThirdSeason"] = ["3", "4", "2"];
-testTeam.seasons["FourthSeason"] = ["3", "4", "2"];
+testTeam.results["SecondSeason"] = ["3", "4", "2"];
+testTeam.results["ThirdSeason"] = ["3", "4", "2"];
+testTeam.results["FourthSeason"] = ["3", "4", "2"];
 
 it('only 3 seasons are displayed', () => {
     const tree = renderer
