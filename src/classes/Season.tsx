@@ -5,7 +5,7 @@ export class Season {
     ranking: string[];
     color: string;
 
-    constructor(name: string, teams: Object, totalGames: number, ranking: string[]) {
+    constructor(name: string, teams: Object={}, totalGames: number=0, ranking: string[]=[]) {
       this.name = name;
       this.teams = teams;
       this.totalGames = totalGames;

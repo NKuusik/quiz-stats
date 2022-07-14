@@ -74,7 +74,7 @@ class App extends React.Component<MyProps, MyState> {
         .then((parsedData: { data: any[]; }) => {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           let currentSeasonTeamNames: string[] = [];
-          const currentSeason = new Season(currentSeasonName, {}, 0, []);
+          const currentSeason = new Season(currentSeasonName);
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             let rawTeamData: string[] =  parsedData.data[i];
             let teamName: string = rawTeamData[1];
