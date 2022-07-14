@@ -1,6 +1,6 @@
 import React from 'react';
-import {Season} from '../classes/Season';
-import {Team} from '../classes/Team';
+import {Season} from '../classes/EntityChildren/Season';
+import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 

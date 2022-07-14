@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import styles from '../style.css';
-import {Season} from '../classes/Season';
+import {Season} from '../classes/EntityChildren/Season';
 
 type MyProps = {
   seasons : {[seasonName: string]: Season};

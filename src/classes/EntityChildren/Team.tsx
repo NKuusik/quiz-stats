@@ -1,6 +1,7 @@
+import { Entity } from "../Entity";
 import { Season } from "./Season";
 
-export class Team {
+export class Team extends Entity {
     rankings: {[seasonName: string]: number};
     name: string;
     latestSeasonScores: Array<string>;
@@ -10,21 +11,12 @@ export class Team {
     color: string;
 
     constructor(name: string, rawLatestSeasonScores: Array<string>, totalScore: number) {
+      super(name);
       this.rankings = {};
-      this.name = name;
       this.results = {};
       this.teamSeasons = {};
       this.totalScore = totalScore; // Todo: totalscore iga hooaja kohta eraldi... akki season klassis?
-      this.color = this.assignColor(this.color);
       this.normalizeGameScore(rawLatestSeasonScores);
-    }
-
-    assignColor(color) {
-      if (color === undefined) {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
-      } else {
-        return color;
-      }
     }
 
     normalizeGameScore(scores: string[], seasonName: string | undefined=undefined): void {

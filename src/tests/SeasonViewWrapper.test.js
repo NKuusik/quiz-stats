@@ -6,7 +6,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import SeasonViewWrapper from '../components/SeasonViewWrapper';
 import { Team } from '../classes/Team';
-import { Season } from '../classes/Season';
+import { Season } from '../classes/EntityChildren/Season';
 import {screen} from '@testing-library/dom';
 import {render, fireEvent} from '@testing-library/react';
 

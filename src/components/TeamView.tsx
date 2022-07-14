@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
-import {Team} from '../classes/Team';
+import {Team} from '../classes/EntityChildren/Team';
 import {ChartDataSet} from '../classes/ChartDataSet';
 
 type MyProps = {

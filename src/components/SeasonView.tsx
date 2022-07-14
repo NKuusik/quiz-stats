@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import LineChart from '../subcomponents/LineChart';
-import {Season} from '../classes/Season';
+import {Season} from '../classes/EntityChildren/Season';
 import styles from '../style.css';
 import {ChartDataSet} from '../classes/ChartDataSet';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import MenuBar from '../components/MenuBar';
 import { Team }  from '../classes/Team';
-import { Season } from '../classes/Season';
+import { Season } from '../classes/EntityChildren/Season';
 
 const testTeam = new Team(1, "Fake team", [1, 2], 3);
 testTeam.results["SeasonNumber"] = [3, 4]

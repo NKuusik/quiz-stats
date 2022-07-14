@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import SeasonView from '../components/SeasonView';
 import {Team} from '../classes/Team';
-import {Season} from '../classes/Season';
+import {Season} from '../classes/EntityChildren/Season';
 
 // Todo: kusagil peaks kontrollima, et Team place ei kattu Seasoni ulatuses.
 
