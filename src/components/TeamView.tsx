@@ -39,16 +39,16 @@ const TeamView = ({team, seasonNames}: MyProps) => {
   function generateDataSetsSeason(): ChartDataSet[] {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
     let count : number = 0;
-    let isHidden : boolean = false;
     for (const seasonName of Object.keys(team.results)) {
       count++;
-      if (count > defaultDataSetsShown) {
-        isHidden = true;
-      }
       const dataColor : string = team.teamSeasons[seasonName].color;
       const label = `# of points in ${seasonName}`;
-      const chartDataSet = new ChartDataSet(isHidden, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
+      const chartDataSet = new ChartDataSet(false, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);
+      arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
+      if (count > defaultDataSetsShown) {
+        arrayWithSeasonPoints[count - 1].hidden = true;
+      }
     }
     return arrayWithSeasonPoints;
   }
