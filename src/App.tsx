@@ -72,29 +72,24 @@ class App extends React.Component<MyProps, MyState> {
           return parseData(res.data);
         })
         .then((parsedData: { data: any[]; }) => {
-          const currentSeasonRanking: string[] = [];
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
-          let currentSeasonLength: number = 0;
-          let currentSeasonTeams: {[teamName: string]: Team} = {};
           let currentSeasonTeamNames: string[] = [];
+          const currentSeason = new Season(currentSeasonName, {}, 0, []); // siin refaktoreeri nagu esmalt idee oli, season initiated enne esimest loopi
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             let rawTeamData: string[] =  parsedData.data[i];
             let teamName: string = rawTeamData[1];
             const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
             this.setState({teams: allTeams});
-            currentSeasonLength = this.setAndValidateSeasonLength(currentSeasonLength, this.state.teams[teamName].results[currentSeasonName]);
+            currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
-            currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName]- 1] = teamName;
+            currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName]- 1] = teamName;
           }
-          this.validateCurrentSeasonRanking(currentSeasonName, currentSeasonRanking, currentSeasonTeamNames);
+          this.validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames);
           for (const teamName of currentSeasonTeamNames) {
-            currentSeasonTeams[teamName] = this.state.teams[teamName];
+            currentSeason.teams[teamName] = this.state.teams[teamName];
+            this.state.teams[teamName].teamSeasons[currentSeasonName] = currentSeason;
           }
-          const season = new Season(currentSeasonName, currentSeasonTeams, currentSeasonLength, currentSeasonRanking); // siin refaktoreeri nagu esmalt idee oli, season initiated enne esimest loopi
-          for (const teamName of currentSeasonTeamNames) {
-            this.state.teams[teamName].teamSeasons[currentSeasonName] = season; 
-          }
-          parsedSeasons[currentSeasonName] = season;
+          parsedSeasons[currentSeasonName] = currentSeason;
         });
     }
     this.setState({seasons: parsedSeasons});
