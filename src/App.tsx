@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import {parseData, getTeamResults, normalizeGameScore} from './scripts/readData';
+import {parseData} from './scripts/readData';
 import {Team} from './classes/Team';
 import {Season} from './classes/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
-import { Transition } from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 
 type MyProps = {
   rawData: any;
@@ -30,14 +30,17 @@ class App extends React.Component<MyProps, MyState> {
     };
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, rawTeamData: string[], currentSeasonName: string): {[teamName: string]: Team} {
-    if (!(rawTeamData[1] in allTeams)) {
-      allTeams[rawTeamData[1]] = getTeamResults(rawTeamData);
+  updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string, 
+    teamLatestSeasonScores: string[], 
+    teamTotalScore: number, currentSeasonName: string): 
+    {[teamName: string]: Team} {
+      if (!(currentTeamName in allTeams)) {
+        allTeams[currentTeamName] = new Team(currentTeamName, teamLatestSeasonScores, teamTotalScore);
+      }
+      allTeams[currentTeamName].normalizeGameScore(teamLatestSeasonScores, currentSeasonName);
+      allTeams[currentTeamName].rankings[currentSeasonName] = teamRanking;
+      return allTeams;
     }
-    allTeams[rawTeamData[1]].results[currentSeasonName] = normalizeGameScore(rawTeamData.slice(2, -1));
-    allTeams[rawTeamData[1]].rankings[currentSeasonName] = parseInt(rawTeamData[0]);
-    return allTeams;
-  }
 
   setAndValidateSeasonLength(currentSeasonLength: number,
     latestSeasonScores: string[]): number {
@@ -54,7 +57,6 @@ class App extends React.Component<MyProps, MyState> {
     if (currentSeasonRanking.length !== currentSeasonTeams.length) {
       throw new Error('The number of teams in season rankings does not match ' +
         'with the actual number of teams');
-
     }
     for (const teamName of currentSeasonTeams) {
       if (currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
@@ -77,8 +79,12 @@ class App extends React.Component<MyProps, MyState> {
           const currentSeason = new Season(currentSeasonName);
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             let rawTeamData: string[] =  parsedData.data[i];
+            let teamRanking: number = parseInt(rawTeamData[0]);
             let teamName: string = rawTeamData[1];
-            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, rawTeamData, currentSeasonName);
+            let teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
+            let teamTotalScore: number = parseInt(rawTeamData[rawTeamData.length - 1]);
+            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking, 
+              teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
             this.setState({teams: allTeams});
             currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);

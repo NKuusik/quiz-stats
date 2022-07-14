@@ -9,14 +9,14 @@ export class Team {
     totalScore: number;
     color: string;
 
-    constructor(name: string, latestSeasonScores: Array<string>, totalScore: number) {
+    constructor(name: string, rawLatestSeasonScores: Array<string>, totalScore: number) {
       this.rankings = {};
       this.name = name;
       this.results = {};
       this.teamSeasons = {};
-      this.latestSeasonScores = latestSeasonScores;
       this.totalScore = totalScore; // Todo: totalscore iga hooaja kohta eraldi... akki season klassis?
       this.color = this.assignColor(this.color);
+      this.normalizeGameScore(rawLatestSeasonScores);
     }
 
     assignColor(color) {
@@ -24,6 +24,19 @@ export class Team {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
       } else {
         return color;
+      }
+    }
+
+    normalizeGameScore(scores: string[], seasonName: string | undefined=undefined): void {
+      for (let i = 0; i < scores.length - 1; i++) {
+        if (scores[i] === '') {
+          scores[i] = '0';
+        }
+      }
+      if (seasonName === undefined) {
+        this.latestSeasonScores = scores;
+      } else {
+        this.results[seasonName] = scores;
       }
     }
 }
