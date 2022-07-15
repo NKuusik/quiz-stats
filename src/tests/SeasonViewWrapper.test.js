@@ -9,8 +9,6 @@ import { Team } from '../classes/EntityChildren/Team';
 import { Season } from '../classes/EntityChildren/Season';
 import {render, fireEvent} from '@testing-library/react';
 
-// Todo: Test state change with Enzyme
-
 const testTeam = new Team("Fake team", [1, 2], 3);
 testTeam.results["Test Season"] = [3, 4]
 

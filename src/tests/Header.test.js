@@ -8,15 +8,6 @@ import Header from '../components/Header';
 import {screen} from '@testing-library/dom';
 import {render} from '@testing-library/react';
 
-
-function chooseViewTest (chosenView, activeView) {
-  if (chosenView === activeView) {
-    return "";
-  } else {
-    return chosenView;
-  }
-}
-
 it('default renders correctly', () => {
   const tree = renderer
       .create(<Header activeView="" choice={""} />)
