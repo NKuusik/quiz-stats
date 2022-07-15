@@ -2,7 +2,7 @@
 
 exports[`default renders correctly 1`] = `
 <div
-  id="menu-bar-container"
+  className="menu-bar-container"
 >
   <div
     className="header-vertical-alignment"
@@ -28,7 +28,7 @@ exports[`default renders correctly 1`] = `
 
 exports[`season renders correctly 1`] = `
 <div
-  id="menu-bar-container"
+  className="menu-bar-container"
 >
   <div
     className="header-vertical-alignment"
@@ -54,7 +54,7 @@ exports[`season renders correctly 1`] = `
 
 exports[`team renders correctly 1`] = `
 <div
-  id="menu-bar-container"
+  className="menu-bar-container"
 >
   <div
     className="header-vertical-alignment"

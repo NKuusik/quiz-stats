@@ -2,7 +2,7 @@
 
 exports[`renders correctly with Seasons 1`] = `
 <div
-  id="menu-bar-container"
+  className="menu-bar-container"
 >
   <div
     className="header-vertical-alignment"
@@ -35,7 +35,7 @@ exports[`renders correctly with Seasons 1`] = `
 
 exports[`renders correctly with Teams 1`] = `
 <div
-  id="menu-bar-container"
+  className="menu-bar-container"
 >
   <div
     className="header-vertical-alignment"
@@ -60,7 +60,7 @@ exports[`renders correctly with Teams 1`] = `
       className="entry-selection"
       onClick={[Function]}
     >
-      Fake team
+      1
     </div>
   </div>
 </div>

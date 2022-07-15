@@ -3,12 +3,11 @@ import { Season } from "./Season";
 
 export class Team extends Entity {
     rankings: {[seasonName: string]: number};
-    name: string;
     latestSeasonScores: Array<string>;
     results: {[seasonName: string]: any[]};
     teamSeasons: {[seasonName: string]: Season}
     totalScore: number;
-    color: string;
+
 
     constructor(name: string, rawLatestSeasonScores: Array<string>, totalScore: number) {
       super(name);

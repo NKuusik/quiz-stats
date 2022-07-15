@@ -10,12 +10,14 @@ exports[`default renders correctly 1`] = `
   </h1>
   <button
     className="button-chart-type"
+    id="chart-button-active"
     onClick={[Function]}
   >
     See points per season
   </button>
   <button
     className="button-chart-type"
+    id=""
     onClick={[Function]}
   >
     See points across seasons
@@ -34,12 +36,14 @@ exports[`only 3 seasons are displayed 1`] = `
   </h1>
   <button
     className="button-chart-type"
+    id="chart-button-active"
     onClick={[Function]}
   >
     See points per season
   </button>
   <button
     className="button-chart-type"
+    id=""
     onClick={[Function]}
   >
     See points across seasons

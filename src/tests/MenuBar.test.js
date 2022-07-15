@@ -5,7 +5,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import MenuBar from '../components/MenuBar';
-import {Team} from '../classes/Team';
+import {Team} from '../classes/EntityChildren/Team';
 import {render, fireEvent} from '@testing-library/react';
 
 const category = {};

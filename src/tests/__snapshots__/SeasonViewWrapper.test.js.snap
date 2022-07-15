@@ -3,12 +3,13 @@
 exports[`default renders correctly 1`] = `
 <div
   className="view-wrapper"
+  id="undefined"
 >
   <div
     className="category-selection"
   >
     <div
-      id="menu-bar-container"
+      className="menu-bar-container"
     >
       <div
         className="header-vertical-alignment"
