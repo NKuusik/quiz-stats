@@ -5,11 +5,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import TeamViewWrapper from '../components/TeamViewWrapper';
-import {Team} from '../classes/Team';
+import {Team} from '../classes/EntityChildren/Team';
 import {render, fireEvent} from '@testing-library/react';
+import {Season} from '../classes/EntityChildren/Season';
 
-const testTeam = new Team(1, "Fake team", [1, 2], 3);
+const testTeam = new Team("Fake team", [1, 2], 3);
+const testSeason = new Season("SeasonNumber");
 testTeam.results["SeasonNumber"] = [3, 4]
+testTeam.teamSeasons["SeasonNumber"] = testSeason;
 
 let testTeams = {
   "Fake team": testTeam

@@ -7,12 +7,11 @@ import renderer from 'react-test-renderer';
 import SeasonViewWrapper from '../components/SeasonViewWrapper';
 import { Team } from '../classes/EntityChildren/Team';
 import { Season } from '../classes/EntityChildren/Season';
-import {screen} from '@testing-library/dom';
 import {render, fireEvent} from '@testing-library/react';
 
 // Todo: Test state change with Enzyme
 
-const testTeam = new Team(1, "Fake team", [1, 2], 3);
+const testTeam = new Team("Fake team", [1, 2], 3);
 testTeam.results["Test Season"] = [3, 4]
 
 let testTeams = {

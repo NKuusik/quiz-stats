@@ -1,7 +1,6 @@
 
 
 import { Team } from '../classes/EntityChildren/Team';
-import { Entity } from '../classes/Entity';
 
 const {parseData: parseData} = require('../scripts/readData');
 

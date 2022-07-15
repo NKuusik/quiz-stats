@@ -4,7 +4,7 @@ import MenuBar from '../components/MenuBar';
 import { Team }  from '../classes/EntityChildren/Team';
 import { Season } from '../classes/EntityChildren/Season';
 
-const testTeam = new Team(1, "Fake team", [1, 2], 3);
+const testTeam = new Team("Fake team", [1, 2], 3);
 testTeam.results["SeasonNumber"] = [3, 4]
 
 let testTeams = {

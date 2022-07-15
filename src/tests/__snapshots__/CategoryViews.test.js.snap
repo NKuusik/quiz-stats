@@ -60,7 +60,7 @@ exports[`renders correctly with Teams 1`] = `
       className="entry-selection"
       onClick={[Function]}
     >
-      1
+      Fake team
     </div>
   </div>
 </div>

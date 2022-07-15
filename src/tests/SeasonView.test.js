@@ -1,12 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SeasonView from '../components/SeasonView';
-import {Team} from '../classes/Team';
+import {Team} from '../classes/EntityChildren/Team';
 import {Season} from '../classes/EntityChildren/Season';
 
 // Todo: kusagil peaks kontrollima, et Team place ei kattu Seasoni ulatuses.
 
-const testTeam = new Team(1, "Fake team", [1, 2, 4, 5, 6], 3);
+const testTeam = new Team("Fake team", [1, 2, 4, 5, 6], 3);
 const secondTeam = new Team(2, "Second team", [1, 2, 4, 5, 6], 3);
 const thirdTeam = new Team(3, "Third team", [1, 2, 4, 5, 6], 3);
 const fourthTeam = new Team(4, "Fourth team", [1, 2, 4, 5, 6], 3);

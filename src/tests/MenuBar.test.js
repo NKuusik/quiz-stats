@@ -43,10 +43,10 @@ test('value changes in SearchField input', () => { // Triviaalne test, aga kui j
 });
 
 test('entries are shown', () => {
-  const firstTeam = new Team(1, "Fake team", [1, 2], 3);
+  const firstTeam = new Team("Fake team", [1, 2], 3);
   firstTeam.results["SeasonNumber"] = [3, 4]
 
-  const secondTeam = new Team(1, "secondTeam", [1, 2], 3);
+  const secondTeam = new Team("secondTeam", [1, 2], 3);
   firstTeam.results["SeasonNumber"] = [3, 4]
   secondTeam.results["SeasonNumber"] = [3, 4]
   
@@ -62,10 +62,10 @@ test('entries are shown', () => {
 });
 
 test('entries correspond to value on SearchField input', () => {
-  const firstTeam = new Team(1, "Fake team", [1, 2], 3);
+  const firstTeam = new Team("Fake team", [1, 2], 3);
   firstTeam.results["SeasonNumber"] = [3, 4]
 
-  const secondTeam = new Team(1, "secondTeam", [1, 2], 3);
+  const secondTeam = new Team("secondTeam", [1, 2], 3);
   firstTeam.results["SeasonNumber"] = [3, 4]
   secondTeam.results["SeasonNumber"] = [3, 4]
   

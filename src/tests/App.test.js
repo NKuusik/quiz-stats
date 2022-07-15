@@ -1,6 +1,6 @@
 import App  from '../App';
-import {Team} from '../classes/Team';
-import * as rawData from '../resources/seasons';
+import {Team} from '../classes/EntityChildren/Team';
+import * as rawData from '../resources/seasons'; // Selle asemel testmaterjal
 
 
 // No snapshot of App for now. 
@@ -11,9 +11,13 @@ test('updateTeamData adds new Team', () => {
   const app = new App(rawData);
   let teamsState = app.state.teams;
   expect(Object.keys(teamsState).length).toBe(0);
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
   const seasonName = "SeasonName";
-  teamsState = app.updateTeamData(app.state.teams, testTeam, seasonName);
+  const teamRanking = 1;
+  const currentTeamName = "Fake team";
+  const teamLatestSeasonScores = [1, 2];
+  const teamTotalScore = 3;
+  teamsState = app.updateTeamData(app.state.teams, teamRanking, currentTeamName, 
+    teamLatestSeasonScores, teamTotalScore, seasonName);
   expect(Object.keys(teamsState).length).toBe(1);
   expect(teamsState["Fake team"].name).toBe('Fake team');
   expect(teamsState["Random name"]).toBe(undefined);
@@ -23,22 +27,28 @@ test('updateTeamData modifies data of existing Team', () => {
   const app = new App(rawData);
   let teamsState = app.state.teams;
   expect(Object.keys(teamsState).length).toBe(0);
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
   const seasonName = "SeasonName";
-  teamsState = app.updateTeamData(app.state.teams, testTeam, seasonName);
+  const teamRanking = 1;
+  const currentTeamName = "Fake team";
+  const teamLatestSeasonScores = [1, 2];
+  const teamTotalScore = 3;
+  teamsState = app.updateTeamData(app.state.teams, teamRanking, currentTeamName, 
+    teamLatestSeasonScores, teamTotalScore, seasonName);
   expect(Object.keys(teamsState).length).toBe(1);
   expect(teamsState["Fake team"].name).toBe('Fake team');
   expect(teamsState["Random name"]).toBe(undefined);
-  testTeam.latestSeasonScores = [3, 4];
+  let secondSeasonScores = [3, 4];
+  let secondSeasonRanking = 5;
+  let secondSeasonTotalScore = 7;
   const secondSeason = "SecondSeason";
-  teamsState = app.updateTeamData(app.state.teams, testTeam, secondSeason);
+  teamsState = app.updateTeamData(app.state.teams, secondSeasonRanking, currentTeamName, secondSeasonScores, secondSeasonTotalScore, secondSeason);
   expect(teamsState["Fake team"].results["SecondSeason"]).toStrictEqual([3, 4]);
 });
 
 test('seasonLength is initially set', () => {
   const app = new App(rawData);
   let seasonLength = 0;
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
+  const testTeam = new Team("Fake team", [1, 2], 3);
   seasonLength = app.setAndValidateSeasonLength(0, testTeam.latestSeasonScores);
   expect(seasonLength).toBe(2);
 });
@@ -46,9 +56,9 @@ test('seasonLength is initially set', () => {
 test('correct seasonLength is validated', () => {
   const app = new App(rawData);
   let seasonLength = 0;
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
+  const testTeam = new Team("Fake team", [1, 2], 3);
   seasonLength = app.setAndValidateSeasonLength(seasonLength, testTeam.latestSeasonScores);
-  const secondTeam = new Team(1, "Second team", [2, 3], 3);
+  const secondTeam = new Team("Second team", [2, 3], 3);
   seasonLength = app.setAndValidateSeasonLength(seasonLength, secondTeam.latestSeasonScores);
   expect(seasonLength).toBe(2);
 });
@@ -56,9 +66,9 @@ test('correct seasonLength is validated', () => {
 test('error is thrown for incorrect seasonLength', () => {
   const app = new App(rawData);
   let seasonLength = 0;
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
+  const testTeam = new Team("Fake team", [1, 2], 3);
   seasonLength = app.setAndValidateSeasonLength(seasonLength, testTeam.latestSeasonScores);
-  const secondTeam = new Team(1, "Second team", [2, 3, 4], 3);
+  const secondTeam = new Team("Second team", [2, 3, 4], 3);
   expect(() => 
     app.setAndValidateSeasonLength(seasonLength, 
     secondTeam.latestSeasonScores)).toThrow();
@@ -66,27 +76,23 @@ test('error is thrown for incorrect seasonLength', () => {
 
 test('No error is thrown for valid season ranking', () => {
   const app = new App(rawData);
-  const testTeam = new Team(1, "Fake team", [1, 2], 3);
-  const secondTeam = new Team(2, "Second team", [2, 3], 3);
-  const seasonRanking = ["Fake team", "Second team"];
-  const teamsInSeason = {
-    "Fake team": testTeam,
-    "Second team": secondTeam
-  }
-  expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason)).not.toThrow();
+  const currentSeasonName = "TestSeason"
+  app.updateTeamData(app.state.teams, 1, "Fake team", [1, 2], 3, currentSeasonName);
+  app.updateTeamData(app.state.teams, 2, "Second team", [2, 0], 2, currentSeasonName);
+  const currentSeasonRanking = ["Fake team", "Second team"];
+  const teamsInSeason = ["Second team", "Fake team"];
+  expect(() => app.validateCurrentSeasonRanking(currentSeasonName, currentSeasonRanking, teamsInSeason)).not.toThrow();
 });
 
 test('Error is thrown due to a mismatch between the length of seasonRanking and teams in season', 
   () => {
     const app = new App(rawData);
-    const testTeam = new Team(1, "Fake team", [1, 2], 3);
-    const secondTeam = new Team(2, "Second team", [2, 3], 3);
+    const currentSeasonName = "TestSeason"
+    app.updateTeamData(app.state.teams, 1, "Fake team", [1, 2], 3, currentSeasonName);
+    app.updateTeamData(app.state.teams, 2, "Second team", [2, 0], 2, currentSeasonName);
     const seasonRanking = ["Fake team", "Second team", "Third team"];
-    const teamsInSeason = {
-      "Fake team": testTeam,
-      "Second team": secondTeam
-    }
-    expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason))
+    const teamsInSeason = ["Second team", "Fake team"];
+    expect(() => app.validateCurrentSeasonRanking(currentSeasonName, seasonRanking, teamsInSeason))
     .toThrow('The number of teams in season rankings does not match ' 
     + 'with the actual number of teams');
   });
@@ -94,12 +100,11 @@ test('Error is thrown due to a mismatch between the length of seasonRanking and 
   test('Error is thrown due to a team being present in season but not in seasonRanking', 
   () => {
     const app = new App(rawData);
-    const testTeam = new Team(1, "Fake team", [1, 2], 3);
-    const secondTeam = new Team(2, "Second team", [2, 3], 3);
+    const currentSeasonName = "TestSeason"
+    app.updateTeamData(app.state.teams, 1, "Fake team", [1, 2], 3, currentSeasonName);
+    app.updateTeamData(app.state.teams, 2, "Second team", [2, 0], 2, currentSeasonName);
     const seasonRanking = ["Second team"];
-    const teamsInSeason = {
-      "Fake team": testTeam
-    }
-    expect(() => app.validateCurrentSeasonRanking(seasonRanking, teamsInSeason))
+    const teamsInSeason = ["Fake team"];
+    expect(() => app.validateCurrentSeasonRanking(currentSeasonName, seasonRanking, teamsInSeason))
     .toThrow(`Fake team is not in place 1`);
   });
