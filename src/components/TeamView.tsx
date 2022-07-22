@@ -76,8 +76,6 @@ const TeamView = ({team, seasonNames}: MyProps) => {
     return [chartDataSet];
   }
 
-
-
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {team.name}</h1>

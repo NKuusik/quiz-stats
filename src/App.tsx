@@ -30,17 +30,17 @@ class App extends React.Component<MyProps, MyState> {
     };
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string, 
-    teamLatestSeasonScores: string[], 
-    teamTotalScore: number, currentSeasonName: string): 
+  updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
+    teamLatestSeasonScores: string[],
+    teamTotalScore: number, currentSeasonName: string):
     {[teamName: string]: Team} {
-      if (!(currentTeamName in allTeams)) {
-        allTeams[currentTeamName] = new Team(currentTeamName, teamLatestSeasonScores, teamTotalScore);
-      }
-      allTeams[currentTeamName].normalizeGameScore(teamLatestSeasonScores, currentSeasonName);
-      allTeams[currentTeamName].rankings[currentSeasonName] = teamRanking;
-      return allTeams;
+    if (!(currentTeamName in allTeams)) {
+      allTeams[currentTeamName] = new Team(currentTeamName, teamLatestSeasonScores, teamTotalScore);
     }
+    allTeams[currentTeamName].normalizeGameScore(teamLatestSeasonScores, currentSeasonName);
+    allTeams[currentTeamName].rankings[currentSeasonName] = teamRanking;
+    return allTeams;
+  }
 
   setAndValidateSeasonLength(currentSeasonLength: number,
     latestSeasonScores: string[]): number {
@@ -75,25 +75,27 @@ class App extends React.Component<MyProps, MyState> {
         })
         .then((parsedData: { data: any[]; }) => {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
-          let currentSeasonTeamNames: string[] = [];
+          const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            let rawTeamData: string[] =  parsedData.data[i];
-            let teamRanking: number = parseInt(rawTeamData[0]);
-            let teamName: string = rawTeamData[1];
-            let teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
-            let teamTotalScore: number = parseInt(rawTeamData[rawTeamData.length - 1]);
-            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking, 
+            const rawTeamData: string[] = parsedData.data[i];
+            const teamRanking: number = parseInt(rawTeamData[0]);
+            const teamName: string = rawTeamData[1];
+            const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
+            const teamTotalScore: number = parseInt(rawTeamData[rawTeamData.length - 1]);
+            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking,
               teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
             this.setState({teams: allTeams});
             currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
-            currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName]- 1] = teamName;
+            currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName] - 1] = teamName;
           }
           this.validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames);
           for (const teamName of currentSeasonTeamNames) {
             currentSeason.teams[teamName] = this.state.teams[teamName];
-            this.state.teams[teamName].teamSeasons[currentSeasonName] = currentSeason;
+            const teamsState = {...this.state.teams};
+            teamsState[teamName].teamSeasons[currentSeasonName] = currentSeason;
+            this.setState({teams: teamsState});
           }
           parsedSeasons[currentSeasonName] = currentSeason;
         });
@@ -103,10 +105,10 @@ class App extends React.Component<MyProps, MyState> {
 
   chooseView(chosenView : string) {
     if (chosenView === this.state.activeView) {
-      this.setState({viewTransition: false})
+      this.setState({viewTransition: false});
     } else {
       this.setState({activeView: chosenView});
-      this.setState({viewTransition: true})
+      this.setState({viewTransition: true});
     }
   }
 
@@ -136,7 +138,7 @@ class App extends React.Component<MyProps, MyState> {
         >
           {() => view}
         </Transition>
-                   
+
       </div>
     );
   }

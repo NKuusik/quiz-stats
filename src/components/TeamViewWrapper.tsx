@@ -10,13 +10,8 @@ type MyProps = {
   fadeOut: string;
 }
 
-type MyState = {
-  activeTeam : Team | null
-}
-
 function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   const [activeTeam, setActiveTeam] = useState<Team | null>(null);
-
 
   function chooseTeam(chosenTeam: Team) {
     if (activeTeam === chosenTeam) {
@@ -25,28 +20,20 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
       setActiveTeam(chosenTeam);
     }
   }
-
-
-    let teamView;
-    if (activeTeam != null) {
-      teamView = <TeamView team={activeTeam} seasonNames={seasonNames} />;
-    }
-    return (
+  let teamView;
+  if (activeTeam != null) {
+    teamView = <TeamView team={activeTeam} seasonNames={seasonNames} />;
+  }
+  return (
       <div id={styles[fadeOut]} className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
-        <MenuBar viewType={'team'} choice={(chosenTeam) => {chooseTeam(chosenTeam)}} category={teams}/>
+        <MenuBar viewType={'team'} choice={(chosenTeam) => { chooseTeam(chosenTeam); }} category={teams}/>
         </div>
         <div className={styles['chart-view']}>
         {teamView}
         </div>
       </div>
-    );
-  }
-
-
-
-
-
-
+  );
+}
 
 export default TeamViewWrapper;

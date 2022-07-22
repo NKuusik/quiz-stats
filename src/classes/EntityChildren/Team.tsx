@@ -1,5 +1,5 @@
-import { Entity } from "../Entity";
-import { Season } from "./Season";
+import {Entity} from '../Entity';
+import {Season} from './Season';
 
 export class Team extends Entity {
     rankings: {[seasonName: string]: number};
@@ -7,7 +7,6 @@ export class Team extends Entity {
     results: {[seasonName: string]: any[]};
     teamSeasons: {[seasonName: string]: Season}
     totalScore: number;
-
 
     constructor(name: string, rawLatestSeasonScores: Array<string>, totalScore: number) {
       super(name);
@@ -18,7 +17,7 @@ export class Team extends Entity {
       this.normalizeGameScore(rawLatestSeasonScores);
     }
 
-    normalizeGameScore(scores: string[], seasonName: string | undefined=undefined): void {
+    normalizeGameScore(scores: string[], seasonName: string | undefined = undefined): void {
       for (let i = 0; i < scores.length - 1; i++) {
         if (scores[i] === '') {
           scores[i] = '0';

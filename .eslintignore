@@ -1,4 +1,5 @@
 **/*.json
+**/*.scss
 **/*.css
 **/*.csv
 **/*.txt
