@@ -36,4 +36,22 @@ test("Active season is changed in menu bar", () => {
   const entriesInMenuBar = element.container.querySelector('.entry-selection');
   fireEvent.click(entriesInMenuBar);
   expect(element.getByRole('heading')).toHaveTextContent('Stats for Test Season');
-});     
+});   
+
+test("clicking on the currently active season toggles the value off", () => {
+  const element = render(<SeasonViewWrapper seasons={testSeasons} teams={testTeams}/>);
+  const entriesInMenuBar = element.container.querySelector('.entry-selection');
+  fireEvent.click(entriesInMenuBar);
+  expect(element.getByRole('heading')).toHaveTextContent('Stats for Test Season');
+  fireEvent.click(entriesInMenuBar);
+
+  // Trying to access the heading now will throw error as no heading exists.
+  let thrownError = null;
+  try {
+    element.getByRole('heading');
+  } catch (error) {
+    thrownError = error;
+  }
+
+  expect(thrownError).toBeInstanceOf(Error);
+});  

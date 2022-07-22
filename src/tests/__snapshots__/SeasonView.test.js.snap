@@ -24,30 +24,6 @@ exports[`default renders correctly 1`] = `
 </div>
 `;
 
-exports[`only 3 teams are shown 1`] = `
-<div>
-  <h1>
-    Stats for 
-    Second Season
-  </h1>
-  <button
-    className="button-chart-type"
-    id="chart-button-active"
-    onClick={[Function]}
-  >
-    See game-by-game
-  </button>
-  <button
-    className="button-chart-type"
-    id=""
-    onClick={[Function]}
-  >
-    See incrementally
-  </button>
-  &lt;MockChart /&gt;
-</div>
-`;
-
 exports[`teams are hidden by default after third team 1`] = `
 <div>
   <h1>

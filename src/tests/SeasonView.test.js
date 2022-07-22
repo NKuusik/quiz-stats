@@ -51,13 +51,17 @@ it('teams are hidden by default after third team', () => {
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
-    
-test('cumulative view is triggered', () => { // Siin võiks veel LineCharti titleContent propsi kontrollida. Peab vastavaks muutma MockCharti
+
+test('active button can be toggled', () => {
   const element = render(<SeasonView season={testSeason}></SeasonView>);
   let activeButton = element.container.querySelector("#chart-button-active");
+  const seasonViewButton = element.container.querySelectorAll(".button-chart-type")[0];
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart-type")[1];
-  expect(cumulativeViewButton).not.toBe(activeButton);
+  expect(seasonViewButton).toBe(activeButton);
   fireEvent.click(cumulativeViewButton);
   activeButton = element.container.querySelector("#chart-button-active");
   expect(cumulativeViewButton).toBe(activeButton);
+  fireEvent.click(seasonViewButton);
+  activeButton = element.container.querySelector("#chart-button-active");
+  expect(seasonViewButton).toBe(activeButton);
 });

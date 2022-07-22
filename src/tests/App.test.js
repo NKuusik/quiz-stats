@@ -1,3 +1,5 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
 import App  from '../App';
 import {Team} from '../classes/EntityChildren/Team';
 import * as rawData from '../resources/seasons'; // Selle asemel testmaterjal
@@ -108,3 +110,18 @@ test('Error is thrown due to a mismatch between the length of seasonRanking and 
     expect(() => app.validateCurrentSeasonRanking(currentSeasonName, seasonRanking, teamsInSeason))
     .toThrow(`Fake team is not in place 1`);
   });
+
+
+  /** // 
+   * 
+   * vt https://stackoverflow.com/questions/42773502/async-component-snapshot-using-jest-and-redux
+   * 
+   * it('renders correctly', () => {
+    const tree = renderer
+    .create(<App rawData={rawData} />)
+    .toJSON();
+  expect(tree).toMatchSnapshot(); 
+  });
+
+   */
+  
