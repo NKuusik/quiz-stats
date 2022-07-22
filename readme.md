@@ -14,3 +14,7 @@ Requires Yarn: https://yarnpkg.com/
 And run "yarn vagrant".
 
 2. If you're not using vagrant, run "yarn start".
+
+Diagram model for key classes:
+
+[Class Diagram](https://github.com/NKuusik/quiz-stats/blob/master/models/base-classes.png)
