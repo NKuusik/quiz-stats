@@ -5,7 +5,6 @@ import styles from '../style.css';
 import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 
-// Todo: liiga palju korduvat koodi: äkki parem üks generic View komponent?
 type MyProps = {
   season : Season;
 }
