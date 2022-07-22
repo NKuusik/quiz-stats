@@ -5,5 +5,6 @@ import season7 from './7.season.csv';
 import season8 from './8.season.csv';
 import season9 from './9.season.csv';
 import season10 from './10.season.csv';
+import season11 from './11.season.csv';
 
-export {season4, season5, season6, season7, season8, season9, season10};
+export {season4, season5, season6, season7, season8, season9, season10, season11};
