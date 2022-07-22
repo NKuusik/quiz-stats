@@ -3,6 +3,7 @@ import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {ChartDataSet} from '../classes/ChartDataSet';
+import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 
 type MyProps = {
   team: Team;
@@ -76,22 +77,15 @@ const TeamView = ({team, seasonNames}: MyProps) => {
     return [chartDataSet];
   }
 
-  function visualizeActiveButton(activeButton : string): string { // Todo: refaktoreerida nii, et on mingi üldine aktiivse nupu valimise funktsioon?
-    if ((cumulativeView === false && activeButton === 'game-by-game') || 
-        (cumulativeView === true && activeButton === 'cumulative')) {
-      return 'chart-button-active';
-    } else {
-      return '';
-    }
-  }
+
 
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {team.name}</h1>
-            <button id={styles[visualizeActiveButton('game-by-game')]} className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
+            <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See points per season
             </button>
-            <button id={styles[visualizeActiveButton('cumulative')]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
+            <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
 
