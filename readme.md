@@ -17,4 +17,4 @@ And run "yarn vagrant".
 
 Diagram model for key classes:
 
-[Class Diagram](https://github.com/NKuusik/quiz-stats/blob/master/models/base-classes.png)
+![Class Diagram](https://github.com/NKuusik/quiz-stats/blob/master/models/base-classes.png)
