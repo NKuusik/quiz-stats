@@ -1,0 +1,35 @@
+// Generated using PlantUML: https://plantuml.com/
+
+abstract Entity {
++ name: string
++ color: string
+assignColor()
+}
+
+class Season {
++ totalGames: number;
++ ranking: string[]
++ teams: Object
+}
+
+class Team {
++ lastSeasonScores: string[]
++ results: {[seasonName: string]: any[]}
++ teamSeasons: {[seasonName: string]: Season}
++ rankings: {[seasonName: string]: number}
++ totalScore: number;
+}
+
+Entity <|-- Team
+Entity <|-- Season
+Team "0..*" -- "0..*" Season
+
+class ChartDataSet {
++ hidden: boolean
++ label: string
++ data: number[]
++ backgroundColor: string
++ borderColor: string
++ borderWidth: number
++ tension: number
+}
