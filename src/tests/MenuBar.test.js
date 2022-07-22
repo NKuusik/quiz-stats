@@ -34,7 +34,7 @@ it('team renders correctly', () => {
        expect(tree).toMatchSnapshot(); 
      });
 
-test('value changes in SearchField input', () => { // Triviaalne test, aga kui jatta, siis äkki SearchFieldi sees?
+test('value changes in SearchField input', () => {
   const menuBar = render((<MenuBar viewType="" category={category} choice={choice}/>));
   const searchField = menuBar.container.querySelector('input');
   expect(searchField.value).toBe('');
@@ -99,15 +99,3 @@ test('entries correspond to value on SearchField input', () => {
   fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
   expect(entriesAsDOM.length).toBe(2);
 });
-
-/* Todo: Uuri, kuidas kontrollida, kas form submission toimus või mitte
-
-test('Default submission with Enter is disabled for SearchField input', () => {
-  const menuBar = render((<MenuBar viewType="" category={category} choice={choice}/>));
-  const searchField = menuBar.container.querySelector('input');
-  expect(searchField.value).toBe('');
-  fireEvent.change(searchField, {target: {value: 'gad'}});
-  fireEvent.keyDown(searchField, {key: 'Enter', code: 'Enter', charCode: 13})
-  expect(menuBar.handleMouseUp).toHaveBeenCalled();
-});
-**/
