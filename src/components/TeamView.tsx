@@ -14,7 +14,7 @@ const TeamView = ({team, seasonNames}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
 
-  function generateLabelsSeason(seasonsAsObject: Object): string[] {
+  function generateLabels(seasonsAsObject: Object): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i -> vajaks uuesti Season propsi
@@ -39,17 +39,16 @@ const TeamView = ({team, seasonNames}: MyProps) => {
 
   function generateDataSetsSeason(): ChartDataSet[] {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
-    let count : number = 0;
     for (const seasonName of Object.keys(team.results)) {
-      count++;
       const dataColor : string = team.teamSeasons[seasonName].color;
       const label = `# of points in ${seasonName}`;
       const chartDataSet = new ChartDataSet(false, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);
       arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
-      if (count > defaultDataSetsShown) {
-        arrayWithSeasonPoints[count - 1].hidden = true;
-      }
+    }
+
+    for (let i = defaultDataSetsShown; i < arrayWithSeasonPoints.length; i++) {
+      arrayWithSeasonPoints[i].hidden = true;
     }
     return arrayWithSeasonPoints;
   }
@@ -91,7 +90,7 @@ const TeamView = ({team, seasonNames}: MyProps) => {
 
             {
             !cumulativeView
-              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsSeason(team.results)} />
+              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabels(team.results)} />
               : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
             }
         </div>
