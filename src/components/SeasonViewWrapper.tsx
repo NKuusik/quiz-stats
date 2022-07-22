@@ -9,7 +9,7 @@ type MyProps = {
   fadeOut: string;
 }
 
-function SeasonViewWrapper({seasons, fadeOut: classNameProp} : MyProps) {
+function SeasonViewWrapper({seasons, fadeOut} : MyProps) {
   const [activeSeason, setActiveSeason] = useState<Season | null>(null);
 
   function chooseSeason(chosenSeason: Season) {
@@ -25,7 +25,7 @@ function SeasonViewWrapper({seasons, fadeOut: classNameProp} : MyProps) {
   }
 
   return (
-    <div id={styles[classNameProp]} className={styles['view-wrapper']}>
+    <div id={styles[fadeOut]} className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>
         <MenuBar viewType={'season'} category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
       </div>

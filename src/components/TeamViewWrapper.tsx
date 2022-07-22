@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TeamView from './TeamView';
 import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
@@ -14,35 +14,27 @@ type MyState = {
   activeTeam : Team | null
 }
 
-class TeamViewWrapper extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props);
-    this.state = {
-      activeTeam: null
-    };
-  };
+function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
+  const [activeTeam, setActiveTeam] = useState<Team | null>(null);
 
-  chooseTeam(chosenTeam: Team) {
-    if (this.state.activeTeam === chosenTeam) {
-      this.setState({
-        activeTeam: null
-      });
+
+  function chooseTeam(chosenTeam: Team) {
+    if (activeTeam === chosenTeam) {
+      setActiveTeam(null);
     } else {
-      this.setState({
-        activeTeam: chosenTeam
-      });
+      setActiveTeam(chosenTeam);
     }
   }
 
-  render() {
+
     let teamView;
-    if (this.state.activeTeam != null) {
-      teamView = <TeamView team={this.state.activeTeam} seasonNames={this.props.seasonNames} />;
+    if (activeTeam != null) {
+      teamView = <TeamView team={activeTeam} seasonNames={seasonNames} />;
     }
     return (
-      <div id={styles[this.props.fadeOut]} className={styles['view-wrapper']}>
+      <div id={styles[fadeOut]} className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
-        <MenuBar viewType={'team'} choice={this.chooseTeam.bind(this)} category={this.props.teams}/>
+        <MenuBar viewType={'team'} choice={(chosenTeam) => {chooseTeam(chosenTeam)}} category={teams}/>
         </div>
         <div className={styles['chart-view']}>
         {teamView}
@@ -50,6 +42,11 @@ class TeamViewWrapper extends React.Component<MyProps, MyState> {
       </div>
     );
   }
-}
+
+
+
+
+
+
 
 export default TeamViewWrapper;
