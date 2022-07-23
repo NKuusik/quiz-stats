@@ -12,6 +12,8 @@ type MyProps = {
 const SeasonView = ({season}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
+  let totalMaxPoints = 0;
+
 
   function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
     if (currentCount > defaultDataSetsShown) {
@@ -32,6 +34,12 @@ const SeasonView = ({season}: MyProps) => {
         incrementalPoints.push(incrementedValue);
       }
     }
+    let currentMaxPoints = incrementalPoints[incrementalPoints.length - 1];
+
+    if (currentMaxPoints > totalMaxPoints) {
+      totalMaxPoints = currentMaxPoints;
+    }
+
     const label = `${teamName}`;
     const chartDataSet = new ChartDataSet(isHidden, label, incrementalPoints, dataColor, dataColor, 1.5, 0.5);
     return chartDataSet;
@@ -88,11 +96,10 @@ const SeasonView = ({season}: MyProps) => {
             !cumulativeView
               ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabels()} maxValue={10}/>
 
-              : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={350}/>
-
+              : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={totalMaxPoints + 10}/>
             }
             {
-              /* Todo: change maxValue dynamic in incremental points chart to correlate with the highest value of points.. */
+              
             }
         </div>
   );

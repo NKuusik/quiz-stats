@@ -18,7 +18,7 @@ export class Team extends Entity {
     }
 
     normalizeGameScore(scores: string[], seasonName: string | undefined = undefined): void {
-      for (let i = 0; i < scores.length - 1; i++) {
+      for (let i = 0; i < scores.length; i++) {
         if (scores[i] === '') {
           scores[i] = '0';
         }
