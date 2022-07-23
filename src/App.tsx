@@ -82,7 +82,7 @@ class App extends React.Component<MyProps, MyState> {
             const teamRanking: number = parseInt(rawTeamData[0]);
             const teamName: string = rawTeamData[1];
             const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
-            const teamTotalScore: number = parseInt(rawTeamData[rawTeamData.length - 1]);
+            const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
             const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking,
               teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
             this.setState({teams: allTeams});

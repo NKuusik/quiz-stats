@@ -26,9 +26,9 @@ const SeasonView = ({season}: MyProps) => {
     const teamPoints: string[] = season.teams[teamName].results[season.name];
     for (let i = 0; i < teamPoints.length; i++) {
       if (i === 0) {
-        incrementalPoints.push(parseInt(teamPoints[i]));
+        incrementalPoints.push(parseFloat(teamPoints[i]));
       } else {
-        const incrementedValue = parseInt(teamPoints[i]) + incrementalPoints[i - 1];
+        const incrementedValue = parseFloat(teamPoints[i]) + incrementalPoints[i - 1];
         incrementalPoints.push(incrementedValue);
       }
     }
