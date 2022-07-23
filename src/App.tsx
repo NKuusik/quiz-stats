@@ -70,7 +70,7 @@ class App extends React.Component<MyProps, MyState> {
     const parsedSeasons: {[seasonName: string]: Season} = {};
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
-        .then((res: { data: string; }) => {
+        .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
         })
         .then((parsedData: { data: any[]; }) => {

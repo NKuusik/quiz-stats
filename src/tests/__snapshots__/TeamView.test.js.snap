@@ -22,7 +22,20 @@ exports[`default renders correctly 1`] = `
   >
     See points across seasons
   </button>
-  &lt;MockChart /&gt;
+  <div>
+    <p>
+      I am a mock chart.
+    </p>
+    <div
+      className="test-data"
+    >
+      3,4,2
+    </div>
+    <canvas
+      height="150"
+      width="400"
+    />
+  </div>
 </div>
 `;
 
@@ -48,6 +61,19 @@ exports[`only 3 seasons are displayed 1`] = `
   >
     See points across seasons
   </button>
-  &lt;MockChart /&gt;
+  <div>
+    <p>
+      I am a mock chart.
+    </p>
+    <div
+      className="test-data"
+    >
+      3,4,2
+    </div>
+    <canvas
+      height="150"
+      width="400"
+    />
+  </div>
 </div>
 `;

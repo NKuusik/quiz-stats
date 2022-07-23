@@ -20,7 +20,20 @@ exports[`default renders correctly 1`] = `
   >
     See incrementally
   </button>
-  &lt;MockChart /&gt;
+  <div>
+    <p>
+      I am a mock chart.
+    </p>
+    <div
+      className="test-data"
+    >
+      1,2,4.2,5,6
+    </div>
+    <canvas
+      height="150"
+      width="400"
+    />
+  </div>
 </div>
 `;
 
@@ -44,6 +57,19 @@ exports[`teams are hidden by default after third team 1`] = `
   >
     See incrementally
   </button>
-  &lt;MockChart /&gt;
+  <div>
+    <p>
+      I am a mock chart.
+    </p>
+    <div
+      className="test-data"
+    >
+      1,2,4,5,6
+    </div>
+    <canvas
+      height="150"
+      width="400"
+    />
+  </div>
 </div>
 `;
