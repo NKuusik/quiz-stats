@@ -4,15 +4,30 @@ import styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
+import TeamComparison from './TeamComparison';
 
 type MyProps = {
-  team: Team;
-  seasonNames: string[]
+  chosenTeam: Team;
+  seasonNames: string[];
+  allTeams : {[teamName: string]: Team};
 }
 
-const TeamView = ({team, seasonNames}: MyProps) => {
+const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
+  const [comparisonTeam, setComparisonTeam] = useState(undefined);
+  const [cumulativeViewMaxValue, setcumulativeViewMaxValue] = useState(0)
+
+  // selle peab resetima iga kord kui vahetada TeamViewWrapperist tiimi
+  // vt https://www.freecodecamp.org/news/react-changing-state-of-child-component-from-parent-8ab547436271/
+  function comparisonTeamHandler(input) {
+    setcumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
+    if (input === comparisonTeam) {
+      setComparisonTeam(undefined);
+    } else {
+      setComparisonTeam(input);
+    }
+  }
 
   function generateLabelsDefault(seasonsAsObject: Object): string[] {
     let longestSeason = [];
@@ -39,10 +54,10 @@ const TeamView = ({team, seasonNames}: MyProps) => {
 
   function generateDataSetsSeason(): ChartDataSet[] {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
-    for (const seasonName of Object.keys(team.results)) {
-      const dataColor : string = team.teamSeasons[seasonName].color;
+    for (const seasonName of Object.keys(chosenTeam.results)) {
+      const dataColor : string = chosenTeam.teamSeasons[seasonName].color;
       const label = `# of points in ${seasonName}`;
-      const chartDataSet = new ChartDataSet(false, label, team.results[seasonName], dataColor, dataColor, 1.5, 0.5);
+      const chartDataSet = new ChartDataSet(false, label, chosenTeam.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);
       arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
     }
@@ -53,43 +68,57 @@ const TeamView = ({team, seasonNames}: MyProps) => {
     return arrayWithSeasonPoints;
   }
 
-  function generateTotalPointsArray(labels: string[]): number[] {
+  function generateTotalPointsArray(team: Team, labels: string[]): number[] {
     const totalPointsAllSeasons : number[] = [];
     for (const seasonName of labels) {
       let sum: number = 0;
       if (team.results[seasonName] !== undefined) {
         const pointsAsNumbers = team.results[seasonName].map(Number);
-        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0);
+        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
       }
+      if (sum > cumulativeViewMaxValue) {
+        setcumulativeViewMaxValue(sum);
+      }
+      console.log(cumulativeViewMaxValue)
       totalPointsAllSeasons.push(sum);
     }
     return totalPointsAllSeasons;
   }
 
   const cumulativeLabels: string[] = generateLabelsCumulative();
-  const totalPoints: number[] = generateTotalPointsArray(cumulativeLabels);
 
-  function generateDataSetsCumualtive(): ChartDataSet[] { // Todo: võiks saada siin ja mujal võrrelda erinevaid tiime.
-    const dataColor : string = team.color;
-    const label: string = `Cumulative points for ${team.name}.`;
-    const chartDataSet = new ChartDataSet(false, label, totalPoints, dataColor, dataColor, 1.5, 0.5);
-    return [chartDataSet];
+
+  function generateDataSetsCumualtive(): ChartDataSet[] {
+    let displayedTeams = [chosenTeam, comparisonTeam];
+    let chartDataSets: any = []; // kitsam type def
+    for (let currentTeam of displayedTeams) {
+      if (currentTeam !== undefined) {
+        const totalPoints: number[] = generateTotalPointsArray(currentTeam, cumulativeLabels);
+        const dataColor : string = currentTeam.color; // idee: home team paksema joonega
+        const teamLabel: string = `Cumulative points for ${currentTeam.name}.`;
+        const chartDataSet = new ChartDataSet(false, teamLabel, totalPoints, dataColor, dataColor, 1.5, 0.5);
+        chartDataSets.push(chartDataSet);
+      }
+    }
+    return chartDataSets;
   }
+
+  console.log(cumulativeViewMaxValue)
 
   return (
         <div className={styles['team-view']}>
-            <h1>Stats for team {team.name}</h1>
+            <h1>Stats for team {chosenTeam.name}</h1>
             <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
               See points per season
             </button>
             <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
-
+            <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />
             {
             !cumulativeView
-              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(team.results)} />
-              : <LineChart maxValue={Math.max.apply(null, totalPoints) + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />
+              : <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
             }
         </div>
   );

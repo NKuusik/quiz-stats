@@ -3,6 +3,7 @@ import TeamView from './TeamView';
 import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
+import TeamComparison from './TeamComparison';
 
 type MyProps = {
   teams : {[teamName: string]: Team};
@@ -22,15 +23,15 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   }
   let teamView;
   if (activeTeam != null) {
-    teamView = <TeamView team={activeTeam} seasonNames={seasonNames} />;
+    teamView = <TeamView chosenTeam={activeTeam} seasonNames={seasonNames} allTeams={teams}/>;
   }
   return (
       <div id={styles[fadeOut]} className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
-        <MenuBar viewType={'team'} choice={(chosenTeam) => { chooseTeam(chosenTeam); }} category={teams}/>
+          <MenuBar viewType={'team'} choice={(chosenTeam) => { chooseTeam(chosenTeam); }} category={teams}/>
         </div>
         <div className={styles['chart-view']}>
-        {teamView}
+          {teamView}
         </div>
       </div>
   );
