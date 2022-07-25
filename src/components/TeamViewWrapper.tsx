@@ -3,7 +3,6 @@ import TeamView from './TeamView';
 import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
-import TeamComparison from './TeamComparison';
 
 type MyProps = {
   teams : {[teamName: string]: Team};

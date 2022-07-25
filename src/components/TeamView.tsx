@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import LineChart from '../subcomponents/LineChart';
 import styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
@@ -12,14 +12,14 @@ type MyProps = {
   allTeams : {[teamName: string]: Team};
 }
 
+// ...View komponendid väiksemaks?
 const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
   const [comparisonTeam, setComparisonTeam] = useState(undefined);
   const [cumulativeViewMaxValue, setcumulativeViewMaxValue] = useState(0)
 
-  // selle peab resetima iga kord kui vahetada TeamViewWrapperist tiimi
-  // vt https://www.freecodecamp.org/news/react-changing-state-of-child-component-from-parent-8ab547436271/
+
   function comparisonTeamHandler(input) {
     setcumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
     if (input === comparisonTeam) {
@@ -28,6 +28,12 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
       setComparisonTeam(input);
     }
   }
+
+  // Reset comparison team, when main team is changed
+  useEffect(() => {
+    setComparisonTeam(undefined);
+  }, [chosenTeam]);
+
 
   function generateLabelsDefault(seasonsAsObject: Object): string[] {
     let longestSeason = [];
@@ -79,7 +85,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
       if (sum > cumulativeViewMaxValue) {
         setcumulativeViewMaxValue(sum);
       }
-      console.log(cumulativeViewMaxValue)
       totalPointsAllSeasons.push(sum);
     }
     return totalPointsAllSeasons;
@@ -88,7 +93,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const cumulativeLabels: string[] = generateLabelsCumulative();
 
 
-  function generateDataSetsCumualtive(): ChartDataSet[] {
+  function generateDataSetsCumualtive(): ChartDataSet[] { // äkki ka average points per game view?
     let displayedTeams = [chosenTeam, comparisonTeam];
     let chartDataSets: any = []; // kitsam type def
     for (let currentTeam of displayedTeams) {
@@ -102,8 +107,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     }
     return chartDataSets;
   }
-
-  console.log(cumulativeViewMaxValue)
 
   return (
         <div className={styles['team-view']}>
