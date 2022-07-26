@@ -17,11 +17,11 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
   const [comparisonTeam, setComparisonTeam] = useState(undefined);
-  const [cumulativeViewMaxValue, setcumulativeViewMaxValue] = useState(0)
+  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState(0)
 
 
   function comparisonTeamHandler(input) {
-    setcumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
+    setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
     if (input === comparisonTeam) {
       setComparisonTeam(undefined);
     } else {
@@ -29,9 +29,10 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     }
   }
 
-  // Reset comparison team, when main team is changed
+  // Reset cumulative view, when main team is changed
   useEffect(() => {
     setComparisonTeam(undefined);
+    setCumulativeViewMaxValue(0); 
   }, [chosenTeam]);
 
 
@@ -83,7 +84,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
         sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
       }
       if (sum > cumulativeViewMaxValue) {
-        setcumulativeViewMaxValue(sum);
+        setCumulativeViewMaxValue(sum);
       }
       totalPointsAllSeasons.push(sum);
     }
@@ -117,11 +118,17 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
             <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
-            <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />
+
             {
             !cumulativeView
-              ? <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />
-              : <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+              ? 
+              <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />
+              :
+              <div>
+                <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} /> 
+                <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />
+              </div>
+
             }
         </div>
   );

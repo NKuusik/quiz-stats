@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
+import MenuBar from './MenuBar';
 
 type MyProps = {
     teams : {[teamName: string]: Team};
@@ -14,10 +15,8 @@ function TeamComparison({teams, comparisonTeamHandler}: MyProps) {
         <button onClick={() => comparisonTeamHandler(teams[team])}>{team}</button>);
     }
     return (
-        <div>
-            <p>I am team comparison</p>
-            {teamNames[0]}
-            {teamNames[1]}
+        <div id={styles['menu-bar-comparison']}>
+            <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam)} viewType={'team'}/>
         </div>
 
     );

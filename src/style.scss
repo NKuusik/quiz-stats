@@ -122,10 +122,19 @@ canvas {
     animation-duration: 500ms;
 }
 
-#menu-bar-selection {
+.menu-bar-selection {
     cursor: grab;
     height: 90vh;
     overflow: auto;
+}
+
+#menu-bar-comparison {
+    width: 20%;
+    height: 10%;
+
+    .menu-bar-selection {
+        height: 50px;
+    }
 }
 
 #header-active {
