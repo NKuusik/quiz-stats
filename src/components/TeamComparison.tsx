@@ -16,7 +16,7 @@ function TeamComparison({teams, comparisonTeamHandler}: MyProps) {
     }
     return (
         <div id={styles['menu-bar-comparison']}>
-            <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam)} viewType={'team'}/>
+            <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam)} viewType={'comparison'}/>
         </div>
 
     );

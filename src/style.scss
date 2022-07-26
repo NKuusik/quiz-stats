@@ -4,6 +4,8 @@ $default-background-color: rgb(33, 35, 75);
 $canvas-menu-bar-background-color: #161833;
 $header-button-color: rgb(230, 46, 229);
 $secondary-color: #B1B5EF;
+$default-border-radius: 15px;
+$default-background-gradient: linear-gradient(#433A65, #302A62);
 
 body {
     background-color: $default-background-color;
@@ -14,7 +16,7 @@ body {
 
 button {
     margin-bottom: 10px;
-    border-radius: 15px;
+    border-radius: $default-border-radius;
     padding: 15px;
 }
 
@@ -92,7 +94,7 @@ canvas {
     margin-right: 10px;
     border: none;
     color: white;
-    background-image: linear-gradient(#433A65, #302A62);
+    background-image: $default-background-gradient;
 }
 
 #fade-out {
@@ -130,10 +132,21 @@ canvas {
 
 #menu-bar-comparison {
     width: 20%;
-    height: 10%;
+    height: 20%;
+    float: right;
+    margin-bottom: 50px;
 
     .menu-bar-selection {
-        height: 50px;
+        height: 8vh;
+    }
+
+    .menu-bar-container {
+        border-radius: $default-border-radius;
+        background-image: $default-background-gradient;
+    }
+
+    .entry-selection {
+        font-size: 15px;
     }
 }
 
