@@ -9,14 +9,9 @@ type MyProps = {
 }
 
 function TeamComparison({teams, comparisonTeamHandler}: MyProps) {
-    let teamNames: any = []
-    for (let team of Object.keys(teams)) {
-        teamNames.push(
-        <button onClick={() => comparisonTeamHandler(teams[team])}>{team}</button>);
-    }
     return (
         <div id={styles['menu-bar-comparison']}>
-            <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam)} viewType={'comparison'}/>
+            <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam.name)} viewType={'comparison'}/>
         </div>
 
     );

@@ -16,22 +16,25 @@ type MyProps = {
 const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
-  const [comparisonTeam, setComparisonTeam] = useState(undefined);
+  const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState(0)
 
 
-  function comparisonTeamHandler(input) {
+  function comparisonTeamHandler(teamName: string): void { // valista vordlus iseendaga.
+    console.log(teamName);
     setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
-    if (input === comparisonTeam) {
-      setComparisonTeam(undefined);
+    let comparisonTeamsInstance = comparisonTeams;
+    if (comparisonTeams.hasOwnProperty(teamName)) {
+      delete comparisonTeamsInstance[teamName];
     } else {
-      setComparisonTeam(input);
+      comparisonTeamsInstance[teamName] = allTeams[teamName];
     }
+    setComparisonTeams(comparisonTeamsInstance);
   }
 
   // Reset cumulative view, when main team is changed
   useEffect(() => {
-    setComparisonTeam(undefined);
+    setComparisonTeams({});
     setCumulativeViewMaxValue(0); 
   }, [chosenTeam]);
 
@@ -95,7 +98,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
 
   function generateDataSetsCumualtive(): ChartDataSet[] { // äkki ka average points per game view?
-    let displayedTeams = [chosenTeam, comparisonTeam];
+    let displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
     let chartDataSets: any = []; // kitsam type def
     for (let currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
