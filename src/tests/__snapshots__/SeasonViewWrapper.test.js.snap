@@ -20,14 +20,14 @@ exports[`default renders correctly 1`] = `
             onChange={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
-            placeholder="Search season"
+            placeholder="season"
             type="text"
             value=""
           />
         </form>
       </div>
       <div
-        id="menu-bar-selection"
+        className="menu-bar-selection"
         onMouseDown={[Function]}
       >
         <div

@@ -13,14 +13,13 @@ exports[`renders correctly with Seasons 1`] = `
         onChange={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
-        placeholder="Search undefined"
         type="text"
         value=""
       />
     </form>
   </div>
   <div
-    id="menu-bar-selection"
+    className="menu-bar-selection"
     onMouseDown={[Function]}
   >
     <div
@@ -46,14 +45,13 @@ exports[`renders correctly with Teams 1`] = `
         onChange={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
-        placeholder="Search undefined"
         type="text"
         value=""
       />
     </form>
   </div>
   <div
-    id="menu-bar-selection"
+    className="menu-bar-selection"
     onMouseDown={[Function]}
   >
     <div

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { ProgressPlugin } from 'webpack';
-import MockChart from './src/tests/__mocks__/MockChart'
+import MockChart from './src/tests/__mocks__/MockChart';
 
 let mockChart = jest.fn();
 
@@ -11,4 +11,8 @@ jest.mock('./src/subcomponents/LineChart', () => (props) => {
                     dataSets={props.dataSets} 
                     labels={props.labels}
                     maxValue={props.maxValue}/>;
+});
+
+jest.mock('./src/resources/icons/icons.js', () =>{
+  return "";
 });

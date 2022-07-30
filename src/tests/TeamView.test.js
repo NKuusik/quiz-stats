@@ -17,7 +17,7 @@ testTeam.teamSeasons["SeasonNumber"] = testSeason;
 
 it('default renders correctly', () => {
     const tree = renderer
-         .create(<TeamView seasonNames={["SeasonNumber"]} team={testTeam}/>)
+         .create(<TeamView allTeams={allTeams} seasonNames={["SeasonNumber"]} chosenTeam={testTeam}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
      });
@@ -33,16 +33,17 @@ testTeam.teamSeasons["SecondSeason"] = secondSeason;
 testTeam.teamSeasons["ThirdSeason"] = thirdSeason;
 testTeam.teamSeasons["FourthSeason"] = fourthSeason;
 
+const allTeams = {"Fake Team": testTeam};
 
 it('only 3 seasons are displayed', () => {
     const tree = renderer
-         .create(<TeamView seasonNames={["SeasonNumber", "SecondSeason", "ThirdSeason", "FourthSeason"]} team={testTeam}/>)
+         .create(<TeamView allTeams={allTeams} seasonNames={["SeasonNumber", "SecondSeason", "ThirdSeason", "FourthSeason"]} chosenTeam={testTeam}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
      });
 
 test('active button can be toggled', () => {
-  const element = render(<TeamView seasonNames={["SeasonNumber", "SecondSeason", "ThirdSeason", "FourthSeason"]} team={testTeam}/>)
+  const element = render(<TeamView allTeams={allTeams} seasonNames={["SeasonNumber", "SecondSeason", "ThirdSeason", "FourthSeason"]} chosenTeam={testTeam}/>)
   let activeButton = element.container.querySelector("#chart-button-active");
   const seasonViewButton = element.container.querySelectorAll(".button-chart")[0];
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
