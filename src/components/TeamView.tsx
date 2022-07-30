@@ -22,7 +22,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   function comparisonTeamHandler(teamName: string): void { 
     setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
-    let comparisonTeamsInstance = comparisonTeams;
+    let comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
     if (comparisonTeams.hasOwnProperty(teamName)) {
       delete comparisonTeamsInstance[teamName];
     } else {
@@ -100,7 +100,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   function generateDataSetsCumualtive(): ChartDataSet[] { // äkki ka average points per game view?
     let displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
-    let chartDataSets: any = []; // kitsam type def
+    let chartDataSets: ChartDataSet[] = []; // kitsam type def
     for (let currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
         const totalPoints: number[] = generateTotalPointsArray(currentTeam, cumulativeLabels);
