@@ -20,7 +20,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState(0)
 
 
-  function comparisonTeamHandler(teamName: string): void { // valista vordlus iseendaga.
+  function comparisonTeamHandler(teamName: string): void { 
     setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
     let comparisonTeamsInstance = comparisonTeams;
     if (comparisonTeams.hasOwnProperty(teamName)) {
@@ -104,12 +104,13 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     for (let currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
         const totalPoints: number[] = generateTotalPointsArray(currentTeam, cumulativeLabels);
-        const dataColor : string = currentTeam.color; // idee: home team paksema joonega
+        const dataColor : string = currentTeam.color; 
         const teamLabel: string = `Cumulative points for ${currentTeam.name}.`;
         const chartDataSet = new ChartDataSet(false, teamLabel, totalPoints, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
       }
     }
+    chartDataSets[0].borderWidth = 5.0; // Sets thicker line for the chosen team.
     return chartDataSets;
   }
   let lineChartComponent = <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />
