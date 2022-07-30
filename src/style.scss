@@ -22,6 +22,7 @@ button {
 
 canvas {
     background-color: $canvas-menu-bar-background-color;
+    position: absolute;
 }
 
 .header {
@@ -134,10 +135,11 @@ canvas {
     width: 20%;
     height: 20%;
     float: right;
-    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
 
     .menu-bar-selection {
-        height: 8vh;
+        height: 70vh;    
     }
 
     .menu-bar-container {
