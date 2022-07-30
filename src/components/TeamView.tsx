@@ -21,13 +21,14 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
 
   function comparisonTeamHandler(teamName: string): void { // valista vordlus iseendaga.
-    console.log(teamName);
     setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
     let comparisonTeamsInstance = comparisonTeams;
     if (comparisonTeams.hasOwnProperty(teamName)) {
       delete comparisonTeamsInstance[teamName];
     } else {
-      comparisonTeamsInstance[teamName] = allTeams[teamName];
+      if (teamName !== chosenTeam.name) {
+        comparisonTeamsInstance[teamName] = allTeams[teamName];
+      }
     }
     setComparisonTeams(comparisonTeamsInstance);
   }

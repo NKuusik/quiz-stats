@@ -5,7 +5,7 @@ import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
-  category : {[seasonName: string]: Season} | {[teamName: string]: Team};
+  category : {[seasonName: string]: Season} | {[teamName: string]: Team}; // Mõtle, äkki parem lihtsalt entryName: string[] ja koodimaagia kõrgemal
   choice : Function;
   viewType : string;
 }
