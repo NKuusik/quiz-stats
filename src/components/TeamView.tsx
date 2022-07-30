@@ -17,12 +17,11 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const defaultDataSetsShown : number = 3;
   const [cumulativeView, setCumulativeView] = useState(false);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
-  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState(0)
+  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState(0);
 
-
-  function comparisonTeamHandler(teamName: string): void { 
+  function comparisonTeamHandler(teamName: string): void {
     setCumulativeViewMaxValue(0); // Reset this value every time setComparisonTeam changes.
-    let comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
+    const comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
     if (comparisonTeams.hasOwnProperty(teamName)) {
       delete comparisonTeamsInstance[teamName];
     } else {
@@ -36,9 +35,8 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   // Reset cumulative view, when main team is changed
   useEffect(() => {
     setComparisonTeams({});
-    setCumulativeViewMaxValue(0); 
+    setCumulativeViewMaxValue(0);
   }, [chosenTeam]);
-
 
   function generateLabelsDefault(seasonsAsObject: Object): string[] {
     let longestSeason = [];
@@ -97,14 +95,13 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   const cumulativeLabels: string[] = generateLabelsCumulative();
 
-
   function generateDataSetsCumualtive(): ChartDataSet[] { // äkki ka average points per game view?
-    let displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
-    let chartDataSets: ChartDataSet[] = []; // kitsam type def
-    for (let currentTeam of displayedTeams) {
+    const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
+    const chartDataSets: ChartDataSet[] = []; // kitsam type def
+    for (const currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
         const totalPoints: number[] = generateTotalPointsArray(currentTeam, cumulativeLabels);
-        const dataColor : string = currentTeam.color; 
+        const dataColor : string = currentTeam.color;
         const teamLabel: string = `Cumulative points for ${currentTeam.name}.`;
         const chartDataSet = new ChartDataSet(false, teamLabel, totalPoints, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
@@ -113,12 +110,12 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     chartDataSets[0].borderWidth = 5.0; // Sets thicker line for the chosen team.
     return chartDataSets;
   }
-  let lineChartComponent = <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />
+  let lineChartComponent = <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />;
 
   let teamComparisonComponent;
   if (cumulativeView) {
-    teamComparisonComponent =  <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
-    lineChartComponent =<LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />;
+    teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
+    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />;
   }
 
   return (

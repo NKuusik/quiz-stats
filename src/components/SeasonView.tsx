@@ -14,7 +14,6 @@ const SeasonView = ({season}: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState(false);
   let totalMaxPoints = 0;
 
-
   function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
     if (currentCount > defaultDataSetsShown) {
       return true;
@@ -34,7 +33,7 @@ const SeasonView = ({season}: MyProps) => {
         incrementalPoints.push(incrementedValue);
       }
     }
-    let currentMaxPoints = incrementalPoints[incrementalPoints.length - 1];
+    const currentMaxPoints = incrementalPoints[incrementalPoints.length - 1];
 
     if (currentMaxPoints > totalMaxPoints) {
       totalMaxPoints = currentMaxPoints;
@@ -99,7 +98,7 @@ const SeasonView = ({season}: MyProps) => {
               : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={totalMaxPoints + 10}/>
             }
             {
-              
+
             }
         </div>
   );
