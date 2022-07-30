@@ -13,18 +13,21 @@ function TeamComparison({teams, comparisonTeamHandler}: MyProps) {
     const [viewActive, setViewActive] = useState<Boolean>(false);
     
 
-    let compareTeamsMenuBar = <button onClick={() => setViewActive(true)} className={styles['button-chart']}>Compare Teams</button>;
+    let menuBar = <button onClick={() => setViewActive(true)} className={styles['button-chart']}>Compare Teams</button>;
+    let closeButton;
+
     if (viewActive) {
-        compareTeamsMenuBar = <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam.name)} viewType={'comparison'}/>;
+        closeButton = <button onClick={() => setViewActive(false)} className={styles['button-chart']} id={styles['comparison-close']} ><img src={closeIcon} alt='Close'></img></button>;
+        menuBar = <MenuBar category={teams} choice={(comparedTeam) => comparisonTeamHandler(comparedTeam.name)} viewType={'comparison'}/>;
     }
 
-    console.log(closeIcon);
     return (
-        <div id={styles['comparison-menu-bar']}>
-            <button onClick={() => setViewActive(false)} className={styles['button-chart']} id={styles['comparison-close']} ><img src={closeIcon} alt='Close'></img></button>
-            {compareTeamsMenuBar}
+        <div id={styles['comparison-container']}>
+            {closeButton}
+            <div id={styles['comparison-menu-bar']}>
+                {menuBar}
+            </div>
         </div>
-
     );
 }
 

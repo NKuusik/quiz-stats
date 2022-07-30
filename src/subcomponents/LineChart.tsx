@@ -44,7 +44,6 @@ class LineChart extends React.Component<MyProps> {
   }
 
   render() {
-    console.log(this.props.dataSets[0]);
     return (
       <>
       <div className='header'>
