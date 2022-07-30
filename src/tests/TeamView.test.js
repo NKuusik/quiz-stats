@@ -44,8 +44,8 @@ it('only 3 seasons are displayed', () => {
 test('active button can be toggled', () => {
   const element = render(<TeamView seasonNames={["SeasonNumber", "SecondSeason", "ThirdSeason", "FourthSeason"]} team={testTeam}/>)
   let activeButton = element.container.querySelector("#chart-button-active");
-  const seasonViewButton = element.container.querySelectorAll(".button-chart-type")[0];
-  const cumulativeViewButton = element.container.querySelectorAll(".button-chart-type")[1];
+  const seasonViewButton = element.container.querySelectorAll(".button-chart")[0];
+  const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
   expect(seasonViewButton).toBe(activeButton);
   fireEvent.click(cumulativeViewButton);
   activeButton = element.container.querySelector("#chart-button-active");

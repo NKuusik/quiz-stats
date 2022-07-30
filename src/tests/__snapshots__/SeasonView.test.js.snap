@@ -7,14 +7,14 @@ exports[`default renders correctly 1`] = `
     Test Season
   </h1>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id="chart-button-active"
     onClick={[Function]}
   >
     See game-by-game
   </button>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id=""
     onClick={[Function]}
   >
@@ -44,14 +44,14 @@ exports[`teams are hidden by default after third team 1`] = `
     Second Season
   </h1>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id="chart-button-active"
     onClick={[Function]}
   >
     See game-by-game
   </button>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id=""
     onClick={[Function]}
   >

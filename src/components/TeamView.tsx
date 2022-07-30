@@ -124,10 +124,10 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {chosenTeam.name}</h1>
-            <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(false)}>
+            <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
               See points per season
             </button>
-            <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart-type']} onClick={() => setCumulativeView(true)}>
+            <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(true)}>
               See points across seasons
             </button>
             {teamComparisonComponent}

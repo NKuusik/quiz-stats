@@ -9,14 +9,14 @@ exports[`default renders correctly 1`] = `
     Fake team
   </h1>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id="chart-button-active"
     onClick={[Function]}
   >
     See points per season
   </button>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id=""
     onClick={[Function]}
   >
@@ -48,14 +48,14 @@ exports[`only 3 seasons are displayed 1`] = `
     Fake team
   </h1>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id="chart-button-active"
     onClick={[Function]}
   >
     See points per season
   </button>
   <button
-    className="button-chart-type"
+    className="button-chart"
     id=""
     onClick={[Function]}
   >

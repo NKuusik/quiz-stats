@@ -6,6 +6,7 @@ $header-button-color: rgb(230, 46, 229);
 $secondary-color: #B1B5EF;
 $default-border-radius: 15px;
 $default-background-gradient: linear-gradient(#433A65, #302A62);
+$comparison-menu-bar-width: 65%;
 
 body {
     background-color: $default-background-color;
@@ -91,7 +92,7 @@ canvas {
     padding-left: 5%;
 }
 
-.button-chart-type {
+.button-chart {
     margin-right: 10px;
     border: none;
     color: white;
@@ -131,8 +132,8 @@ canvas {
     overflow: auto;
 }
 
-#menu-bar-comparison {
-    width: 20%;
+#comparison-menu-bar {
+    width: 25%;
     height: 20%;
     float: right;
     position: relative;
@@ -145,10 +146,23 @@ canvas {
     .menu-bar-container {
         border-radius: $default-border-radius;
         background-image: $default-background-gradient;
+        width: $comparison-menu-bar-width;
     }
 
     .entry-selection {
         font-size: 15px;
+    }
+
+    .button-chart {
+        width: $comparison-menu-bar-width;
+    }
+    #comparison-close {
+        float: right;
+        width: 15%;
+
+        img {
+            width: 100%;
+        }
     }
 }
 

@@ -55,8 +55,8 @@ it('teams are hidden by default after third team', () => {
 test('active button can be toggled', () => {
   const element = render(<SeasonView season={testSeason}></SeasonView>);
   let activeButton = element.container.querySelector("#chart-button-active");
-  const seasonViewButton = element.container.querySelectorAll(".button-chart-type")[0];
-  const cumulativeViewButton = element.container.querySelectorAll(".button-chart-type")[1];
+  const seasonViewButton = element.container.querySelectorAll(".button-chart")[0];
+  const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
   expect(seasonViewButton).toBe(activeButton);
   fireEvent.click(cumulativeViewButton);
   activeButton = element.container.querySelector("#chart-button-active");
@@ -68,7 +68,7 @@ test('active button can be toggled', () => {
 
 test('data is accurate in ChartDataSets', () =>{
   const element = render(<SeasonView season={testSeason}></SeasonView>);
-  const cumulativeViewButton = element.container.querySelectorAll(".button-chart-type")[1];
+  const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
   let testData = element.container.getElementsByClassName('test-data')[0];
   
   // Game-by-game view point data.
