@@ -93,7 +93,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return totalPointsAllSeasons;
   }
 
-  function generateAveragePointsArray(team: Team, labels: string[]): number[] { // Todo: dubleerib generateTotalPointsArray-d. Refactor
+  function generateAveragePointsArray(team: Team, labels: string[]): number[] { // Todo: dubleerib generateTotalPointsArray-d. Refactor https://blog.logrocket.com/how-when-to-force-react-component-re-render/
     const averagePointsAllSeasons: number[] = []
     for (const seasonName of labels) {
       let sum: number = 0;
@@ -102,6 +102,9 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
         const pointsAsNumbers = team.results[seasonName].map(Number);
         sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
         average = sum / team.results[seasonName].length;
+      }
+      if (average > cumulativeViewMaxValue) {
+        setCumulativeViewMaxValue(average);
       }
       averagePointsAllSeasons.push(average);
     }
@@ -112,18 +115,20 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   function generateDataSetsCumualtive(averagePointsMode: boolean = true): ChartDataSet[] {
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
-    console.log(displayedTeams);
     const chartDataSets: ChartDataSet[] = [];
     for (const currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
         let points: number[] = []
+        let teamLabel: string = '';
         if (averagePointsMode) {
           points = generateAveragePointsArray(currentTeam, cumulativeLabels);
+          teamLabel = `Average points for ${currentTeam.name}.`;
         } else {
           points = generateTotalPointsArray(currentTeam, cumulativeLabels);
+          teamLabel = `Cumulative points for ${currentTeam.name}.`;
         }
         const dataColor : string = currentTeam.color;
-        const teamLabel: string = `Cumulative points for ${currentTeam.name}.`;
+  
         const chartDataSet = new ChartDataSet(false, teamLabel, points, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
       }
@@ -136,7 +141,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   let teamComparisonComponent;
   if (cumulativeView) {
     teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
-    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
+    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
   }
 
   return (
