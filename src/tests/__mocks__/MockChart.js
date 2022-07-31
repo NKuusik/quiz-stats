@@ -10,7 +10,9 @@ class MockChart extends React.Component {
         <div>
           <p>I am a mock chart.</p>
           <div className={'test-data'}>
-            {this.props.dataSets[0].data.toString()}
+            {this.props.dataSets.map(dataSet => (
+             <p key={dataSet.label}>{dataSet.data.toString()}</p> )
+            )}
           </div>
           <canvas width="400" height="150"></canvas>
         </div>

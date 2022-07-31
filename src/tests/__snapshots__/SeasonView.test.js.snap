@@ -27,7 +27,9 @@ exports[`default renders correctly 1`] = `
     <div
       className="test-data"
     >
-      1,2,4.2,5,6
+      <p>
+        1,2,4.2,5,6
+      </p>
     </div>
     <canvas
       height="150"
@@ -64,7 +66,18 @@ exports[`teams are hidden by default after third team 1`] = `
     <div
       className="test-data"
     >
-      1,2,4,5,6
+      <p>
+        1,2,4,5,6
+      </p>
+      <p>
+        1,2,4,5,6
+      </p>
+      <p>
+        1,2,4,5,6
+      </p>
+      <p>
+        1,2,4,5,6
+      </p>
     </div>
     <canvas
       height="150"
