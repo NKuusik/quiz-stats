@@ -41,7 +41,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   function generateLabelsDefault(seasonsAsObject: Object): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (seasonsAsObject[seasonKey].length > longestSeason.length) { // Todo: parem kui saaks kasutada Season.total_games-i -> vajaks uuesti Season propsi
+      if (seasonsAsObject[seasonKey].length > longestSeason.length) { 
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -93,17 +93,38 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return totalPointsAllSeasons;
   }
 
+  function generateAveragePointsArray(team: Team, labels: string[]): number[] { // Todo: dubleerib generateTotalPointsArray-d. Refactor
+    const averagePointsAllSeasons: number[] = []
+    for (const seasonName of labels) {
+      let sum: number = 0;
+      let average: number = 0;
+      if (team.results[seasonName] !== undefined) {
+        const pointsAsNumbers = team.results[seasonName].map(Number);
+        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
+        average = sum / team.results[seasonName].length;
+      }
+      averagePointsAllSeasons.push(average);
+    }
+    return averagePointsAllSeasons;
+  }
+
   const cumulativeLabels: string[] = generateLabelsCumulative();
 
-  function generateDataSetsCumualtive(): ChartDataSet[] { // äkki ka average points per game view?
+  function generateDataSetsCumualtive(averagePointsMode: boolean = true): ChartDataSet[] {
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
-    const chartDataSets: ChartDataSet[] = []; // kitsam type def
+    console.log(displayedTeams);
+    const chartDataSets: ChartDataSet[] = [];
     for (const currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
-        const totalPoints: number[] = generateTotalPointsArray(currentTeam, cumulativeLabels);
+        let points: number[] = []
+        if (averagePointsMode) {
+          points = generateAveragePointsArray(currentTeam, cumulativeLabels);
+        } else {
+          points = generateTotalPointsArray(currentTeam, cumulativeLabels);
+        }
         const dataColor : string = currentTeam.color;
         const teamLabel: string = `Cumulative points for ${currentTeam.name}.`;
-        const chartDataSet = new ChartDataSet(false, teamLabel, totalPoints, dataColor, dataColor, 1.5, 0.5);
+        const chartDataSet = new ChartDataSet(false, teamLabel, points, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
       }
     }
@@ -115,7 +136,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   let teamComparisonComponent;
   if (cumulativeView) {
     teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
-    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive()} labels={cumulativeLabels} />;
+    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue + 10} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
   }
 
   return (
