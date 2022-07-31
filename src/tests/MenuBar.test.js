@@ -8,7 +8,7 @@ import MenuBar from '../components/MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import {render, fireEvent} from '@testing-library/react';
 
-const category = {};
+const category = [];
 const choice = () => {};
 const viewTypeSeason = "season";
 const viewTypeTeam = "team";
@@ -54,7 +54,7 @@ test('entries are shown', () => {
     "Fake team": firstTeam,
     "secondTeam": secondTeam
   };
-  const menuBar = render((<MenuBar viewType="team" category={testTeams} choice={choice}/>));
+  const menuBar = render((<MenuBar viewType="team" category={Object.keys(testTeams)} choice={choice}/>));
   const entriesAsDOM = menuBar.container.getElementsByClassName('entry-selection');
   expect(entriesAsDOM.length).toBe(2);
   expect(entriesAsDOM[0].textContent).toBe('Fake team');
@@ -73,7 +73,7 @@ test('entries correspond to value on SearchField input', () => {
     "Fake team": firstTeam,
     "secondTeam": secondTeam
   };
-  const menuBar = render((<MenuBar viewType="team" category={testTeams} choice={choice}/>));
+  const menuBar = render((<MenuBar viewType="team" category={Object.keys(testTeams)} choice={choice}/>));
   const entriesAsDOM = menuBar.container.getElementsByClassName('entry-selection');
   expect(entriesAsDOM.length).toBe(2);
   expect(entriesAsDOM[0].textContent).toBe('Fake team');

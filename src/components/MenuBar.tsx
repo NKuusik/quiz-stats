@@ -5,7 +5,7 @@ import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
-  category : string[]; // Mõtle, äkki parem lihtsalt entryName: string[] ja koodimaagia kõrgemal
+  category : string[];
   choice : Function;
   viewType : string;
 }
