@@ -12,11 +12,11 @@ type MyProps = {
 function SeasonViewWrapper({seasons, fadeOut} : MyProps) {
   const [activeSeason, setActiveSeason] = useState<Season | null>(null);
 
-  function chooseSeason(chosenSeason: Season) {
-    if (activeSeason === chosenSeason) {
+  function chooseSeason(seasonName: string) {
+    if (activeSeason === seasons[seasonName]) {
       setActiveSeason(null);
     } else {
-      setActiveSeason(chosenSeason);
+      setActiveSeason(seasons[seasonName]);
     }
   }
   let seasonView;
@@ -27,7 +27,7 @@ function SeasonViewWrapper({seasons, fadeOut} : MyProps) {
   return (
     <div id={styles[fadeOut]} className={styles['view-wrapper']}>
       <div className={styles['category-selection']}>
-        <MenuBar viewType={'season'} category={seasons} choice={(chosenSeason) => { chooseSeason(chosenSeason); }} />
+        <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeason(chosenSeason); }} />
       </div>
       <div className={styles['chart-view']}>
         {seasonView}

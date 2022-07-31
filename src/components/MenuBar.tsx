@@ -5,7 +5,7 @@ import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 type MyProps = {
-  category : {[seasonName: string]: Season} | {[teamName: string]: Team}; // Mõtle, äkki parem lihtsalt entryName: string[] ja koodimaagia kõrgemal
+  category : string[]; // Mõtle, äkki parem lihtsalt entryName: string[] ja koodimaagia kõrgemal
   choice : Function;
   viewType : string;
 }
@@ -20,8 +20,8 @@ class MenuBar extends React.Component<MyProps, MyState> {
   constructor(props: MyProps) {
     super(props);
     this.state = {
-      allEntries: Object.keys(this.props.category),
-      matchedEntries: Object.keys(this.props.category).sort()
+      allEntries: this.props.category,
+      matchedEntries: this.props.category.sort()
     };
   }
 
@@ -53,9 +53,9 @@ class MenuBar extends React.Component<MyProps, MyState> {
                 <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
                 {
                 this.state.matchedEntries.map(entry => (
-                    <div key={this.props.category[entry].name} className={styles['entry-selection']}
-                      onClick={() => this.props.choice(this.props.category[entry])}>
-                      {this.props.category[entry].name}
+                    <div key={entry} className={styles['entry-selection']}
+                      onClick={() => this.props.choice(entry)}>
+                      {entry}
                     </div>
                 ))}
               </div>
