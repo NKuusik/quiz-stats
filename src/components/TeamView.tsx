@@ -5,6 +5,7 @@ import {Team} from '../classes/EntityChildren/Team';
 import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import TeamComparison from './TeamComparison';
+import TeamViewSeasonal from './TeamViewSeasonal';
 
 type MyProps = {
   chosenTeam: Team;
@@ -48,20 +49,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     setAverageViewMaxValue(0);
   }, [chosenTeam]);
 
-  function generateLabelsDefault(seasonsAsObject: Object): string[] {
-    let longestSeason = [];
-    for (const seasonKey in seasonsAsObject) {
-      if (seasonsAsObject[seasonKey].length > longestSeason.length) {
-        longestSeason = seasonsAsObject[seasonKey];
-      }
-    }
-    const labels : string[] = [];
-    for (let i = 1; i < longestSeason.length; i++) {
-      labels.push(`Game #${i}`);
-    }
-    return labels;
-  }
-
   function generateLabelsCumulative(): string[] {
     const labels : string[] = [];
     for (const season of seasonNames) {
@@ -69,22 +56,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     }
     labels.sort();
     return labels;
-  }
-
-  function generateDataSetsSeason(): ChartDataSet[] {
-    const arrayWithSeasonPoints : ChartDataSet[] = [];
-    for (const seasonName of Object.keys(chosenTeam.results)) {
-      const dataColor : string = chosenTeam.teamSeasons[seasonName].color;
-      const label = `# of points in ${seasonName}`;
-      const chartDataSet = new ChartDataSet(false, label, chosenTeam.results[seasonName], dataColor, dataColor, 1.5, 0.5);
-      arrayWithSeasonPoints.push(chartDataSet);
-      arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
-    }
-
-    for (let i = defaultDataSetsShown; i < arrayWithSeasonPoints.length; i++) {
-      arrayWithSeasonPoints[i].hidden = true;
-    }
-    return arrayWithSeasonPoints;
   }
 
   function generateTotalPointsArray(team: Team, labels: string[], averagePointMode: boolean=true): number[] {
@@ -127,7 +98,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
         if (averagePointsMode) {  
           teamLabel = `Average points for ${currentTeam.name}.`;
         } else {
-          teamLabel = `Cumulative points for ${currentTeam.name}.`;
+          teamLabel = `Total points for ${currentTeam.name}.`;
         }
         const dataColor : string = currentTeam.color;
         const chartDataSet = new ChartDataSet(false, teamLabel, points, dataColor, dataColor, 1.5, 0.5);
@@ -137,7 +108,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     chartDataSets[0].borderWidth = 5.0; // Sets thicker line for the chosen team.
     return chartDataSets;
   }
-  let lineChartComponent = <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSetsSeason()} labels={generateLabelsDefault(chosenTeam.results)} />;
+  let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
 
   let teamComparisonComponent;
   let cumulativeViewButton;
@@ -146,12 +117,12 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
     cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => setAverageView(false)}>
-      See cumulative points
+      See total points
     </button>;
     if (averageView) {
       lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
     } else {
-      lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive(false)} labels={cumulativeLabels} />;
+      lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Total points across seasons'} dataSets={generateDataSetsCumualtive(false)} labels={cumulativeLabels} />;
       cumulativeViewButton =
       <button className={styles['button-chart']} onClick={() => setAverageView(true)}>
         See average points
