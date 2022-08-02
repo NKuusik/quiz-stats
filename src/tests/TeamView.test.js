@@ -85,13 +85,23 @@ test('can compare teams in cumulative view', () => {
   const element = render(<TeamView allTeams={allTeams} seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} chosenTeam={testTeam}/>)
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
   fireEvent.click(cumulativeViewButton);
+
+  const pointTypeToggleButton = element.container.querySelectorAll(".button-chart")[2];
   const teamComparisonButton = element.container.querySelector('#comparison-menu-bar').querySelector('button');
   fireEvent.click(teamComparisonButton);
+ 
   const teamComparisonMenuBar = element.container.querySelector('#comparison-menu-bar').querySelector('.menu-bar-container');
   const teamComparisonMenuentries = teamComparisonMenuBar.querySelectorAll('.entry-selection');
   let mockChartDisplayedTestData = element.container.querySelector('.test-data').querySelectorAll('p');
 
   // Only original team is selected.
+
+  expect(mockChartDisplayedTestData.length).toBe(1);
+  expect(mockChartDisplayedTestData[0]).toHaveTextContent('11,8,5,2');
+
+  // Switch to cumulative points
+  fireEvent.click(pointTypeToggleButton);
+  mockChartDisplayedTestData = element.container.querySelector('.test-data').querySelectorAll('p');
   expect(mockChartDisplayedTestData.length).toBe(1);
   expect(mockChartDisplayedTestData[0]).toHaveTextContent('33,24,15,6');
 
@@ -101,8 +111,20 @@ test('can compare teams in cumulative view', () => {
   expect(mockChartDisplayedTestData.length).toBe(2)
   expect(mockChartDisplayedTestData[1]).toHaveTextContent('6,15,24,33');
 
+   // Switch to average points
+  fireEvent.click(pointTypeToggleButton);
+  mockChartDisplayedTestData = element.container.querySelector('.test-data').querySelectorAll('p');
+  expect(mockChartDisplayedTestData.length).toBe(2)
+  expect(mockChartDisplayedTestData[1]).toHaveTextContent('2,5,8,11');
+
   // Thrid team is selected for comparison.
   fireEvent.click(teamComparisonMenuentries[2]);
+  mockChartDisplayedTestData = element.container.querySelector('.test-data').querySelectorAll('p');
+  expect(mockChartDisplayedTestData.length).toBe(3)
+  expect(mockChartDisplayedTestData[2]).toHaveTextContent('3,3,3,3');
+
+  // Switch to cumulative points
+  fireEvent.click(pointTypeToggleButton);
   mockChartDisplayedTestData = element.container.querySelector('.test-data').querySelectorAll('p');
   expect(mockChartDisplayedTestData.length).toBe(3)
   expect(mockChartDisplayedTestData[2]).toHaveTextContent('9,9,9,9');
