@@ -87,38 +87,31 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return arrayWithSeasonPoints;
   }
 
-  function generateTotalPointsArray(team: Team, labels: string[]): number[] {
+  function generateTotalPointsArray(team: Team, labels: string[], averagePointMode: boolean=true): number[] {
     const totalPointsAllSeasons : number[] = [];
-    for (const seasonName of labels) {
-      let sum: number = 0;
-      if (team.results[seasonName] !== undefined) {
-        const pointsAsNumbers = team.results[seasonName].map(Number);
-        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
-      }
-      if (sum > cumulativeViewMaxValue) {
-        setCumulativeViewMaxValue(sum);
-      }
-      totalPointsAllSeasons.push(sum);
-    }
-    return totalPointsAllSeasons;
-  }
-
-  function generateAveragePointsArray(team: Team, labels: string[]): number[] { // Todo: dubleerib generateTotalPointsArray-d. Refactor https://blog.logrocket.com/how-when-to-force-react-component-re-render/
-    const averagePointsAllSeasons: number[] = [];
     for (const seasonName of labels) {
       let sum: number = 0;
       let average: number = 0;
       if (team.results[seasonName] !== undefined) {
         const pointsAsNumbers = team.results[seasonName].map(Number);
         sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
-        average = sum / team.results[seasonName].length;
+        if (averagePointMode) {
+          average = sum / team.results[seasonName].length;
+        }
+      } 
+      if (!averagePointMode && (sum > cumulativeViewMaxValue)) {
+        setCumulativeViewMaxValue(sum);
+      } else if (averagePointMode && (average > averageViewMaxValue)) {
+        setAverageViewMaxValue(average)
       }
-      if (average > averageViewMaxValue) {
-        setAverageViewMaxValue(average);
+      if (!averagePointMode) {
+        totalPointsAllSeasons.push(sum);
+      } else if (averagePointMode) {
+        console.log('boo')
+        totalPointsAllSeasons.push(average);
       }
-      averagePointsAllSeasons.push(average);
     }
-    return averagePointsAllSeasons;
+    return totalPointsAllSeasons;
   }
 
   const cumulativeLabels: string[] = generateLabelsCumulative();
@@ -130,15 +123,13 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
       if (currentTeam !== undefined) {
         let points: number[] = [];
         let teamLabel: string = '';
-        if (averagePointsMode) {
-          points = generateAveragePointsArray(currentTeam, cumulativeLabels);
+        points = generateTotalPointsArray(currentTeam, cumulativeLabels, averagePointsMode);
+        if (averagePointsMode) {  
           teamLabel = `Average points for ${currentTeam.name}.`;
         } else {
-          points = generateTotalPointsArray(currentTeam, cumulativeLabels);
           teamLabel = `Cumulative points for ${currentTeam.name}.`;
         }
         const dataColor : string = currentTeam.color;
-
         const chartDataSet = new ChartDataSet(false, teamLabel, points, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
       }
