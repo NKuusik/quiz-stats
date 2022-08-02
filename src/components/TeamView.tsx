@@ -13,9 +13,9 @@ type MyProps = {
 }
 
 enum ViewType {
-  Seasonal = "Seasonal",
-  Average = "Average",
-  Cumulative = "Cumulative"
+  Seasonal = 'Seasonal',
+  Average = 'Average',
+  Cumulative = 'Cumulative'
 }
 
 // ...View komponendid väiksemaks?
@@ -51,7 +51,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   function generateLabelsDefault(seasonsAsObject: Object): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
-      if (seasonsAsObject[seasonKey].length > longestSeason.length) { 
+      if (seasonsAsObject[seasonKey].length > longestSeason.length) {
         longestSeason = seasonsAsObject[seasonKey];
       }
     }
@@ -104,7 +104,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   }
 
   function generateAveragePointsArray(team: Team, labels: string[]): number[] { // Todo: dubleerib generateTotalPointsArray-d. Refactor https://blog.logrocket.com/how-when-to-force-react-component-re-render/
-    const averagePointsAllSeasons: number[] = []
+    const averagePointsAllSeasons: number[] = [];
     for (const seasonName of labels) {
       let sum: number = 0;
       let average: number = 0;
@@ -128,7 +128,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     const chartDataSets: ChartDataSet[] = [];
     for (const currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
-        let points: number[] = []
+        let points: number[] = [];
         let teamLabel: string = '';
         if (averagePointsMode) {
           points = generateAveragePointsArray(currentTeam, cumulativeLabels);
@@ -138,7 +138,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
           teamLabel = `Cumulative points for ${currentTeam.name}.`;
         }
         const dataColor : string = currentTeam.color;
-  
+
         const chartDataSet = new ChartDataSet(false, teamLabel, points, dataColor, dataColor, 1.5, 0.5);
         chartDataSets.push(chartDataSet);
       }
@@ -153,18 +153,18 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   if (cumulativeView) {
     teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
-    cumulativeViewButton = 
+    cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => setAverageView(false)}>
       See cumulative points
-    </button>
+    </button>;
     if (averageView) {
       lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
     } else {
       lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Cumulative points across seasons'} dataSets={generateDataSetsCumualtive(false)} labels={cumulativeLabels} />;
-      cumulativeViewButton = 
+      cumulativeViewButton =
       <button className={styles['button-chart']} onClick={() => setAverageView(true)}>
         See average points
-      </button>
+      </button>;
     }
   }
 
