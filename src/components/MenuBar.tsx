@@ -1,8 +1,8 @@
 import React from 'react';
-import {Season} from '../classes/EntityChildren/Season';
-import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
+
+// Todo: kui valida menüüst elementi võiks SearchField minna tühjaks.
 
 type MyProps = {
   category : string[];
