@@ -1,29 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import LineChart from '../../subcomponents/LineChart';
 import {Season} from '../../classes/EntityChildren/Season';
 import {ChartDataSet} from '../../classes/ChartDataSet';
 
 type MyProps = {
   season : Season;
+  defaultDataSetsShown : number;
+  labels: string[];
+  isDataSetHidden: Function;
 }
 
-const SeasonViewPerGame = ({season}: MyProps) => {
-  const defaultDataSetsShown : number = 3;
-
-  function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
-    if (currentCount > defaultDataSetsShown) {
-      return true;
-    }
-    return false;
-  }
-
-  function generateLabels(): string[] {
-    const labels : string[] = [];
-    for (let i = 1; i <= season.totalGames; i++) {
-      labels.push(`Game #${i}`);
-    }
-    return labels;
-  }
+const SeasonViewPerGame = ({season, defaultDataSetsShown, labels, isDataSetHidden}: MyProps) => {
 
   function generateDataSetsWithRunningPoints(): ChartDataSet[] {
     const dataSetsWithRunningPoints : ChartDataSet[] = [];
@@ -42,8 +29,8 @@ const SeasonViewPerGame = ({season}: MyProps) => {
   }
 
   return (
-  <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabels()} maxValue={10}/>
-  );
+    <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={labels} maxValue={10}/>
+    );
 };
 
 export default SeasonViewPerGame;

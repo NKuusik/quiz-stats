@@ -5,6 +5,7 @@ import styles from '../style.css';
 import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import SeasonViewPerGame from './SeasonViewSubComponents/SeasonViewPerGame';
+import SeasonViewCumulative from './SeasonViewSubComponents/SeasonViewCumulative';
 
 type MyProps = {
   season : Season;
@@ -12,37 +13,14 @@ type MyProps = {
 
 const SeasonView = ({season}: MyProps) => {
   const defaultDataSetsShown : number = 3;
+  const labels: string[] = generateLabels();
   const [cumulativeView, setCumulativeView] = useState(false);
-  let totalMaxPoints = 0;
 
   function isDataSetHidden(currentCount: number, defaultDataSetsShown: number): boolean {
     if (currentCount > defaultDataSetsShown) {
       return true;
     }
     return false;
-  }
-
-  function calculateIncrementalPoints(teamName: string, isHidden: boolean): ChartDataSet {
-    const dataColor : string = season.teams[teamName].color;
-    const incrementalPoints : number[] = [];
-    const teamPoints: string[] = season.teams[teamName].results[season.name];
-    for (let i = 0; i < teamPoints.length; i++) {
-      if (i === 0) {
-        incrementalPoints.push(parseFloat(teamPoints[i]));
-      } else {
-        const incrementedValue = parseFloat(teamPoints[i]) + incrementalPoints[i - 1];
-        incrementalPoints.push(incrementedValue);
-      }
-    }
-    const currentMaxPoints = incrementalPoints[incrementalPoints.length - 1];
-
-    if (currentMaxPoints > totalMaxPoints) {
-      totalMaxPoints = currentMaxPoints;
-    }
-
-    const label = `${teamName}`;
-    const chartDataSet = new ChartDataSet(isHidden, label, incrementalPoints, dataColor, dataColor, 1.5, 0.5);
-    return chartDataSet;
   }
 
   function generateLabels(): string[] {
@@ -53,18 +31,6 @@ const SeasonView = ({season}: MyProps) => {
     return labels;
   }
 
-  function generateDataSetsWithIncrementalPoints(): ChartDataSet[] {
-    let dataSetCount : number = 0;
-    let isHidden : boolean = false;
-    const dataSets : ChartDataSet[] = [];
-    for (const teamName of season.ranking) {
-      dataSetCount++;
-      isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
-      const chartDataSet = calculateIncrementalPoints(teamName, isHidden);
-      dataSets.push(chartDataSet);
-    }
-    return dataSets;
-  }
 
   return (
         <div>
@@ -78,9 +44,9 @@ const SeasonView = ({season}: MyProps) => {
 
             {
             !cumulativeView
-              ? <SeasonViewPerGame season={season}/>
+              ? <SeasonViewPerGame season={season} defaultDataSetsShown={defaultDataSetsShown} labels={labels} isDataSetHidden={isDataSetHidden}/>
 
-              : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={totalMaxPoints + 10}/>
+              : <SeasonViewCumulative season={season} defaultDataSetsShown={defaultDataSetsShown} labels={labels} isDataSetHidden={isDataSetHidden}/>
             }
             {
 
