@@ -4,6 +4,7 @@ import {Season} from '../classes/EntityChildren/Season';
 import styles from '../style.css';
 import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
+import SeasonViewPerGame from './SeasonViewSubComponents/SeasonViewPerGame';
 
 type MyProps = {
   season : Season;
@@ -52,22 +53,6 @@ const SeasonView = ({season}: MyProps) => {
     return labels;
   }
 
-  function generateDataSetsWithRunningPoints(): ChartDataSet[] {
-    const dataSetsWithRunningPoints : ChartDataSet[] = [];
-    let dataSetCount : number = 0;
-    let isHidden : boolean = false;
-    for (const teamName of season.ranking) {
-      dataSetCount++;
-      isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
-      const dataColor : string = season.teams[teamName].color;
-      const teamPoints: number[] = season.teams[teamName].results[season.name];
-      const label = `${teamName}`;
-      const chartDataSet = new ChartDataSet(isHidden, label, teamPoints, dataColor, dataColor, 1.5, 0.5);
-      dataSetsWithRunningPoints.push(chartDataSet);
-    }
-    return dataSetsWithRunningPoints;
-  }
-
   function generateDataSetsWithIncrementalPoints(): ChartDataSet[] {
     let dataSetCount : number = 0;
     let isHidden : boolean = false;
@@ -93,7 +78,7 @@ const SeasonView = ({season}: MyProps) => {
 
             {
             !cumulativeView
-              ? <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={generateLabels()} maxValue={10}/>
+              ? <SeasonViewPerGame season={season}/>
 
               : <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={generateLabels()} maxValue={totalMaxPoints + 10}/>
             }

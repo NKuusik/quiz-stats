@@ -25,7 +25,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
 
   if (cumulativeView) {
-    lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} />
+    lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} />;
   }
 
   return (
