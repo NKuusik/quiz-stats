@@ -16,6 +16,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
   const [averageViewMaxValue, setAverageViewMaxValue] = useState<number>(0);
+  const cumulativeLabels: string[] = generateLabels();
 
   function resetMaxValues(): void {
     setCumulativeViewMaxValue(0);
@@ -41,7 +42,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     resetMaxValues();
   }, [chosenTeam]);
 
-  function generateLabelsCumulative(): string[] {
+  function generateLabels(): string[] {
     const labels : string[] = [];
     for (const season of seasonNames) {
       labels.push(season);
@@ -50,7 +51,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return labels;
   }
 
-  function generateTotalPointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
+  function generatePointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
     const totalPointsAllSeasons : number[] = [];
     for (const seasonName of labels) {
       let sum: number = 0;
@@ -76,16 +77,15 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return totalPointsAllSeasons;
   }
 
-  const cumulativeLabels: string[] = generateLabelsCumulative();
 
-  function generateDataSetsCumualtive(averagePointsMode: boolean = true): ChartDataSet[] {
+  function generateDataSets(averagePointsMode: boolean = true): ChartDataSet[] {
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
     const chartDataSets: ChartDataSet[] = [];
     for (const currentTeam of displayedTeams) {
       if (currentTeam !== undefined) {
         let points: number[] = [];
         let teamLabel: string = '';
-        points = generateTotalPointsArray(currentTeam, cumulativeLabels, averagePointsMode);
+        points = generatePointsArray(currentTeam, cumulativeLabels, averagePointsMode);
         if (averagePointsMode) {
           teamLabel = `Average points for ${currentTeam.name}.`;
         } else {
@@ -101,7 +101,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return chartDataSets;
   }
 
-  let lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSetsCumualtive(true)} labels={cumulativeLabels} />;
+  let lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSets(true)} labels={cumulativeLabels} />;
   const teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
   let cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => setAverageView(false)}>
@@ -109,7 +109,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     </button>;
 
   if (!averageView) {
-    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Total points across seasons'} dataSets={generateDataSetsCumualtive(false)} labels={cumulativeLabels} />;
+    lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Total points across seasons'} dataSets={generateDataSets(false)} labels={cumulativeLabels} />;
     cumulativeViewButton =
       <button className={styles['button-chart']} onClick={() => setAverageView(true)}>
         See average points
