@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import LineChart from '../subcomponents/LineChart';
-import styles from '../style.css';
-import {Team} from '../classes/EntityChildren/Team';
-import {ChartDataSet} from '../classes/ChartDataSet';
+import LineChart from '../../subcomponents/LineChart';
+import styles from '../../style.css';
+import {Team} from '../../classes/EntityChildren/Team';
+import {ChartDataSet} from '../../classes/ChartDataSet';
 import TeamComparison from './TeamComparison';
 
 type MyProps = {
@@ -68,7 +68,6 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
       if (!averagePointMode) {
         totalPointsAllSeasons.push(sum);
       } else if (averagePointMode) {
-        console.log('boo')
         totalPointsAllSeasons.push(average);
       }
     }

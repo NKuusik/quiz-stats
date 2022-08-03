@@ -1,7 +1,7 @@
 import React from 'react';
-import LineChart from '../subcomponents/LineChart';
-import {Team} from '../classes/EntityChildren/Team';
-import {ChartDataSet} from '../classes/ChartDataSet';
+import LineChart from '../../subcomponents/LineChart';
+import {Team} from '../../classes/EntityChildren/Team';
+import {ChartDataSet} from '../../classes/ChartDataSet';
 
 
 type MyProps = {

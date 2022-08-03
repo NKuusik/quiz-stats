@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
-import TeamViewSeasonal from './TeamViewSeasonal';
-import TeamViewCumulative from './TeamViewCumulative';
+import TeamViewSeasonal from './TeamViewSubComponents/TeamViewSeasonal';
+import TeamViewCumulative from './TeamViewSubComponents/TeamViewCumulative';
 
 type MyProps = {
   chosenTeam: Team;
