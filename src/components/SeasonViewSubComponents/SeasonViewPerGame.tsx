@@ -11,7 +11,6 @@ type MyProps = {
 }
 
 const SeasonViewPerGame = ({season, defaultDataSetsShown, labels, isDataSetHidden}: MyProps) => {
-
   function generateDataSetsWithRunningPoints(): ChartDataSet[] {
     const dataSetsWithRunningPoints : ChartDataSet[] = [];
     let dataSetCount : number = 0;
@@ -30,7 +29,7 @@ const SeasonViewPerGame = ({season, defaultDataSetsShown, labels, isDataSetHidde
 
   return (
     <LineChart titleContent={`Game-by-game points for ${season.name}`} dataSets={generateDataSetsWithRunningPoints()} labels={labels} maxValue={10}/>
-    );
+  );
 };
 
 export default SeasonViewPerGame;

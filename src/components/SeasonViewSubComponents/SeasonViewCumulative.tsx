@@ -58,7 +58,7 @@ const SeasonViewCumulative = ({season, defaultDataSetsShown, labels}: MyProps) =
 
   return (
     <LineChart titleContent={`Incremental points ${season.name}`} dataSets={generateDataSetsWithIncrementalPoints()} labels={labels} maxValue={totalMaxPoints + 10}/>
-    );
+  );
 };
 
 export default SeasonViewCumulative;

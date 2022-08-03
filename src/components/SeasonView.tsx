@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import LineChart from '../subcomponents/LineChart';
 import {Season} from '../classes/EntityChildren/Season';
 import styles from '../style.css';
-import {ChartDataSet} from '../classes/ChartDataSet';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import SeasonViewPerGame from './SeasonViewSubComponents/SeasonViewPerGame';
 import SeasonViewCumulative from './SeasonViewSubComponents/SeasonViewCumulative';
@@ -30,7 +28,6 @@ const SeasonView = ({season}: MyProps) => {
     }
     return labels;
   }
-
 
   return (
         <div>

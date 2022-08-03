@@ -77,7 +77,6 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return totalPointsAllSeasons;
   }
 
-
   function generateDataSets(averagePointsMode: boolean = true): ChartDataSet[] {
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
     const chartDataSets: ChartDataSet[] = [];
