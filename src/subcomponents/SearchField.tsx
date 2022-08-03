@@ -8,13 +8,13 @@ type MyProps = {
     inputResetToggle: boolean;
 }
 
-const SearchField = ({menuBarEntries, onFieldValueChange, viewType, inputResetToggle: inputReset}: MyProps) => {
+const SearchField = ({menuBarEntries, onFieldValueChange, viewType, inputResetToggle}: MyProps) => {
   const [searchFieldValue, setSearchFieldValue] = useState('');
 
   useEffect(() => {
     setSearchFieldValue('');
     onFieldValueChange(menuBarEntries);
-  }, [inputReset]);
+  }, [inputResetToggle]);
 
   const handleChange = (event) => {
     setSearchFieldValue(event.target.value);
@@ -46,7 +46,6 @@ const SearchField = ({menuBarEntries, onFieldValueChange, viewType, inputResetTo
     onFieldValueChange(matchedEntries);
   }
 
-  console.log(inputReset);
   return (
     <div id={styles['search-field']} className={styles['header-vertical-alignment']}>
         <form>
