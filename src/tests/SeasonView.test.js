@@ -76,5 +76,6 @@ test('data is accurate in ChartDataSets', () =>{
   
   // Incremental view point data.
   fireEvent.click(cumulativeViewButton);
+  testData = element.container.getElementsByClassName('test-data')[0];
   expect(testData).toHaveTextContent('1,3,7.2,12.2,18.2');
 });

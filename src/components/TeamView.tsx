@@ -11,15 +11,8 @@ type MyProps = {
   allTeams : {[teamName: string]: Team};
 }
 
-enum ViewType {
-  Seasonal = 'Seasonal',
-  Average = 'Average',
-  Cumulative = 'Cumulative'
-}
-
-// ...View komponendid väiksemaks?
 const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
-  const [cumulativeView, setCumulativeView] = useState<boolean>(false); // Todo: replace boolean with enum ViewType
+  const [cumulativeView, setCumulativeView] = useState<boolean>(false);
 
   // Reset cumulative view, when main team is changed
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
