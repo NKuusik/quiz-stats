@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../style.css';
 
 type MyProps = {
     menuBarEntries: string[];
     onFieldValueChange: Function;
     viewType: string;
+    inputResetToggle: boolean;
 }
 
-const SearchField = ({menuBarEntries, onFieldValueChange, viewType}: MyProps) => {
+const SearchField = ({menuBarEntries, onFieldValueChange, viewType, inputResetToggle: inputReset}: MyProps) => {
   const [searchFieldValue, setSearchFieldValue] = useState('');
+
+  useEffect(() => {
+    setSearchFieldValue('');
+    onFieldValueChange(menuBarEntries);
+  }, [inputReset]);
 
   const handleChange = (event) => {
     setSearchFieldValue(event.target.value);
@@ -40,6 +46,7 @@ const SearchField = ({menuBarEntries, onFieldValueChange, viewType}: MyProps) =>
     onFieldValueChange(matchedEntries);
   }
 
+  console.log(inputReset);
   return (
     <div id={styles['search-field']} className={styles['header-vertical-alignment']}>
         <form>
