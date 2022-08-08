@@ -16,7 +16,8 @@ type MyState = {
   teams: {[teamName: string]: Team};
   seasons: {[seasonName: string]: Season};
   activeView: string;
-  viewTransition: boolean
+  viewTransition: boolean;
+  backEndData: any;
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -26,7 +27,8 @@ class App extends React.Component<MyProps, MyState> {
       teams: {},
       seasons: {},
       activeView: '',
-      viewTransition: false
+      viewTransition: false,
+      backEndData: 'no data received',
     };
   }
 
@@ -67,6 +69,14 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
+    let backEndData = ""; 
+    axios.get('http://localhost:8080/quiz_stats/').
+      then((res) => {
+        return parseData(res.data); // vaja uut parserit vastavalt sisendandmetele
+      }).then((parsedData) =>{
+        backEndData = parsedData.data[0][0];
+        this.setState({backEndData: backEndData});
+      });
     const parsedSeasons: {[seasonName: string]: Season} = {};
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
@@ -121,6 +131,7 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   render() {
+    let messageFromBack = this.state.backEndData;
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
@@ -130,6 +141,7 @@ class App extends React.Component<MyProps, MyState> {
     }
     return (
       <div>
+        <p>{messageFromBack}</p>
         <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
         <Transition
           in={this.state.viewTransition}
@@ -140,6 +152,7 @@ class App extends React.Component<MyProps, MyState> {
         </Transition>
 
       </div>
+
     );
   }
 }
