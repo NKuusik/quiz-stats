@@ -16,6 +16,7 @@ const SeasonViewPerGame = ({season, defaultDataSetsShown, labels, isDataSetHidde
     let dataSetCount : number = 0;
     let isHidden : boolean = false;
     for (const teamName of season.ranking) {
+      console.log(teamName);
       dataSetCount++;
       isHidden = isDataSetHidden(dataSetCount, defaultDataSetsShown);
       const dataColor : string = season.teams[teamName].color;

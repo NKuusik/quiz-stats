@@ -17,7 +17,8 @@ type MyState = {
   seasons: {[seasonName: string]: Season};
   activeView: string;
   viewTransition: boolean;
-  backEndTeams: {[teamName: string]: Team};
+  backendSeasons: {[seasonName: string]: Season};
+
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -28,7 +29,7 @@ class App extends React.Component<MyProps, MyState> {
       seasons: {},
       activeView: '',
       viewTransition: false,
-      backEndTeams: {},
+      backendSeasons: {}
     };
   }
 
@@ -83,12 +84,8 @@ class App extends React.Component<MyProps, MyState> {
           output[team['name']] = team;
         }
         this.setState({teams: output});
-        console.log('Done')
+        console.log('Teams done')
       }).then(() => {
-
-
-
-    
 
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
@@ -122,8 +119,29 @@ class App extends React.Component<MyProps, MyState> {
           parsedSeasons[currentSeasonName] = currentSeason;
         });
     }
+    axios.get('http://localhost:8080/quiz_stats/seasons/').
+    then((res) => {
+      return res.data.results;
+    }).then((results) => {
+      let output: {[teamName: string]: Season} = {};
+      for (let seasonData of results) {
+        let teamsInSeason = {}
+        let ranking: string[] = []
+        for (let teamName of seasonData['teams_in_season']) {
+          teamsInSeason[teamName] = this.state.teams[teamName];
+          ranking[this.state.teams[teamName].rankings[seasonData['name']] - 1] = teamName
+        }
+        let season: Season = new Season(seasonData['name'], 
+          teamsInSeason, seasonData['length'], ranking);
+        output[season.name] = season;
+      }
+      this.setState({seasons: output});
+    });
   });
-    this.setState({seasons: parsedSeasons});
+
+
+    
+    
   }
 
   chooseView(chosenView : string) {
