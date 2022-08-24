@@ -17,7 +17,7 @@ type MyState = {
   seasons: {[seasonName: string]: Season};
   activeView: string;
   viewTransition: boolean;
-  backEndData: any;
+  backEndTeams: {[teamName: string]: Team};
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -28,7 +28,7 @@ class App extends React.Component<MyProps, MyState> {
       seasons: {},
       activeView: '',
       viewTransition: false,
-      backEndData: 'no data received',
+      backEndTeams: {},
     };
   }
 
@@ -69,22 +69,34 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    let backEndData = ""; 
-    axios.get('http://localhost:8080/quiz_stats/').
-      then((res) => {
-        return parseData(res.data); // vaja uut parserit vastavalt sisendandmetele
-      }).then((parsedData) =>{
-        backEndData = parsedData.data[0][0];
-        this.setState({backEndData: backEndData});
-      });
     const parsedSeasons: {[seasonName: string]: Season} = {};
+    axios.get('http://localhost:8080/quiz_stats/teams/').
+      then((res) => {
+        return res.data.results; // kõiki andmeid kohe lugeda aeglane
+      }).then((results) =>{
+        let output: {[teamName: string]: Team} = {};
+        for (let teamData of results) {
+          let team = new Team(teamData['name'], [], 0);
+          team.teamSeasons = teamData['seasons'];
+          team.rankings = teamData['rankings'];
+          team.results = teamData['results'];
+          output[team['name']] = team;
+        }
+        this.setState({teams: output});
+        console.log('Done')
+      }).then(() => {
+
+
+
+    
+
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
         })
         .then((parsedData: { data: any[]; }) => {
-          const currentSeasonName: string = `season ${parsedData.data[0]}`;
+          const currentSeasonName: string = `Season ${parsedData.data[0]}`;
           const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
           for (let i = 1; i < parsedData.data.length - 1; i++) {
@@ -95,7 +107,7 @@ class App extends React.Component<MyProps, MyState> {
             const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
             const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking,
               teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
-            this.setState({teams: allTeams});
+            // this.setState({teams: allTeams});
             currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
             currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName] - 1] = teamName;
@@ -105,11 +117,12 @@ class App extends React.Component<MyProps, MyState> {
             currentSeason.teams[teamName] = this.state.teams[teamName];
             const teamsState = {...this.state.teams};
             teamsState[teamName].teamSeasons[currentSeasonName] = currentSeason;
-            this.setState({teams: teamsState});
+            // this.setState({teams: teamsState});
           }
           parsedSeasons[currentSeasonName] = currentSeason;
         });
     }
+  });
     this.setState({seasons: parsedSeasons});
   }
 
@@ -122,7 +135,7 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
-  fadeoutView(): string { // Halb kood aga töötab, vaata üle
+  fadeoutView(): string { 
     if (this.state.viewTransition === false) {
       return 'fade-out';
     } else {
@@ -131,7 +144,6 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   render() {
-    let messageFromBack = this.state.backEndData;
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
@@ -141,16 +153,13 @@ class App extends React.Component<MyProps, MyState> {
     }
     return (
       <div>
-        <p>{messageFromBack}</p>
         <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
         <Transition
           in={this.state.viewTransition}
           timeout={450}
-          onExited={() => this.setState({activeView: ''})}
-        >
+          onExited={() => this.setState({activeView: ''})}>
           {() => view}
         </Transition>
-
       </div>
 
     );
