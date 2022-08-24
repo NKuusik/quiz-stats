@@ -33,44 +33,7 @@ class App extends React.Component<MyProps, MyState> {
     };
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
-    teamLatestSeasonScores: string[],
-    teamTotalScore: number, currentSeasonName: string):
-    {[teamName: string]: Team} {
-    if (!(currentTeamName in allTeams)) {
-      allTeams[currentTeamName] = new Team(currentTeamName, teamLatestSeasonScores, teamTotalScore);
-    }
-    allTeams[currentTeamName].normalizeGameScore(teamLatestSeasonScores, currentSeasonName);
-    allTeams[currentTeamName].rankings[currentSeasonName] = teamRanking;
-    return allTeams;
-  }
-
-  setAndValidateSeasonLength(currentSeasonLength: number,
-    latestSeasonScores: string[]): number {
-    if (currentSeasonLength === 0) {
-      currentSeasonLength = latestSeasonScores.length;
-    } else if (currentSeasonLength !== latestSeasonScores.length) {
-      throw new Error('Invalid team data: season length has already been determined, but does not match with the provided length');
-    }
-    return currentSeasonLength;
-  }
-
-  validateCurrentSeasonRanking(currentSeasonName: string, currentSeasonRanking: string[],
-    currentSeasonTeams: string[]) {
-    if (currentSeasonRanking.length !== currentSeasonTeams.length) {
-      throw new Error('The number of teams in season rankings does not match ' +
-        'with the actual number of teams');
-    }
-    for (const teamName of currentSeasonTeams) {
-      if (currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
-        throw new Error(`${teamName} is not in place ${this.state.teams[teamName].rankings[currentSeasonName]}.
-          Found ${currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1]} instead.`);
-      }
-    }
-  }
-
   componentDidMount() {
-    const parsedSeasons: {[seasonName: string]: Season} = {};
     axios.get('http://localhost:8080/quiz_stats/teams/').
       then((res) => {
         return res.data.results; // kõiki andmeid kohe lugeda aeglane
@@ -86,61 +49,27 @@ class App extends React.Component<MyProps, MyState> {
         this.setState({teams: output});
         console.log('Teams done')
       }).then(() => {
-
-    for (const season of Object.values(this.props.rawData)) {
-      axios.get(season)
-        .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
-          return parseData(res.data);
-        })
-        .then((parsedData: { data: any[]; }) => {
-          const currentSeasonName: string = `Season ${parsedData.data[0]}`;
-          const currentSeasonTeamNames: string[] = [];
-          const currentSeason = new Season(currentSeasonName);
-          for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const rawTeamData: string[] = parsedData.data[i];
-            const teamRanking: number = parseInt(rawTeamData[0]);
-            const teamName: string = rawTeamData[1];
-            const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
-            const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
-            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking,
-              teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
-            // this.setState({teams: allTeams});
-            currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
-            currentSeasonTeamNames.push(teamName);
-            currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName] - 1] = teamName;
+      axios.get('http://localhost:8080/quiz_stats/seasons/').
+        then((res) => {
+        return res.data.results;
+      }).then((results) => {
+        let output: {[teamName: string]: Season} = {};
+        for (let seasonData of results) {
+          let teamsInSeason = {}
+          let ranking: string[] = []
+          let season: Season = new Season(seasonData['name'], 
+            teamsInSeason, seasonData['length']);
+          for (let teamName of seasonData['teams_in_season']) { // Siin lihtsusta/vaata yle
+            teamsInSeason[teamName] = this.state.teams[teamName];
+            ranking[this.state.teams[teamName].rankings[seasonData['name']] - 1] = teamName
+            this.state.teams[teamName].teamSeasons[season.name] = season;
           }
-          this.validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames);
-          for (const teamName of currentSeasonTeamNames) {
-            currentSeason.teams[teamName] = this.state.teams[teamName];
-            const teamsState = {...this.state.teams};
-            teamsState[teamName].teamSeasons[currentSeasonName] = currentSeason;
-            // this.setState({teams: teamsState});
-          }
-          parsedSeasons[currentSeasonName] = currentSeason;
-        });
-    }
-    axios.get('http://localhost:8080/quiz_stats/seasons/').
-    then((res) => {
-      return res.data.results;
-    }).then((results) => {
-      let output: {[teamName: string]: Season} = {};
-      for (let seasonData of results) {
-        let teamsInSeason = {}
-        let ranking: string[] = []
-        for (let teamName of seasonData['teams_in_season']) {
-          teamsInSeason[teamName] = this.state.teams[teamName];
-          ranking[this.state.teams[teamName].rankings[seasonData['name']] - 1] = teamName
-        }
-        let season: Season = new Season(seasonData['name'], 
-          teamsInSeason, seasonData['length'], ranking);
+          season.ranking = ranking;
         output[season.name] = season;
       }
       this.setState({seasons: output});
     });
-  });
-
-
-    
+  });    
     
   }
 
