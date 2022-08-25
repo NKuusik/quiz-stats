@@ -36,14 +36,18 @@ class App extends React.Component<MyProps, MyState> {
   componentDidMount() {
     axios.get('http://localhost:8080/quiz_stats/teams/').
       then((res) => {
-        return res.data.results; // kõiki andmeid kohe lugeda aeglane
+        return res.data;
       }).then((results) =>{
         let output: {[teamName: string]: Team} = {};
         for (let teamData of results) {
-          let team = new Team(teamData['name'], [], 0);
+          console.log(teamData.name)
+          let team = new Team(teamData['name'], [], 0); 
+          // See peaks toimuma nüüd allpool iga tiimi kohta eraldi
+          /*
           team.teamSeasons = teamData['seasons'];
           team.rankings = teamData['rankings'];
           team.results = teamData['results'];
+          */
           output[team['name']] = team;
         }
         this.setState({teams: output});
