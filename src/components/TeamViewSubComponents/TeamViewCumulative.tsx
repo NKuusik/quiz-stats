@@ -4,6 +4,7 @@ import styles from '../../style.css';
 import {Team} from '../../classes/EntityChildren/Team';
 import {ChartDataSet} from '../../classes/ChartDataSet';
 import TeamComparison from './TeamComparison';
+import axios from 'axios';
 
 type MyProps = {
   chosenTeam: Team;
@@ -16,6 +17,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
   const [averageViewMaxValue, setAverageViewMaxValue] = useState<number>(0);
+  const [isRequestFinished, setIsRequestFinished] = useState<boolean>(true);
   const cumulativeLabels: string[] = generateLabels();
 
   function resetMaxValues(): void {
@@ -25,16 +27,25 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
 
   function comparisonTeamHandler(teamName: string): void {
     resetMaxValues();
+    setIsRequestFinished(false);
     const comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
-    if (comparisonTeams.hasOwnProperty(teamName)) {
-      delete comparisonTeamsInstance[teamName];
-    } else {
-      if (teamName !== chosenTeam.name) {
-        comparisonTeamsInstance[teamName] = allTeams[teamName];
+    axios.get(`http://localhost:8080/quiz_stats/teams/${teamName}/`). // Refaktoreeri yheks funktsiooniks TeamViewWrapperiga
+    then((res) => {
+      allTeams[teamName].rankings = res.data.rankings;
+      allTeams[teamName].teamSeasons = res.data.seasons;
+      allTeams[teamName].results = res.data.results;
+  }).then(() => {
+      if (comparisonTeams.hasOwnProperty(teamName)) {
+        delete comparisonTeamsInstance[teamName];
+      } else {
+        if (teamName !== chosenTeam.name) {
+          comparisonTeamsInstance[teamName] = allTeams[teamName];
+        }
       }
+      setComparisonTeams(comparisonTeamsInstance);
+      setIsRequestFinished(true);
+      });
     }
-    setComparisonTeams(comparisonTeamsInstance);
-  }
 
   // Reset cumulative view, when main team is changed
   useEffect(() => {
@@ -100,7 +111,10 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return chartDataSets;
   }
 
-  let lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSets(true)} labels={cumulativeLabels} />;
+  let lineChartComponent;
+  if (isRequestFinished) {
+    lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSets(true)} labels={cumulativeLabels} />;
+  }
   const teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
   let cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => setAverageView(false)}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import {parseData} from './scripts/readData';
 import {Team} from './classes/EntityChildren/Team';
 import {Season} from './classes/EntityChildren/Season';
 import TeamViewWrapper from './components/TeamViewWrapper';
@@ -40,8 +39,7 @@ class App extends React.Component<MyProps, MyState> {
       }).then((results) =>{
         let output: {[teamName: string]: Team} = {};
         for (let teamData of results) {
-          console.log(teamData.name)
-          let team = new Team(teamData['name'], [], 0); 
+          let team = new Team(teamData['name'], [], 0); // Vaikimisi võiks olla teised parameetrid peale nime 'undefined'
           // See peaks toimuma nüüd allpool iga tiimi kohta eraldi
           /*
           team.teamSeasons = teamData['seasons'];
@@ -51,7 +49,6 @@ class App extends React.Component<MyProps, MyState> {
           output[team['name']] = team;
         }
         this.setState({teams: output});
-        console.log('Teams done')
       }).then(() => {
       axios.get('http://localhost:8080/quiz_stats/seasons/').
         then((res) => {

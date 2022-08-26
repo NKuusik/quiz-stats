@@ -27,8 +27,8 @@ const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
   function generateDataSets(): ChartDataSet[] {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
     for (const seasonName of Object.keys(chosenTeam.results)) {
-      console.log(seasonName);
-      const dataColor : string = chosenTeam.teamSeasons[seasonName].color;
+      // const dataColor : string = chosenTeam.teamSeasons[seasonName].color; // Siin vaja taiendada Seasoni API-d
+      const dataColor = '#FFFFFF';
       const label = `# of points in ${seasonName}`;
       const chartDataSet = new ChartDataSet(false, label, chosenTeam.results[seasonName], dataColor, dataColor, 1.5, 0.5);
       arrayWithSeasonPoints.push(chartDataSet);

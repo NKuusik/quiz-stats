@@ -3,6 +3,7 @@ import TeamView from './TeamView';
 import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import styles from '../style.css';
+import axios from 'axios';
 
 type MyProps = {
   teams : {[teamName: string]: Team};
@@ -14,11 +15,19 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   const [activeTeam, setActiveTeam] = useState<Team | null>(null);
 
   function chooseTeam(teamName: string) {
-    if (activeTeam === teams[teamName]) {
-      setActiveTeam(null);
-    } else {
-      setActiveTeam(teams[teamName]);
-    }
+    console.log('boo')
+    axios.get(`http://localhost:8080/quiz_stats/teams/${teamName}/`).
+      then((res) => {
+        teams[teamName].rankings = res.data.rankings;
+        teams[teamName].teamSeasons = res.data.seasons;
+        teams[teamName].results = res.data.results;
+    }).then(() => {
+      if (activeTeam === teams[teamName]) {
+        setActiveTeam(null);
+      } else {
+        setActiveTeam(teams[teamName]);
+      }
+    });
   }
   let teamView;
   if (activeTeam != null) {
