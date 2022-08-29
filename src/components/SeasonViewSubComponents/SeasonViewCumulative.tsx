@@ -24,7 +24,9 @@ const SeasonViewCumulative = ({season, defaultDataSetsShown, labels}: MyProps) =
     const dataColor : string = season.teams[teamName].color;
     const incrementalPoints : number[] = [];
     const teamPoints: string[] = season.teams[teamName].results[season.name];
+    console.log(teamPoints)
     for (let i = 0; i < teamPoints.length; i++) {
+      console.log(i)
       if (i === 0) {
         incrementalPoints.push(parseFloat(teamPoints[i]));
       } else {

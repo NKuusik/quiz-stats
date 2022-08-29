@@ -15,7 +15,6 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   const [activeTeam, setActiveTeam] = useState<Team | null>(null);
 
   function chooseTeam(teamName: string) {
-    console.log('boo')
     axios.get(`http://localhost:8080/quiz_stats/teams/${teamName}/`).
       then((res) => {
         teams[teamName].rankings = res.data.rankings;

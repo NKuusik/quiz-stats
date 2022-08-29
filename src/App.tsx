@@ -40,12 +40,6 @@ class App extends React.Component<MyProps, MyState> {
         let output: {[teamName: string]: Team} = {};
         for (let teamData of results) {
           let team = new Team(teamData['name'], [], 0); // Vaikimisi võiks olla teised parameetrid peale nime 'undefined'
-          // See peaks toimuma nüüd allpool iga tiimi kohta eraldi
-          /*
-          team.teamSeasons = teamData['seasons'];
-          team.rankings = teamData['rankings'];
-          team.results = teamData['results'];
-          */
           output[team['name']] = team;
         }
         this.setState({teams: output});
