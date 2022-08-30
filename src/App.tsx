@@ -39,7 +39,7 @@ class App extends React.Component<MyProps, MyState> {
       }).then((results) =>{
         let output: {[teamName: string]: Team} = {};
         for (let teamData of results) {
-          let team = new Team(teamData['name'], [], 0); // Vaikimisi võiks olla teised parameetrid peale nime 'undefined'
+          let team = new Team(teamData['name']);
           output[team['name']] = team;
         }
         this.setState({teams: output});
@@ -51,15 +51,11 @@ class App extends React.Component<MyProps, MyState> {
         let output: {[teamName: string]: Season} = {};
         for (let seasonData of results) {
           let teamsInSeason = {}
-          let ranking: string[] = []
-          let season: Season = new Season(seasonData['name'], 
-            teamsInSeason, seasonData['length']);
-          for (let teamName of seasonData['teams_in_season']) { // Siin lihtsusta/vaata yle
+          let season: Season = new Season(seasonData['name'], teamsInSeason, seasonData['length']);
+          for (let teamName of seasonData['teams_in_season']) {
             teamsInSeason[teamName] = this.state.teams[teamName];
-            ranking[this.state.teams[teamName].rankings[seasonData['name']] - 1] = teamName
             this.state.teams[teamName].teamSeasons[season.name] = season;
           }
-          season.ranking = ranking;
         output[season.name] = season;
       }
       this.setState({seasons: output});

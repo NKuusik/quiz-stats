@@ -2,31 +2,12 @@ import {Entity} from '../Entity';
 import {Season} from './Season';
 
 export class Team extends Entity {
-    rankings: {[seasonName: string]: number};
-    latestSeasonScores: Array<string>;
-    results: {[seasonName: string]: any[]};
-    teamSeasons: {[seasonName: string]: Season}
-    totalScore: number;
+    rankings: {[seasonName: string]: number} | undefined;
+    results: {[seasonName: string]: any[]} | undefined;
+    teamSeasons: {[seasonName: string]: Season};
+    totalScore: {[seasonName: string]: number} | undefined;
 
-    constructor(name: string, rawLatestSeasonScores: Array<string>, totalScore: number) {
+    constructor(name: string) {
       super(name);
-      this.rankings = {};
-      this.results = {};
-      this.teamSeasons = {};
-      this.totalScore = totalScore; // Todo: totalscore iga hooaja kohta eraldi... akki season klassis?
-      this.normalizeGameScore(rawLatestSeasonScores);
     }
-
-    normalizeGameScore(scores: string[], seasonName: string | undefined = undefined): void {
-      for (let i = 0; i < scores.length; i++) {
-        if (scores[i] === '') {
-          scores[i] = '0';
-        }
-      }
-      if (seasonName === undefined) {
-        this.latestSeasonScores = scores;
-      } else {
-        this.results[seasonName] = scores;
-      }
-    }
-}
+  }

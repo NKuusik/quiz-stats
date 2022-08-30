@@ -67,7 +67,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     for (const seasonName of labels) {
       let sum: number = 0;
       let average: number = 0;
-      if (team.results[seasonName] !== undefined) {
+      if (team.results !== undefined && team.results[seasonName] !== undefined) {
         const pointsAsNumbers = team.results[seasonName].map(Number);
         sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
         if (averagePointMode) {

@@ -10,7 +10,7 @@ type MyProps = {
 const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
   const defaultDataSetsShown : number = 3;
 
-  function generateLabels(seasonsAsObject: Object): string[] {
+  function generateLabels(seasonsAsObject: Object | undefined): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) {
@@ -26,19 +26,21 @@ const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
 
   function generateDataSets(): ChartDataSet[] {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
-    for (const seasonName of Object.keys(chosenTeam.results)) {
-      // const dataColor : string = chosenTeam.teamSeasons[seasonName].color; // Siin vaja taiendada Seasoni API-d
-      const dataColor = '#FFFFFF';
-      const label = `# of points in ${seasonName}`;
-      const chartDataSet = new ChartDataSet(false, label, chosenTeam.results[seasonName], dataColor, dataColor, 1.5, 0.5);
-      arrayWithSeasonPoints.push(chartDataSet);
-      arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
+    if (chosenTeam.results !== undefined) {
+      for (const seasonName of Object.keys(chosenTeam.results)) {
+        // const dataColor : string = chosenTeam.teamSeasons[seasonName].color; // Siin vaja taiendada Seasoni API-d
+        const dataColor = '#FFFFFF';
+        const label = `# of points in ${seasonName}`;
+        const chartDataSet = new ChartDataSet(false, label, chosenTeam.results[seasonName], dataColor, dataColor, 1.5, 0.5);
+        arrayWithSeasonPoints.push(chartDataSet);
+        arrayWithSeasonPoints.sort((a, b) => (a.label > b.label) ? 1 : -1);
+      }
+  
+      for (let i = defaultDataSetsShown; i < arrayWithSeasonPoints.length; i++) {
+        arrayWithSeasonPoints[i].hidden = true;
+      }
     }
-
-    for (let i = defaultDataSetsShown; i < arrayWithSeasonPoints.length; i++) {
-      arrayWithSeasonPoints[i].hidden = true;
-    }
-    return arrayWithSeasonPoints;
+    return arrayWithSeasonPoints;   
   }
 
   const lineChartComponent = <LineChart maxValue={10} titleContent={'Game-by-game points per season'} dataSets={generateDataSets()} labels={generateLabels(chosenTeam.results)} />;
