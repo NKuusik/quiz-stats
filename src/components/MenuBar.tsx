@@ -59,8 +59,10 @@ class MenuBar extends React.Component<MyProps, MyState> {
   }
 
   render() {
+
+/*    <div className={[styles.App, styles.bold, styles['d-flex-c']].join(' ')}></div>*/
     return (
-            <div className={styles['menu-bar-container']}>
+            <div className={[styles['menu-bar-container'], styles['menu-bar-container-collapsed']].join(' ')}>
               <SearchField viewType={this.props.viewType} menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)} inputResetToggle={this.state.inputResetToggle} />
                 <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
                 {
