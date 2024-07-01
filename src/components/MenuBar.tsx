@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -15,6 +15,14 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const [menuBarContainerStyle, setMenuBarContainerStyle] = useState('menu-bar-container');
+
+  useEffect(() => {
+    changeMenuBarContainerStyle();
+  }, []);
+
+  window.addEventListener('resize', () => {
+    changeMenuBarContainerStyle();
+  });
 
   const menuBarRef = useRef<any>();
 
@@ -47,6 +55,15 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
     }
   }
 
+  function changeMenuBarContainerStyle() {
+    const width = window.innerWidth;
+    if (width < 500) {
+      setMenuBarContainerStyle('menu-bar-container-collapsed');
+    } else {
+      setMenuBarContainerStyle('menu-bar-container');
+    }
+  }
+
   return (
     <div className={styles[menuBarContainerStyle]}>
       <SearchField viewType={viewType} menuBarEntries={allEntries} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
@@ -56,15 +73,14 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
             <div key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
-                choice(entry)}}>
+                choice(entry);
+              }}>
               {entry}
             </div>
         ))}
       </div>
     </div>
-);
-
-
- }
+  );
+};
 
 export default MenuBar;
