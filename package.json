@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn scss && webpack && serve",
-    "vagrant": "yarn scss && webpack serve --host 0.0.0.0 --public 10.10.10.61:3000",
+    "vagrant": "yarn scss && webpack serve --host 0.0.0.0 --public 192.168.56.0:3000",
     "test": "clear && jest --coverage",
     "snap": "clear && jest --updateSnapshot",
     "lint": "eslint './src/**'",
@@ -54,7 +54,7 @@
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "prop-types": "^15.8.1",
     "react-test-renderer": "^17.0.2",
     "sass": "^1.53.0",
