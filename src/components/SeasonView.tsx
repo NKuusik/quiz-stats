@@ -29,9 +29,8 @@ const SeasonView = ({season}: MyProps) => {
     return labels;
   }
 
-
   return (
-        <div className={styles['data-view-expanded']}>
+        <div>
             <h1>Stats for {season.name}</h1>
             <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
               See game-by-game

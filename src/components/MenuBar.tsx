@@ -17,7 +17,7 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const [menuBarContainerStyle, setMenuBarContainerStyle]: [any, Dispatch<any>] = useState(styles['menu-bar-container']);
   const collapseWidth = 500
-
+/*
   useEffect(() => {
     extendMenuBar();
   }, []);
@@ -25,7 +25,7 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   window.addEventListener('resize', () => {
     extendMenuBar();
   });
-
+*/
   const menuBarRef = useRef<any>();
 
   function filterEntries(entriesValue: string[]): void {
@@ -57,17 +57,6 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
     }
   }
 
-
-
-
-  function extendMenuBar() {
-    const width = window.innerWidth;
-    if (width < collapseWidth) {
-      setMenuBarContainerStyle([styles['menu-bar-container'], styles['menu-bar-container-extended']].join(' '));
-    } else {
-      setMenuBarContainerStyle(styles['menu-bar-container']);
-    }
-  }
 
   return (
     <div className={menuBarContainerStyle}>

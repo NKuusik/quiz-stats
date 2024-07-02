@@ -135,16 +135,21 @@ canvas {
 }
 
 .menu-bar-container-extended {
-    width: 100vw;    
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;  
     animation-name: slide-full;
     animation-duration: $animation-speed;   
 }
 
 .menu-bar-container-collapsed {
+    display: none;
+    /*
     animation-name: slide-out;
     animation-duration: $animation-speed;   
-    width: 0vw;
-    padding: 0%;
+    width: 0%;
+    */
 }
 
 .menu-bar-selection {
