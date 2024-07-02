@@ -13,7 +13,7 @@ interface CssExports {
   'header': string;
   'header-active': string;
   'menu-bar-container': string;
-  'menu-bar-container-collapsed': string;
+  'category-selection-collapsed': string;
   'menu-bar-selection': string;
   'search-field': string;
   'slide-in': string;

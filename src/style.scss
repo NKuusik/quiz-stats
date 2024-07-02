@@ -125,6 +125,7 @@ canvas {
     }
 }
 
+// Animations here should go to .category-selection
 .menu-bar-container {
     padding-top: 10px;
     padding-left: 5%;
@@ -134,7 +135,7 @@ canvas {
     animation-duration: $animation-speed;    
 }
 
-.menu-bar-container-extended {
+.category-selection-extended {
     position: absolute;
     top: 0;
     right: 0;
@@ -143,13 +144,10 @@ canvas {
     animation-duration: $animation-speed;   
 }
 
-.menu-bar-container-collapsed {
+.category-selection-collapsed {
     display: none;
-    /*
     animation-name: slide-out;
     animation-duration: $animation-speed;   
-    width: 0%;
-    */
 }
 
 .menu-bar-selection {

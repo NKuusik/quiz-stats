@@ -8,9 +8,10 @@ type MyProps = {
   teams : {[teamName: string]: Team};
   seasonNames : Array<string>;
   fadeOut: string;
+  categorySelectionStyle: any;
 }
 
-function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
+function TeamViewWrapper({teams, seasonNames, fadeOut, categorySelectionStyle} : MyProps) {
   const [activeTeam, setActiveTeam] = useState<Team | null>(null);
 
   function chooseTeam(teamName: string) {
@@ -26,7 +27,7 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   }
   return (
       <div id={styles[fadeOut]} className={styles['view-wrapper']}>
-        <div className={styles['category-selection']}>
+        <div className={categorySelectionStyle}>
           <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeam(chosenTeam); }} category={Object.keys(teams)} collapseFunction={() => {console.log('boo');}}/>
         </div>
         <div className={styles['chart-view']}>

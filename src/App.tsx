@@ -7,6 +7,8 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
+import styles from './style.css';
+
 
 type MyProps = {
   rawData: any;
@@ -16,7 +18,8 @@ type MyState = {
   teams: {[teamName: string]: Team};
   seasons: {[seasonName: string]: Season};
   activeView: string;
-  viewTransition: boolean
+  viewTransition: boolean;
+  categorySelectionStyle: any;
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -26,7 +29,8 @@ class App extends React.Component<MyProps, MyState> {
       teams: {},
       seasons: {},
       activeView: '',
-      viewTransition: false
+      viewTransition: false,
+      categorySelectionStyle: styles['category-selection'],
     };
   }
 
@@ -67,6 +71,7 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
+    this.extendMenuBar()
     const parsedSeasons: {[seasonName: string]: Season} = {};
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
@@ -101,6 +106,10 @@ class App extends React.Component<MyProps, MyState> {
         });
     }
     this.setState({seasons: parsedSeasons});
+
+    window.addEventListener('resize', () => {
+      this.extendMenuBar();
+    });
   }
 
   chooseView(chosenView : string) {
@@ -120,13 +129,22 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
+  extendMenuBar() {
+    const width = window.innerWidth;
+    if (width < 500) {
+      this.setState({categorySelectionStyle: styles['category-selection-extended']});
+    } else {
+      this.setState({categorySelectionStyle: styles['category-selection']});
+    }
+  }
+
   render() {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
-      view = <SeasonViewWrapper fadeOut={this.fadeoutView()} seasons={this.state.seasons} />;
+      view = <SeasonViewWrapper fadeOut={this.fadeoutView()} seasons={this.state.seasons} categorySelectionStyle={this.state.categorySelectionStyle}/>;
     } else if (activeView === 'team') {
-      view = <TeamViewWrapper fadeOut={this.fadeoutView()} teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)}/>;
+      view = <TeamViewWrapper fadeOut={this.fadeoutView()} teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)} categorySelectionStyle={this.state.categorySelectionStyle}/>;
     }
     return (
       <div>
