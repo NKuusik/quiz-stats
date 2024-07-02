@@ -15,13 +15,14 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const [menuBarContainerStyle, setMenuBarContainerStyle]: [any, Dispatch<any>] = useState(styles['menu-bar-container']);
+  const collapseWidth = 500
 
   useEffect(() => {
-    changeMenuBarContainerStyle();
+    extendMenuBar();
   }, []);
 
   window.addEventListener('resize', () => {
-    changeMenuBarContainerStyle();
+    extendMenuBar();
   });
 
   const menuBarRef = useRef<any>();
@@ -55,10 +56,18 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
     }
   }
 
-  function changeMenuBarContainerStyle() {
+  function collapseMenuBar() {
     const width = window.innerWidth;
-    if (width < 500) {
-      setMenuBarContainerStyle([styles['menu-bar-container'], styles['menu-bar-container-collapsed']].join(' '));
+    if (width < collapseWidth) {
+      setMenuBarContainerStyle(styles['menu-bar-container-collapsed']);
+    }
+  }
+
+
+  function extendMenuBar() {
+    const width = window.innerWidth;
+    if (width < collapseWidth) {
+      setMenuBarContainerStyle([styles['menu-bar-container'], styles['menu-bar-container-extended']].join(' '));
     } else {
       setMenuBarContainerStyle(styles['menu-bar-container']);
     }
@@ -73,6 +82,7 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
             <div key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
+                collapseMenuBar();
                 choice(entry);
               }}>
               {entry}

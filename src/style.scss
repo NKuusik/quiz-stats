@@ -8,6 +8,7 @@ $secondary-color: #B1B5EF;
 $default-border-radius: 15px;
 $default-background-gradient: linear-gradient(#433A65, #302A62);
 $comparison-container-width: 80%;
+$animation-speed: 500ms;
 
 body {
     background-color: $default-background-color;
@@ -102,7 +103,7 @@ canvas {
 
 #fade-out {
     animation-name: slide-out;
-    animation-duration: 500ms;
+    animation-duration: $animation-speed;
 }
 
 #search-field {
@@ -118,18 +119,26 @@ canvas {
     }
 }
 
-// Refactor here
 .menu-bar-container {
     padding-top: 10px;
     padding-left: 5%;
     padding-right: 5%;
     background-color: $menu-bar-background-color-main;
     animation-name: slide-in;
-    animation-duration: 500ms;    
+    animation-duration: $animation-speed;    
+}
+
+.menu-bar-container-extended {
+    width: 100vw;    
+    animation-name: slide-full;
+    animation-duration: $animation-speed;   
 }
 
 .menu-bar-container-collapsed {
-    width: 100vw;    
+    animation-name: slide-out;
+    animation-duration: $animation-speed;   
+    width: 0vw;
+    padding: 0%;
 }
 
 .menu-bar-selection {
@@ -198,6 +207,15 @@ canvas {
     }
     to {
         width: 100%;
+    } 
+}
+
+@keyframes slide-full {
+    from {
+        width: inherit;
+    }
+    to {
+        width: 100vw;
     } 
 }
 
