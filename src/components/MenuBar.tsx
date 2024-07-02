@@ -8,9 +8,10 @@ type MyProps = {
   category : string[];
   choice : Function;
   viewType : string;
+  collapseFunction: Function;
 }
 
-const MenuBar = ({category, choice, viewType} : MyProps) => {
+const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   const [allEntries, setAllEntries] = useState(category);
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
@@ -56,12 +57,7 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
     }
   }
 
-  function collapseMenuBar() {
-    const width = window.innerWidth;
-    if (width < collapseWidth) {
-      setMenuBarContainerStyle(styles['menu-bar-container-collapsed']);
-    }
-  }
+
 
 
   function extendMenuBar() {
@@ -82,7 +78,7 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
             <div key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
-                collapseMenuBar();
+                collapseFunction();
                 choice(entry);
               }}>
               {entry}

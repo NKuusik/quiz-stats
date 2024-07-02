@@ -27,7 +27,7 @@ function TeamViewWrapper({teams, seasonNames, fadeOut} : MyProps) {
   return (
       <div id={styles[fadeOut]} className={styles['view-wrapper']}>
         <div className={styles['category-selection']}>
-          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeam(chosenTeam); }} category={Object.keys(teams)}/>
+          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeam(chosenTeam); }} category={Object.keys(teams)} collapseFunction={() => {console.log('boo');}}/>
         </div>
         <div className={styles['chart-view']}>
           {teamView}

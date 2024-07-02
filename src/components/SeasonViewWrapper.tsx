@@ -11,7 +11,7 @@ type MyProps = {
 
 function SeasonViewWrapper({seasons, fadeOut} : MyProps) {
   const [activeSeason, setActiveSeason] = useState<Season | null>(null);
-
+  const [categorySelectionStyle, setCategorySelectionStyle] = useState(styles['category-selection'])
   function chooseSeason(seasonName: string) {
     if (activeSeason === seasons[seasonName]) {
       setActiveSeason(null);
@@ -24,10 +24,19 @@ function SeasonViewWrapper({seasons, fadeOut} : MyProps) {
     seasonView = <SeasonView season={activeSeason} />;
   }
 
+  // Siit edasi: funktsiooni kasutatakse MenuBar-is ja peab muutma stiili väärtust selles klassis
+  // Kui see toimib, tõsta see veel samm kõrgemale
+  function collapseMenuBar() {
+    const width = window.innerWidth;
+    if (width < 500) {
+      setCategorySelectionStyle(styles['menu-bar-container-collapsed']);
+    }
+  }
+
   return (
-    <div id={styles[fadeOut]} className={styles['view-wrapper']}>
+    <div id={styles[fadeOut]} className={categorySelectionStyle}>
       <div className={styles['category-selection']}>
-        <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeason(chosenSeason); }} />
+        <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeason(chosenSeason); }} collapseFunction ={() => {collapseMenuBar()}} />
       </div>
       <div className={styles['chart-view']}>
         {seasonView}

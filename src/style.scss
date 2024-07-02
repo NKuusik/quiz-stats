@@ -10,6 +10,11 @@ $default-background-gradient: linear-gradient(#433A65, #302A62);
 $comparison-container-width: 80%;
 $animation-speed: 500ms;
 
+.data-view-expanded {
+    background-color: purple;
+    width: 100vw;
+}
+
 body {
     background-color: $default-background-color;
     font-size: 18px;
@@ -85,6 +90,7 @@ canvas {
     }
 }
 
+// See nulli
 .category-selection {
     width: 20%;
 }
