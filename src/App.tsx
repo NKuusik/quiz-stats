@@ -131,11 +131,15 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
+  // Todo: Currently this method ensures that collapsed view is not transitioned into extended view during resize.
+  // However, we do want to transition from collapsed view into extended view when a header button is pressed and
+  // the screen size is less than collapse width.
+  // Create separate method for that and pass it down to Header instead of extendMenuBar
   extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
-    if (width < collapseWidth) {
+    if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper']) {
       this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
-    } else {
+    } else if (width > collapseWidth) {
       this.setState({categorySelectionStyle: styles['view-wrapper']});
     }
   }
