@@ -85,8 +85,17 @@ canvas {
 }
 
 .view-wrapper {
+    > div {
+        float: left;
+    }
+    
     .category-selection {
         width: 20%;
+    }
+
+    .chart-view {
+        width: 70%;
+        padding-left: 5%;
     }
 }
 
@@ -107,15 +116,10 @@ canvas {
         animation-name: slide-out;
         animation-duration: $animation-speed;  
     }
-}
-
-.chart-view {
-    width: 70%;
-    padding-left: 5%;
-}
-
-.chart-view-extended {
-    width: 90%;
+    .chart-view {
+        width: 90vw;
+        padding-left: 5vw;
+    }
 }
 
 .button-chart {
