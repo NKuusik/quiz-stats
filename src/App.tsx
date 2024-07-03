@@ -12,6 +12,7 @@ import styles from './style.css';
 
 type MyProps = {
   rawData: any;
+  collapseWidth: number;
 }
 
 type MyState = {
@@ -71,8 +72,8 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    this.extendMenuBar()
     const parsedSeasons: {[seasonName: string]: Season} = {};
+    this.extendMenuBar(this.props.collapseWidth);
     for (const season of Object.values(this.props.rawData)) {
       axios.get(season)
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
@@ -108,7 +109,7 @@ class App extends React.Component<MyProps, MyState> {
     this.setState({seasons: parsedSeasons});
 
     window.addEventListener('resize', () => {
-      this.extendMenuBar();
+      this.extendMenuBar(this.props.collapseWidth);
     });
   }
 
@@ -129,26 +130,47 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
-  extendMenuBar() {
+  extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
-    if (width < 500) {
+    if (width < collapseWidth) {
       this.setState({categorySelectionStyle: styles['category-selection-extended']});
     } else {
       this.setState({categorySelectionStyle: styles['category-selection']});
     }
   }
 
+  collapseMenuBar(collapseWidth: number): void {
+      const width = window.innerWidth;
+      if (width < collapseWidth) {
+        this.setState({categorySelectionStyle: styles['category-selection-collapsed']});
+      }
+    }
+
   render() {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
-      view = <SeasonViewWrapper fadeOut={this.fadeoutView()} seasons={this.state.seasons} categorySelectionStyle={this.state.categorySelectionStyle}/>;
+      view = <SeasonViewWrapper 
+        fadeOut={this.fadeoutView()} 
+        seasons={this.state.seasons} 
+        categorySelectionStyle={this.state.categorySelectionStyle}
+        collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
+        />;
     } else if (activeView === 'team') {
-      view = <TeamViewWrapper fadeOut={this.fadeoutView()} teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)} categorySelectionStyle={this.state.categorySelectionStyle}/>;
+      view = <TeamViewWrapper 
+        fadeOut={this.fadeoutView()} 
+        teams={this.state.teams} 
+        seasonNames={Object.keys(this.state.seasons)} 
+        categorySelectionStyle={this.state.categorySelectionStyle}
+        collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
+        />;
     }
     return (
       <div>
-        <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
+        <Header 
+          activeView={activeView} 
+          choice={this.chooseView.bind(this)}
+          />
         <Transition
           in={this.state.viewTransition}
           timeout={450}

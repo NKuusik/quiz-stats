@@ -16,16 +16,7 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const [menuBarContainerStyle, setMenuBarContainerStyle]: [any, Dispatch<any>] = useState(styles['menu-bar-container']);
-  const collapseWidth = 500
-/*
-  useEffect(() => {
-    extendMenuBar();
-  }, []);
 
-  window.addEventListener('resize', () => {
-    extendMenuBar();
-  });
-*/
   const menuBarRef = useRef<any>();
 
   function filterEntries(entriesValue: string[]): void {
