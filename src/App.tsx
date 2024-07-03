@@ -114,7 +114,8 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   chooseView(chosenView : string) {
-    if (chosenView === this.state.activeView) {
+    const width = window.innerWidth;
+    if (chosenView === this.state.activeView && width > this.props.collapseWidth) {
       this.setState({viewTransition: false});
     } else {
       this.setState({activeView: chosenView});
