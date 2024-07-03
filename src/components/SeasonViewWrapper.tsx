@@ -26,8 +26,8 @@ function SeasonViewWrapper({seasons, fadeOut, categorySelectionStyle, collapseMe
   }
 
   return (
-    <div id={styles[fadeOut]} className={styles['view-wrapper']}>
-      <div className={categorySelectionStyle}>
+    <div id={styles[fadeOut]} className={categorySelectionStyle}>
+      <div className={styles['category-selection']}>
         <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeason(chosenSeason); }} collapseFunction ={() => {collapseMenuBarFunction()}} />
       </div>
       <div className={styles['chart-view']}>

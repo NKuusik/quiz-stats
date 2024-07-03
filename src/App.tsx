@@ -31,7 +31,7 @@ class App extends React.Component<MyProps, MyState> {
       seasons: {},
       activeView: '',
       viewTransition: false,
-      categorySelectionStyle: styles['category-selection'],
+      categorySelectionStyle: styles['view-wrapper'],
     };
   }
 
@@ -133,16 +133,16 @@ class App extends React.Component<MyProps, MyState> {
   extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
     if (width < collapseWidth) {
-      this.setState({categorySelectionStyle: styles['category-selection-extended']});
+      this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
     } else {
-      this.setState({categorySelectionStyle: styles['category-selection']});
+      this.setState({categorySelectionStyle: styles['view-wrapper']});
     }
   }
 
   collapseMenuBar(collapseWidth: number): void {
       const width = window.innerWidth;
       if (width < collapseWidth) {
-        this.setState({categorySelectionStyle: styles['category-selection-collapsed']});
+        this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
       }
     }
 
