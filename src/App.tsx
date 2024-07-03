@@ -170,6 +170,7 @@ class App extends React.Component<MyProps, MyState> {
         <Header 
           activeView={activeView} 
           choice={this.chooseView.bind(this)}
+          extendMenuBarFunction={() => {this.extendMenuBar(this.props.collapseWidth)}}
           />
         <Transition
           in={this.state.viewTransition}
