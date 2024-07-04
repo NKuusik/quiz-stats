@@ -21,6 +21,7 @@ type MyState = {
   activeView: string;
   viewTransition: boolean;
   categorySelectionStyle: any;
+  activeEntry: Season | Team | null;
 }
 
 class App extends React.Component<MyProps, MyState> {
@@ -32,6 +33,7 @@ class App extends React.Component<MyProps, MyState> {
       activeView: '',
       viewTransition: false,
       categorySelectionStyle: styles['view-wrapper'],
+      activeEntry: null,
     };
   }
 
@@ -70,6 +72,14 @@ class App extends React.Component<MyProps, MyState> {
       }
     }
   }
+
+  chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
+      if (this.state.activeEntry === data[entryName]) {
+        this.setState({activeEntry: null});
+      } else {
+        this.setState({activeEntry: data[entryName]});
+      }
+    }
 
   componentDidMount() {
     const parsedSeasons: {[seasonName: string]: Season} = {};
@@ -121,6 +131,8 @@ class App extends React.Component<MyProps, MyState> {
       this.setState({activeView: chosenView});
       this.setState({viewTransition: true});
     }
+
+    this.setState({activeEntry: null})
   }
 
   fadeoutView(): string { // Halb kood aga töötab, vaata üle
@@ -131,14 +143,16 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
-  // Todo: Currently this method ensures that collapsed view is not transitioned into extended view during resize.
-  // However, we do want to transition from collapsed view into extended view when a header button is pressed and
-  // the screen size is less than collapse width.
-  // Create separate method for that and pass it down to Header instead of extendMenuBar
+
   extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
     if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper']) {
-      this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
+      if (this.state.activeEntry === null) {
+        this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
+      } else {
+        this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
+      }
+
     } else if (width > collapseWidth) {
       this.setState({categorySelectionStyle: styles['view-wrapper']});
     }
@@ -167,6 +181,8 @@ class App extends React.Component<MyProps, MyState> {
         seasons={this.state.seasons} 
         categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
+        chooseSeasonFunction={(chosenSeason) => this.chooseEntry(chosenSeason, this.state.seasons)}
+        activeEntry={this.state.activeEntry as Season | null}
         />;
     } else if (activeView === 'team') {
       view = <TeamViewWrapper 
@@ -175,6 +191,8 @@ class App extends React.Component<MyProps, MyState> {
         seasonNames={Object.keys(this.state.seasons)} 
         categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
+        chooseTeamFunction={(chosenTeam) => this.chooseEntry(chosenTeam, this.state.teams)}
+        activeEntry={this.state.activeEntry as Team | null}
         />;
     }
     return (
