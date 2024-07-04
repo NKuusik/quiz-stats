@@ -17,20 +17,20 @@ const Header = ({choice, activeView, smallLayoutTransitions} : MyProps) => {
   }
 
   function handleClick(choiceName: string): void {
-    choice(choiceName)
-    smallLayoutTransitions()
+    choice(choiceName);
+    smallLayoutTransitions();
   }
 
   return (
         <div className={[styles['header']].join(' ')}>
             <h1>Stats for {activeView === '' ? 'something' : activeView}</h1>
             <ul>
-                <li><button id={styles[visualizeActiveButton('team')]} onClick={() => { 
-                  handleClick('team'); 
-                  }}>Check team</button></li>
-                <li><button id={styles[visualizeActiveButton('season')]} onClick={() => { 
+                <li><button id={styles[visualizeActiveButton('team')]} onClick={() => {
+                  handleClick('team');
+                }}>Check team</button></li>
+                <li><button id={styles[visualizeActiveButton('season')]} onClick={() => {
                   handleClick('season');
-                  }}>Check season</button></li>
+                }}>Check season</button></li>
             </ul>
         </div>
   );

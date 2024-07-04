@@ -9,7 +9,6 @@ import Header from './components/Header';
 import {Transition} from 'react-transition-group';
 import styles from './style.css';
 
-
 type MyProps = {
   rawData: any;
   collapseWidth: number;
@@ -33,7 +32,7 @@ class App extends React.Component<MyProps, MyState> {
       activeView: '',
       viewTransition: false,
       categorySelectionStyle: styles['view-wrapper'],
-      activeEntry: null,
+      activeEntry: null
     };
   }
 
@@ -74,12 +73,12 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
-      if (this.state.activeEntry === data[entryName]) {
-        this.setState({activeEntry: null});
-      } else {
-        this.setState({activeEntry: data[entryName]});
-      }
+    if (this.state.activeEntry === data[entryName]) {
+      this.setState({activeEntry: null});
+    } else {
+      this.setState({activeEntry: data[entryName]});
     }
+  }
 
   componentDidMount() {
     const parsedSeasons: {[seasonName: string]: Season} = {};
@@ -132,7 +131,7 @@ class App extends React.Component<MyProps, MyState> {
       this.setState({viewTransition: true});
     }
 
-    this.setState({activeEntry: null})
+    this.setState({activeEntry: null});
   }
 
   fadeoutView(): string { // Halb kood aga töötab, vaata üle
@@ -143,7 +142,6 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
-
   extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
     if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper']) {
@@ -152,7 +150,6 @@ class App extends React.Component<MyProps, MyState> {
       } else {
         this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
       }
-
     } else if (width > collapseWidth) {
       this.setState({categorySelectionStyle: styles['view-wrapper']});
     }
@@ -166,29 +163,29 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   collapseMenuBar(collapseWidth: number): void {
-      const width = window.innerWidth;
-      if (width < collapseWidth) {
-        this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
-      }
+    const width = window.innerWidth;
+    if (width < collapseWidth) {
+      this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
     }
+  }
 
   render() {
     const activeView = this.state.activeView;
     let view;
     if (activeView === 'season') {
-      view = <SeasonViewWrapper 
-        fadeOut={this.fadeoutView()} 
-        seasons={this.state.seasons} 
+      view = <SeasonViewWrapper
+        fadeOut={this.fadeoutView()}
+        seasons={this.state.seasons}
         categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
         chooseSeasonFunction={(chosenSeason) => this.chooseEntry(chosenSeason, this.state.seasons)}
         activeEntry={this.state.activeEntry as Season | null}
         />;
     } else if (activeView === 'team') {
-      view = <TeamViewWrapper 
-        fadeOut={this.fadeoutView()} 
-        teams={this.state.teams} 
-        seasonNames={Object.keys(this.state.seasons)} 
+      view = <TeamViewWrapper
+        fadeOut={this.fadeoutView()}
+        teams={this.state.teams}
+        seasonNames={Object.keys(this.state.seasons)}
         categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
         chooseTeamFunction={(chosenTeam) => this.chooseEntry(chosenTeam, this.state.teams)}
@@ -197,10 +194,10 @@ class App extends React.Component<MyProps, MyState> {
     }
     return (
       <div>
-        <Header 
-          activeView={activeView} 
+        <Header
+          activeView={activeView}
           choice={this.chooseView.bind(this)}
-          smallLayoutTransitions={() => {this.transitionCollapsedToExtendedView(this.props.collapseWidth)}}
+          smallLayoutTransitions={() => { this.transitionCollapsedToExtendedView(this.props.collapseWidth); }}
           />
         <Transition
           in={this.state.viewTransition}

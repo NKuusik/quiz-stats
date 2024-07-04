@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, Dispatch} from 'react';
+import React, {useState, useRef, Dispatch} from 'react';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -47,7 +47,6 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
       setInputResetToggle(false);
     }
   }
-
 
   return (
     <div className={menuBarContainerStyle}>

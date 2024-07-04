@@ -17,7 +17,7 @@ function TeamComparison({teams, comparisonTeamHandler}: MyProps) {
 
   if (viewActive) {
     closeButton = <button onClick={() => setViewActive(false)} className={styles['button-chart']} id={styles['comparison-close']} ><img src={closeIcon} alt='Close'></img></button>;
-    menuBar = <MenuBar category={Object.keys(teams)} choice={(comparedTeamName: string) => comparisonTeamHandler(comparedTeamName)} viewType={'comparison'} collapseFunction={() => {console.log('boo');}}/>;
+    menuBar = <MenuBar category={Object.keys(teams)} choice={(comparedTeamName: string) => comparisonTeamHandler(comparedTeamName)} viewType={'comparison'} collapseFunction={() => { console.log('boo'); }}/>;
   }
 
   return (

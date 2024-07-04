@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TeamView from './TeamView';
 import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
@@ -12,12 +12,20 @@ type MyProps = {
   collapseMenuBarFunction: Function;
   chooseTeamFunction: Function;
 
-  // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference 
+  // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference
   // that activeEntry becomes   activeEntry: Season | Team | null and conditional rendering is expanded
   activeEntry: Team | null;
 }
 
-function TeamViewWrapper({teams, seasonNames, fadeOut, categorySelectionStyle, collapseMenuBarFunction, chooseTeamFunction, activeEntry} : MyProps) {
+function TeamViewWrapper({
+  teams,
+  seasonNames,
+  fadeOut,
+  categorySelectionStyle,
+  collapseMenuBarFunction,
+  chooseTeamFunction,
+  activeEntry
+} : MyProps) {
   let teamView;
   if (activeEntry != null) {
     teamView = <TeamView chosenTeam={activeEntry} seasonNames={seasonNames} allTeams={teams}/>;
@@ -25,7 +33,7 @@ function TeamViewWrapper({teams, seasonNames, fadeOut, categorySelectionStyle, c
   return (
       <div id={styles[fadeOut]} className={categorySelectionStyle}>
         <div className={styles['category-selection']}>
-          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => {collapseMenuBarFunction()}}/>
+          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => { collapseMenuBarFunction(); }}/>
         </div>
         <div className={styles['chart-view']}>
           {teamView}
