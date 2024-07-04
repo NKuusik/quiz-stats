@@ -3,11 +3,11 @@ import styles from '../style.css';
 
 type MyProps = {
   choice : Function;
-  extendMenuBarFunction: Function;
+  smallLayoutTransitions: Function;
   activeView: string;
 }
 
-const Header = ({choice, activeView, extendMenuBarFunction} : MyProps) => {
+const Header = ({choice, activeView, smallLayoutTransitions} : MyProps) => {
   function visualizeActiveButton(buttonName : string): string {
     if (activeView === buttonName) {
       return 'header-active';
@@ -18,7 +18,7 @@ const Header = ({choice, activeView, extendMenuBarFunction} : MyProps) => {
 
   function handleClick(choiceName: string): void {
     choice(choiceName)
-    extendMenuBarFunction()
+    smallLayoutTransitions()
   }
 
   return (

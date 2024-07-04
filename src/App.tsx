@@ -144,6 +144,13 @@ class App extends React.Component<MyProps, MyState> {
     }
   }
 
+  transitionCollapsedToExtendedView(collapseWidth: number): void {
+    const width = window.innerWidth;
+    if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper-collapsed']) {
+      this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
+    }
+  }
+
   collapseMenuBar(collapseWidth: number): void {
       const width = window.innerWidth;
       if (width < collapseWidth) {
@@ -175,7 +182,7 @@ class App extends React.Component<MyProps, MyState> {
         <Header 
           activeView={activeView} 
           choice={this.chooseView.bind(this)}
-          extendMenuBarFunction={() => {this.extendMenuBar(this.props.collapseWidth)}}
+          smallLayoutTransitions={() => {this.transitionCollapsedToExtendedView(this.props.collapseWidth)}}
           />
         <Transition
           in={this.state.viewTransition}
