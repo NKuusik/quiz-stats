@@ -29,9 +29,6 @@ canvas {
 }
 
 .header {
-    float: right;
-    width: 80%;
-
     ul {
         list-style-type: none;
         width: 60%;
@@ -89,6 +86,10 @@ canvas {
         padding-left: 5%;
         float: left;
     } 
+    .header {
+        float: right;
+        width: 80%;
+    }
 }
 
 .app-wrapper-extended {
@@ -103,6 +104,9 @@ canvas {
     .chart-view {
         display: none; 
     }
+    .header {
+        width: 100%;
+    }
 }
 
 .app-wrapper-collapsed {
@@ -116,48 +120,7 @@ canvas {
         padding-left: 5vw;
     }
 }
-/*
-.view-wrapper {
-    > div {
-        float: left;
-    }
 
-    .category-selection {
-        width: 20%;
-    }
-
-    .chart-view {
-        width: 70%;
-        padding-left: 5%;
-    }
-}
-
-.view-wrapper-extended {
-    .category-selection {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;  
-        animation-name: slide-full;
-        animation-duration: $animation-speed;   
-    }
-    .chart-view {
-        display: none; 
-    }
-}
-
-.view-wrapper-collapsed {
-    .category-selection {
-        display: none; 
-        animation-name: slide-out;
-        animation-duration: $animation-speed;  
-    }
-    .chart-view {
-        width: 90vw;
-        padding-left: 5vw;
-    }
-}
-*/
 .button-chart {
     margin-right: 10px;
     border: none;
