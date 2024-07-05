@@ -22,11 +22,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
 
-  window.addEventListener('resize', () => {
-    extendMenuBar(collapseWidth);
-  });
-
-
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
     extendMenuBar(collapseWidth);
@@ -70,6 +65,10 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
 
     setSeasons(parsedSeasons);
+
+    window.addEventListener('resize', () => {
+      extendMenuBar(collapseWidth);
+    });
   }, []);
 
 
@@ -141,13 +140,17 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     const width = window.innerWidth;
     if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
       if (activeEntry === null) {
+        console.log(`extendMenuBar ${categorySelectionStyle} 1`)
         setCategorySelectionStyle(styles['app-wrapper-extended']);
       } else {
+        console.log(`extendMenuBar ${categorySelectionStyle} 2`)
         setCategorySelectionStyle(styles['app-wrapper-extended-collapsed']);
       }
     } else if (width > collapseWidth) {
+      console.log(`extendMenuBar ${categorySelectionStyle} 3`)
       setCategorySelectionStyle(styles['app-wrapper']);
     }
+    console.log(`extendMenuBar ${categorySelectionStyle} 4`)
   }
 
   function transitionCollapsedToExtendedView(collapseWidth: number): void {
