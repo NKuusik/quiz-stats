@@ -21,6 +21,21 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
+  
+  let intermediaryActiveEntry = activeEntry;
+  /*
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      extendMenuBar(collapseWidth)
+    })
+  })*/
+  
+  useEffect(() => {
+    window.addEventListener('resize', extendMenuBar(collapseWidth));
+    return () => window.removeEventListener('resize', extendMenuBar(collapseWidth))
+    
+  });
+  
 
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
@@ -65,10 +80,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
 
     setSeasons(parsedSeasons);
-
-    window.addEventListener('resize', () => {
-      extendMenuBar(collapseWidth);
-    });
   }, []);
 
 
@@ -108,16 +119,42 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
   }
 
+  function extendMenuBar(collapseWidth: number): any {
+    console.log(`extendMenuBar 0`)
+    console.log(intermediaryActiveEntry)
+    console.log(categorySelectionStyle)
+    const width = window.innerWidth;
+    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
 
-  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
+      if (intermediaryActiveEntry === null) {
+        console.log(`extendMenuBar ${categorySelectionStyle} 1`)
+        setCategorySelectionStyle(styles['app-wrapper-extended']);
+      } else {
+        console.log(`extendMenuBar ${categorySelectionStyle} 2`)
+        setCategorySelectionStyle(styles['app-wrapper-extended-collapsed']);
+      }
+    } else if (width > collapseWidth) {
+      console.log(`extendMenuBar ${categorySelectionStyle} 3`)
+      setCategorySelectionStyle(styles['app-wrapper']);
+    }
+    console.log(`extendMenuBar ${categorySelectionStyle} 4`)
+  }
+
+  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {    
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
+      intermediaryActiveEntry = null;
     } else {
       setActiveEntry(data[entryName]);
+      intermediaryActiveEntry = data[entryName]
     }
+
+    console.log(`chooseEntry ${entryName}`)
+    console.log(activeEntry)
   }
 
   function chooseView(chosenView : string) {
+    console.log(`chooseView`)
     const width = window.innerWidth;
     if (chosenView === activeView && width > collapseWidth) {
       setViewTransition(false);
@@ -134,23 +171,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     } else {
       return '';
     }
-  }
-
-  function extendMenuBar(collapseWidth: number): void {
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
-      if (activeEntry === null) {
-        console.log(`extendMenuBar ${categorySelectionStyle} 1`)
-        setCategorySelectionStyle(styles['app-wrapper-extended']);
-      } else {
-        console.log(`extendMenuBar ${categorySelectionStyle} 2`)
-        setCategorySelectionStyle(styles['app-wrapper-extended-collapsed']);
-      }
-    } else if (width > collapseWidth) {
-      console.log(`extendMenuBar ${categorySelectionStyle} 3`)
-      setCategorySelectionStyle(styles['app-wrapper']);
-    }
-    console.log(`extendMenuBar ${categorySelectionStyle} 4`)
   }
 
   function transitionCollapsedToExtendedView(collapseWidth: number): void {
@@ -206,3 +226,5 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   }
 
 export default App;
+
+
