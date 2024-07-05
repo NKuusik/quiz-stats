@@ -31,7 +31,7 @@ class App extends React.Component<MyProps, MyState> {
       seasons: {},
       activeView: '',
       viewTransition: false,
-      categorySelectionStyle: styles['view-wrapper'],
+      categorySelectionStyle: styles['app-wrapper'],
       activeEntry: null
     };
   }
@@ -144,28 +144,28 @@ class App extends React.Component<MyProps, MyState> {
 
   extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
-    if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper']) {
+    if (width < collapseWidth && this.state.categorySelectionStyle === styles['app-wrapper']) {
       if (this.state.activeEntry === null) {
-        this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
+        this.setState({categorySelectionStyle: styles['app-wrapper-extended']});
       } else {
-        this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
+        this.setState({categorySelectionStyle: styles['app-wrapper-collapsed']});
       }
     } else if (width > collapseWidth) {
-      this.setState({categorySelectionStyle: styles['view-wrapper']});
+      this.setState({categorySelectionStyle: styles['app-wrapper']});
     }
   }
 
   transitionCollapsedToExtendedView(collapseWidth: number): void {
     const width = window.innerWidth;
-    if (width < collapseWidth && this.state.categorySelectionStyle === styles['view-wrapper-collapsed']) {
-      this.setState({categorySelectionStyle: styles['view-wrapper-extended']});
+    if (width < collapseWidth && this.state.categorySelectionStyle === styles['app-wrapper-collapsed']) {
+      this.setState({categorySelectionStyle: styles['app-wrapper-extended']});
     }
   }
 
   collapseMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
     if (width < collapseWidth) {
-      this.setState({categorySelectionStyle: styles['view-wrapper-collapsed']});
+      this.setState({categorySelectionStyle: styles['app-wrapper-collapsed']});
     }
   }
 
@@ -176,7 +176,6 @@ class App extends React.Component<MyProps, MyState> {
       view = <SeasonViewWrapper
         fadeOut={this.fadeoutView()}
         seasons={this.state.seasons}
-        categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
         chooseSeasonFunction={(chosenSeason) => this.chooseEntry(chosenSeason, this.state.seasons)}
         activeEntry={this.state.activeEntry as Season | null}
@@ -186,14 +185,13 @@ class App extends React.Component<MyProps, MyState> {
         fadeOut={this.fadeoutView()}
         teams={this.state.teams}
         seasonNames={Object.keys(this.state.seasons)}
-        categorySelectionStyle={this.state.categorySelectionStyle}
         collapseMenuBarFunction={() => this.collapseMenuBar(this.props.collapseWidth)}
         chooseTeamFunction={(chosenTeam) => this.chooseEntry(chosenTeam, this.state.teams)}
         activeEntry={this.state.activeEntry as Team | null}
         />;
     }
     return (
-      <div>
+      <div className={this.state.categorySelectionStyle}>
         <Header
           activeView={activeView}
           choice={this.chooseView.bind(this)}

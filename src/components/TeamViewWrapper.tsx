@@ -8,7 +8,6 @@ type MyProps = {
   teams : {[teamName: string]: Team};
   seasonNames : Array<string>;
   fadeOut: string;
-  categorySelectionStyle: any;
   collapseMenuBarFunction: Function;
   chooseTeamFunction: Function;
 
@@ -21,7 +20,6 @@ function TeamViewWrapper({
   teams,
   seasonNames,
   fadeOut,
-  categorySelectionStyle,
   collapseMenuBarFunction,
   chooseTeamFunction,
   activeEntry
@@ -31,7 +29,7 @@ function TeamViewWrapper({
     teamView = <TeamView chosenTeam={activeEntry} seasonNames={seasonNames} allTeams={teams}/>;
   }
   return (
-      <div id={styles[fadeOut]} className={categorySelectionStyle}>
+      <div id={styles[fadeOut]} >
         <div className={styles['category-selection']}>
           <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => { collapseMenuBarFunction(); }}/>
         </div>

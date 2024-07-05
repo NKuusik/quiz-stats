@@ -7,7 +7,6 @@ import {Season} from '../classes/EntityChildren/Season';
 type MyProps = {
   seasons : {[seasonName: string]: Season};
   fadeOut: string;
-  categorySelectionStyle: any;
   collapseMenuBarFunction: Function;
   chooseSeasonFunction: Function;
 
@@ -19,7 +18,6 @@ type MyProps = {
 function SeasonViewWrapper({
   seasons,
   fadeOut,
-  categorySelectionStyle,
   collapseMenuBarFunction,
   chooseSeasonFunction,
   activeEntry
@@ -30,7 +28,7 @@ function SeasonViewWrapper({
   }
 
   return (
-    <div id={styles[fadeOut]} className={categorySelectionStyle}>
+    <div id={styles[fadeOut]} >
       <div className={styles['category-selection']}>
         <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeasonFunction(chosenSeason, seasons); }} collapseFunction ={() => { collapseMenuBarFunction(); }} />
       </div>

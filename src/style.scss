@@ -10,11 +10,6 @@ $default-background-gradient: linear-gradient(#433A65, #302A62);
 $comparison-container-width: 80%;
 $animation-speed: 500ms;
 
-.data-view-expanded {
-    background-color: purple;
-    width: 100vw;
-}
-
 body {
     background-color: $default-background-color;
     font-size: 18px;
@@ -84,6 +79,44 @@ canvas {
     }
 }
 
+.app-wrapper {
+    .category-selection {
+        width: 20%;
+        float: left;
+    }
+    .chart-view {
+        width: 70%;
+        padding-left: 5%;
+        float: left;
+    } 
+}
+
+.app-wrapper-extended {
+    .category-selection {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;  
+        animation-name: slide-full;
+        animation-duration: $animation-speed;   
+    }
+    .chart-view {
+        display: none; 
+    }
+}
+
+.app-wrapper-collapsed {
+    .category-selection {
+        display: none; 
+        animation-name: slide-out;
+        animation-duration: $animation-speed;  
+    }
+    .chart-view {
+        width: 90vw;
+        padding-left: 5vw;
+    }
+}
+/*
 .view-wrapper {
     > div {
         float: left;
@@ -124,7 +157,7 @@ canvas {
         padding-left: 5vw;
     }
 }
-
+*/
 .button-chart {
     margin-right: 10px;
     border: none;
