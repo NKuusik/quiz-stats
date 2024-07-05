@@ -13,16 +13,6 @@ type MyProps = {
   rawData: any;
   collapseWidth: number;
 }
-/*
-type MyState = {
-  teams: {[teamName: string]: Team};
-  seasons: {[seasonName: string]: Season};
-  activeView: string;
-  viewTransition: boolean;
-  categorySelectionStyle: any;
-  activeEntry: Season | Team | null;
-}*/
-//   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
 
 const App = ({rawData, collapseWidth}: MyProps) => {
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
@@ -32,14 +22,16 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
 
+  window.addEventListener('resize', () => {
+    extendMenuBar(collapseWidth);
+  });
 
 
   useEffect(() => {
-    console.log(`Boo ${rawData}, ${collapseWidth}`)
     const parsedSeasons: {[seasonName: string]: Season} = {};
     extendMenuBar(collapseWidth);
+    let allTeams: {[teamName: string]: Team} = {}
     for (const season of Object.values(rawData)) {
-      console.log(`Shoo ${season}`)
       axios.get(season)
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
@@ -48,18 +40,15 @@ const App = ({rawData, collapseWidth}: MyProps) => {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
-          let allTeams: {[teamName: string]: Team} = {}
+          
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const rawTeamData: string[] = parsedData.data[i];
             const teamRanking: number = parseInt(rawTeamData[0]);
             const teamName: string = rawTeamData[1];
             const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
             const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
-            console.log(`teams state ${JSON.stringify(teams)} 3`)
             allTeams = updateTeamData(allTeams, teamRanking,
               teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
-            console.log(`allTeams ${JSON.stringify(allTeams)} 4`)
-            console.log(`teams ${JSON.stringify(teams)} 5`)
 
             currentSeason.totalGames = setAndValidateSeasonLength(currentSeason.totalGames, allTeams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
@@ -67,24 +56,20 @@ const App = ({rawData, collapseWidth}: MyProps) => {
           }
 
           validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames, allTeams);
-          const teamsState = {...allTeams};
 
           // Add current season to team data
           for (const teamName of currentSeasonTeamNames) {
             currentSeason.teams[teamName] = allTeams[teamName];
-            teamsState[teamName].teamSeasons[currentSeasonName] = currentSeason;
+            allTeams[teamName].teamSeasons[currentSeasonName] = currentSeason;
             
           }
-          setTeams(teamsState);
+          
           parsedSeasons[currentSeasonName] = currentSeason;
         });
+        setTeams(allTeams);
     }
 
     setSeasons(parsedSeasons);
-
-    window.addEventListener('resize', () => {
-      extendMenuBar(collapseWidth);
-    });
   }, []);
 
 
@@ -97,8 +82,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
     allTeams[currentTeamName].normalizeGameScore(teamLatestSeasonScores, currentSeasonName);
     allTeams[currentTeamName].rankings[currentSeasonName] = teamRanking;
-    console.log(`updateTeamData allTeams ${JSON.stringify(allTeams)} ${allTeams[currentTeamName]} 2`)
-
     return allTeams;
   }
 
@@ -120,7 +103,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
     for (const teamName of currentSeasonTeams) {
       if (currentSeasonRanking[allTeams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
-        throw new Error(`${teamName} is not in place ${this.state.teams[teamName].rankings[currentSeasonName]}.
+        throw new Error(`${teamName} is not in place ${allTeams[teamName].rankings[currentSeasonName]}.
           Found ${currentSeasonRanking[allTeams[teamName].rankings[currentSeasonName] - 1]} instead.`);
       }
     }
@@ -157,7 +140,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   function extendMenuBar(collapseWidth: number): void {
     const width = window.innerWidth;
     if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
-      if (this.state.activeEntry === null) {
+      if (activeEntry === null) {
         setCategorySelectionStyle(styles['app-wrapper-extended']);
       } else {
         setCategorySelectionStyle(styles['app-wrapper-extended-collapsed']);
@@ -218,5 +201,5 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       </div>
     );
   }
-  
+
 export default App;
