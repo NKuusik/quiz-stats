@@ -20,58 +20,20 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
-  const nodeRef = useRef(null)
+  const nodeRef = useRef(null);
 
-  useEffect(() => {
-    let eventHandler = () => extendMenuBar(collapseWidth)
-    window.addEventListener('resize', eventHandler)
-    return () => window.removeEventListener('resize', eventHandler)
-  })
-  useEffect(() => {
-    const parsedSeasons: {[seasonName: string]: Season} = {};
-    extendMenuBar(collapseWidth);
-    let allTeams: {[teamName: string]: Team} = {}
-    for (const season of Object.values(rawData)) {
-      axios.get(season)
-        .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
-          return parseData(res.data);
-        })
-        .then((parsedData: { data: any[]; }) => {
-          const currentSeasonName: string = `season ${parsedData.data[0]}`;
-          const currentSeasonTeamNames: string[] = [];
-          const currentSeason = new Season(currentSeasonName);
-          
-          for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const rawTeamData: string[] = parsedData.data[i];
-            const teamRanking: number = parseInt(rawTeamData[0]);
-            const teamName: string = rawTeamData[1];
-            const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
-            const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
-            allTeams = updateTeamData(allTeams, teamRanking,
-              teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
-
-            currentSeason.totalGames = setAndValidateSeasonLength(currentSeason.totalGames, allTeams[teamName].results[currentSeasonName]);
-            currentSeasonTeamNames.push(teamName);
-            currentSeason.ranking[allTeams[teamName].rankings[currentSeasonName] - 1] = teamName;
-          }
-
-          validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames, allTeams);
-
-          // Add current season to team data
-          for (const teamName of currentSeasonTeamNames) {
-            currentSeason.teams[teamName] = allTeams[teamName];
-            allTeams[teamName].teamSeasons[currentSeasonName] = currentSeason;
-            
-          }
-          
-          parsedSeasons[currentSeasonName] = currentSeason;
-        });
-        setTeams(allTeams);
+  function extendMenuBar(collapseWidth: number): any {
+    const width = window.innerWidth;
+    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
+      if (activeEntry === null) {
+        setCategorySelectionStyle(styles['app-wrapper-extended']);
+      } else {
+        setCategorySelectionStyle(styles['app-wrapper-collapsed']);
+      }
+    } else if (width > collapseWidth) {
+      setCategorySelectionStyle(styles['app-wrapper']);
     }
-
-    setSeasons(parsedSeasons);
-  }, []);
-
+  }
 
   function updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
     teamLatestSeasonScores: string[],
@@ -109,20 +71,56 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
   }
 
-  function extendMenuBar(collapseWidth: number): any {
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
-      if (activeEntry === null) {
-        setCategorySelectionStyle(styles['app-wrapper-extended']);
-      } else {
-        setCategorySelectionStyle(styles['app-wrapper-collapsed']);
-      }
-    } else if (width > collapseWidth) {
-      setCategorySelectionStyle(styles['app-wrapper']);
-    }
-  }
+  useEffect(() => {
+    const eventHandler = () => extendMenuBar(collapseWidth);
+    window.addEventListener('resize', eventHandler);
+    return () => window.removeEventListener('resize', eventHandler);
+  });
+  useEffect(() => {
+    const parsedSeasons: {[seasonName: string]: Season} = {};
+    extendMenuBar(collapseWidth);
+    let allTeams: {[teamName: string]: Team} = {};
+    for (const season of Object.values(rawData)) {
+      axios.get(season)
+        .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
+          return parseData(res.data);
+        })
+        .then((parsedData: { data: any[]; }) => {
+          const currentSeasonName: string = `season ${parsedData.data[0]}`;
+          const currentSeasonTeamNames: string[] = [];
+          const currentSeason = new Season(currentSeasonName);
 
-  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {    
+          for (let i = 1; i < parsedData.data.length - 1; i++) {
+            const rawTeamData: string[] = parsedData.data[i];
+            const teamRanking: number = parseInt(rawTeamData[0]);
+            const teamName: string = rawTeamData[1];
+            const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
+            const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
+            allTeams = updateTeamData(allTeams, teamRanking,
+              teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
+
+            currentSeason.totalGames = setAndValidateSeasonLength(currentSeason.totalGames, allTeams[teamName].results[currentSeasonName]);
+            currentSeasonTeamNames.push(teamName);
+            currentSeason.ranking[allTeams[teamName].rankings[currentSeasonName] - 1] = teamName;
+          }
+
+          validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames, allTeams);
+
+          // Add current season to team data
+          for (const teamName of currentSeasonTeamNames) {
+            currentSeason.teams[teamName] = allTeams[teamName];
+            allTeams[teamName].teamSeasons[currentSeasonName] = currentSeason;
+          }
+
+          parsedSeasons[currentSeasonName] = currentSeason;
+        });
+      setTeams(allTeams);
+    }
+
+    setSeasons(parsedSeasons);
+  }, []);
+
+  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
     } else {
@@ -183,13 +181,13 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       collapseWidth={collapseWidth}
       />;
   }
-    return (
+  return (
       <div className={categorySelectionStyle}>
         <Header
           activeView={activeView}
           choice={(chosenView) => chooseView(chosenView)}
           collapseWidth = {collapseWidth}
-          smallLayoutTransitions={() => {transitionCollapsedToExtendedView(collapseWidth); }}
+          smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
           />
         <Transition
           nodeRef={nodeRef}
@@ -201,9 +199,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         </Transition>
 
       </div>
-    );
-  }
+  );
+};
 
 export default App;
-
-

@@ -17,6 +17,16 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: 
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
   const [averageViewMaxValue, setAverageViewMaxValue] = useState<number>(0);
+
+  function generateLabels(): string[] {
+    const labels : string[] = [];
+    for (const season of seasonNames) {
+      labels.push(season);
+    }
+    labels.sort();
+    return labels;
+  }
+
   const cumulativeLabels: string[] = generateLabels();
 
   function resetMaxValues(): void {
@@ -27,7 +37,7 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: 
   function comparisonTeamHandler(teamName: string): void {
     resetMaxValues();
     const comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
-    if (comparisonTeams.hasOwnProperty(teamName)) {
+    if (Object.hasOwnProperty.call(comparisonTeams, teamName)) {
       delete comparisonTeamsInstance[teamName];
     } else {
       if (teamName !== chosenTeam.name) {
@@ -42,15 +52,6 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: 
     setComparisonTeams({});
     resetMaxValues();
   }, [chosenTeam]);
-
-  function generateLabels(): string[] {
-    const labels : string[] = [];
-    for (const season of seasonNames) {
-      labels.push(season);
-    }
-    labels.sort();
-    return labels;
-  }
 
   function generatePointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
     const totalPointsAllSeasons : number[] = [];
@@ -101,11 +102,10 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: 
     return chartDataSets;
   }
 
-  let buttonStartText = "See"
+  let buttonStartText = 'See';
 
   if (window.innerWidth < collapseWidth) {
-    buttonStartText = ""
-    
+    buttonStartText = '';
   }
 
   let lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSets(true)} labels={cumulativeLabels} />;

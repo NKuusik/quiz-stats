@@ -22,9 +22,9 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
     lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} collapseWidth={collapseWidth} />;
   }
 
-  let buttonStartText = "See points"
+  let buttonStartText = 'See points';
   if (window.innerWidth < collapseWidth) {
-    buttonStartText = ""
+    buttonStartText = '';
   }
 
   return (

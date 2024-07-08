@@ -1,4 +1,4 @@
-import React, {useState, useRef, Dispatch} from 'react';
+import React, {useState, useRef} from 'react';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -12,11 +12,8 @@ type MyProps = {
 }
 
 const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
-  const [allEntries, setAllEntries] = useState(category);
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
-  const [menuBarContainerStyle, setMenuBarContainerStyle]: [any, Dispatch<any>] = useState(styles['menu-bar-container']);
-
   const menuBarRef = useRef<any>();
 
   function filterEntries(entriesValue: string[]): void {
@@ -49,8 +46,8 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   }
 
   return (
-    <div className={menuBarContainerStyle}>
-      <SearchField viewType={viewType} menuBarEntries={allEntries} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
+    <div className={styles['menu-bar-container']}>
+      <SearchField viewType={viewType} menuBarEntries={category} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
         <div ref={menuBarRef} onMouseDown={handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
         {
         matchedEntries.map(entry => (

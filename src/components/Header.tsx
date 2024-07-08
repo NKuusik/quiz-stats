@@ -22,17 +22,17 @@ const Header = ({choice, activeView, smallLayoutTransitions, collapseWidth} : My
     smallLayoutTransitions();
   }
 
-  let buttonTextStart = 'Check'
+  let buttonTextStart = 'Check';
 
   if (window.innerWidth < collapseWidth) {
-    buttonTextStart = ''
+    buttonTextStart = '';
   }
 
   return (
         <div className={[styles['header']].join(' ')}>
             <h1>Stats for {activeView === '' ? 'something' : activeView}</h1>
             <ul>
-                <li><button id={styles[visualizeActiveButton('team')]} className={styles['button-header']}  onClick={() => {
+                <li><button id={styles[visualizeActiveButton('team')]} className={styles['button-header']} onClick={() => {
                   handleClick('team');
                 }}>{buttonTextStart} team</button></li>
                 <li><button id={styles[visualizeActiveButton('season')]} className={styles['button-header']} onClick={() => {
