@@ -10,6 +10,7 @@ type MyProps = {
   fadeOut: string;
   collapseMenuBarFunction: Function;
   chooseTeamFunction: Function;
+  collapseWidth: number;
 
   // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference
   // that activeEntry becomes   activeEntry: Season | Team | null and conditional rendering is expanded
@@ -22,11 +23,12 @@ function TeamViewWrapper({
   fadeOut,
   collapseMenuBarFunction,
   chooseTeamFunction,
-  activeEntry
+  activeEntry,
+  collapseWidth
 } : MyProps) {
   let teamView;
   if (activeEntry != null) {
-    teamView = <TeamView chosenTeam={activeEntry} seasonNames={seasonNames} allTeams={teams}/>;
+    teamView = <TeamView chosenTeam={activeEntry} seasonNames={seasonNames} allTeams={teams} collapseWidth={collapseWidth}/>;
   }
   return (
       <div id={styles[fadeOut]} >

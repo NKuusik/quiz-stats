@@ -7,6 +7,7 @@ $header-button-color: rgb(230, 46, 229);
 $secondary-color: #B1B5EF;
 $default-border-radius: 15px;
 $default-background-gradient: linear-gradient(#433A65, #302A62);
+$reverse-background-gradient: linear-gradient(#302A62, #433A65);
 $comparison-container-width: 80%;
 $animation-speed: 500ms;
 
@@ -117,6 +118,10 @@ canvas {
     }
 }
 
+.chart-view h1 {
+    max-width: 80%;
+}
+
 .app-wrapper-collapsed {
     .category-selection {
         display: none; 
@@ -133,6 +138,19 @@ canvas {
     }
     .button-header {
         min-width: 90px;
+    }
+    #comparison-menu-bar {
+        min-width: 85vw;
+    }
+    // Todo: flatten this
+    #comparison-container #comparison-close {
+        width: 50%;
+        margin-left: 50%;
+        border-radius: 50% 50% 0% 0%;
+        background-color: $reverse-background-gradient;
+        img {
+            width: 50%;
+        }
     }
 }
 
@@ -179,6 +197,7 @@ canvas {
 
 #comparison-container {
     width: 25%;
+    min-width: 200px;
     height: 20%;
     float: right;
     position: relative;
@@ -211,17 +230,21 @@ canvas {
         background-image: none;
         float: left;
         width: 20%;
+        min-width: 30px;
         border-radius: 50% 0% 0% 50%;
         background-image: $default-background-gradient;
 
         img {
             width: 100%;
+            min-width: 20px;
         }
     }
     #search-field { //Muuda id klassiks.
         padding: 0px 0px 15px 0px;
     }
 }
+
+
 
 #header-active {
     background-color: $header-button-color;

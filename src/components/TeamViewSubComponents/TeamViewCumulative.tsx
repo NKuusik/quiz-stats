@@ -9,9 +9,10 @@ type MyProps = {
   chosenTeam: Team;
   seasonNames: string[];
   allTeams : {[teamName: string]: Team};
+  collapseWidth: number
 }
 
-const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
+const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) => {
   const [averageView, setAverageView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
@@ -100,18 +101,25 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
     return chartDataSets;
   }
 
+  let buttonStartText = "See"
+
+  if (window.innerWidth < collapseWidth) {
+    buttonStartText = ""
+    
+  }
+
   let lineChartComponent = <LineChart maxValue={averageViewMaxValue} titleContent={'Average points across seasons'} dataSets={generateDataSets(true)} labels={cumulativeLabels} />;
-  const teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} />;
+  const teamComparisonComponent = <TeamComparison teams={allTeams} comparisonTeamHandler={comparisonTeamHandler} collapseWidth={collapseWidth} />;
   let cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => setAverageView(false)}>
-      See total points
+      {buttonStartText} total points
     </button>;
 
   if (!averageView) {
     lineChartComponent = <LineChart maxValue={cumulativeViewMaxValue} titleContent={'Total points across seasons'} dataSets={generateDataSets(false)} labels={cumulativeLabels} />;
     cumulativeViewButton =
       <button className={styles['button-chart']} onClick={() => setAverageView(true)}>
-        See average points
+        {buttonStartText} average points
       </button>;
   }
 

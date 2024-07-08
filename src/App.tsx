@@ -184,6 +184,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
       chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
       activeEntry={activeEntry as Team | null}
+      collapseWidth={collapseWidth}
       />;
   }
     return (
