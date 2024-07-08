@@ -108,6 +108,13 @@ canvas {
         width: 100%;
 
     }
+    ul {
+        width: 10%;
+        flex-wrap: wrap;
+    }
+    .button-header {
+        min-width: 90px;
+    }
 }
 
 .app-wrapper-collapsed {

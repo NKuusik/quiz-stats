@@ -8,7 +8,6 @@ import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
 import styles from './style.css';
-
 type MyProps = {
   rawData: any;
   collapseWidth: number;
@@ -21,13 +20,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
-    
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      extendMenuBar(collapseWidth)
-    })
-  })
 
+  useEffect(() => {
+    let eventHandler = () => extendMenuBar(collapseWidth)
+    window.addEventListener('resize', eventHandler)
+    return () => window.removeEventListener('resize', eventHandler)
+  })
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
     extendMenuBar(collapseWidth);
@@ -113,6 +111,8 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   function extendMenuBar(collapseWidth: number): any {
     const width = window.innerWidth;
     if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
+      console.log("extendMenuBar")
+      console.log(activeEntry)
 
       if (activeEntry === null) {
         setCategorySelectionStyle(styles['app-wrapper-extended']);
@@ -125,6 +125,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   }
 
   function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {    
+    console.log("chooseEntry")
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
     } else {
@@ -140,6 +141,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       setActiveView(chosenView);
       setViewTransition(true);
     }
+    console.log("chooseView")
     setActiveEntry(null);
   }
 
@@ -189,6 +191,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         <Header
           activeView={activeView}
           choice={(chosenView) => chooseView(chosenView)}
+          collapseWidth = {collapseWidth}
           smallLayoutTransitions={() => {transitionCollapsedToExtendedView(collapseWidth); }}
           />
         <Transition

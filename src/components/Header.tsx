@@ -5,9 +5,10 @@ type MyProps = {
   choice : Function;
   smallLayoutTransitions: Function;
   activeView: string;
+  collapseWidth: number
 }
 
-const Header = ({choice, activeView, smallLayoutTransitions} : MyProps) => {
+const Header = ({choice, activeView, smallLayoutTransitions, collapseWidth} : MyProps) => {
   function visualizeActiveButton(buttonName : string): string {
     if (activeView === buttonName) {
       return 'header-active';
@@ -23,7 +24,7 @@ const Header = ({choice, activeView, smallLayoutTransitions} : MyProps) => {
 
   let buttonTextStart = 'Check'
 
-  if (window.innerWidth < 700) {
+  if (window.innerWidth < collapseWidth) {
     buttonTextStart = ''
   }
 
