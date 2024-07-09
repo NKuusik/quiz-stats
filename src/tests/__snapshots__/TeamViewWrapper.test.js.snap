@@ -2,8 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="view-wrapper"
-  id="undefined"
+  id=""
 >
   <div
     className="category-selection"
@@ -41,6 +40,47 @@ exports[`renders correctly 1`] = `
   </div>
   <div
     className="chart-view"
-  />
+  >
+    <div
+      className="team-view"
+    >
+      <h1>
+        Stats for team 
+        Fake team
+      </h1>
+      <button
+        className="button-chart"
+        id="chart-button-active"
+        onClick={[Function]}
+      >
+        See points
+         per season
+      </button>
+      <button
+        className="button-chart"
+        id=""
+        onClick={[Function]}
+      >
+        See points
+         across seasons
+      </button>
+      <div>
+        <p>
+          I am a mock chart.
+        </p>
+        <div
+          className="test-data"
+        >
+          <p>
+            3,4
+          </p>
+        </div>
+        <canvas
+          height="150"
+          width="400"
+        />
+      </div>
+    </div>
+  </div>
 </div>
 `;

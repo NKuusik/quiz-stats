@@ -1,30 +1,87 @@
+/**
+ * @jest-environment jsdom
+ */
+
+jest.mock('axios');
+import axios from 'axios';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import App  from '../App';
-import {Team} from '../classes/EntityChildren/Team';
-import * as rawData from '../resources/seasons'; // Selle asemel testmaterjal
+import {render, fireEvent, waitFor} from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
+import {expect, jest, test} from '@jest/globals';
+
+  describe('App', () =>{
+    beforeEach(() => {
+      fetchMock.resetMocks()
+    })
+
+    let localTestData = {
+      testSeason1: [
+        [ '01' ],
+        [ '1', 'First Test Team', '10', '5', '3', '18' ],
+        [ '2', 'Second Test Team', '4', '6', '2', '12' ],
+        [ '3', 'Third Test Team', '1', '1', '9', '9' ]
+      ]
+    }
+
+    test('all teams are added correctly', async () => {
 
 
-// No snapshot of App for now. 
-// Just test functionality of individual methods.
+      // Todo: expand this
+      axios.get
+        .mockResolvedValueOnce({ data: '01\n1,First Test Team,10,5,3,18\n'});
 
+      const app = await render(<App 
+        rawData={localTestData}
+        collapseWidth={800}
+        />);
+      
+      await waitFor(() =>
+      {    
+        let teamButton = app.container.querySelectorAll('button')[0];
+        fireEvent.click(teamButton);  
+        const entriesAsDOM = app.container.getElementsByClassName('entry-selection');
+        expect(entriesAsDOM.length).toBe(1);
+        expect(entriesAsDOM[0].textContent).toBe('First Test Team');
 
+      })
+    });
+    
+    it('default renders correctly', () => {
+      const tree = renderer
+          .create(<App 
+            rawData={localTestData}
+            collapseWidth={800}
+            />)
+          .toJSON();
+        expect(tree).toMatchSnapshot(); 
+      });    
+  })
+
+/*
 test('updateTeamData adds new Team', () => {
-  const app = new App(rawData);
-  let teamsState = app.state.teams;
+  const app = new App(rawData, 800);
+
+  let teamsState = app.teams;
+  console.log(teamsState)
+  expect(true).toBe(true);
+
+
   expect(Object.keys(teamsState).length).toBe(0);
   const seasonName = "SeasonName";
   const teamRanking = 1;
   const currentTeamName = "Fake team";
   const teamLatestSeasonScores = [1, 2];
   const teamTotalScore = 3;
-  teamsState = app.updateTeamData(app.state.teams, teamRanking, currentTeamName, 
+  teamsState = app.updateTeamData(app.teams, teamRanking, currentTeamName, 
     teamLatestSeasonScores, teamTotalScore, seasonName);
   expect(Object.keys(teamsState).length).toBe(1);
   expect(teamsState["Fake team"].name).toBe('Fake team');
   expect(teamsState["Random name"]).toBe(undefined);
 });
-
+*/
+/*
 test('updateTeamData modifies data of existing Team', () => {
   const app = new App(rawData);
   let teamsState = app.state.teams;

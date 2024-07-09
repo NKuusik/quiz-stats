@@ -2,8 +2,7 @@
 
 exports[`default renders correctly 1`] = `
 <div
-  className="view-wrapper"
-  id="undefined"
+  id=""
 >
   <div
     className="category-selection"

@@ -13,14 +13,16 @@ exports[`default renders correctly 1`] = `
     id="chart-button-active"
     onClick={[Function]}
   >
-    See points per season
+    See points
+     per season
   </button>
   <button
     className="button-chart"
     id=""
     onClick={[Function]}
   >
-    See points across seasons
+    See points
+     across seasons
   </button>
   <div>
     <p>
@@ -63,14 +65,16 @@ exports[`only 3 seasons are displayed 1`] = `
     id="chart-button-active"
     onClick={[Function]}
   >
-    See points per season
+    See points
+     per season
   </button>
   <button
     className="button-chart"
     id=""
     onClick={[Function]}
   >
-    See points across seasons
+    See points
+     across seasons
   </button>
   <div>
     <p>

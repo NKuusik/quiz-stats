@@ -11,18 +11,22 @@ exports[`default renders correctly 1`] = `
   <ul>
     <li>
       <button
+        className="button-header"
         id=""
         onClick={[Function]}
       >
-        Check team
+        Check
+         team
       </button>
     </li>
     <li>
       <button
+        className="button-header"
         id=""
         onClick={[Function]}
       >
-        Check season
+        Check
+         season
       </button>
     </li>
   </ul>
@@ -40,18 +44,22 @@ exports[`season renders correctly 1`] = `
   <ul>
     <li>
       <button
+        className="button-header"
         id=""
         onClick={[Function]}
       >
-        Check team
+        Check
+         team
       </button>
     </li>
     <li>
       <button
+        className="button-header"
         id="header-active"
         onClick={[Function]}
       >
-        Check season
+        Check
+         season
       </button>
     </li>
   </ul>
@@ -64,23 +72,27 @@ exports[`team renders correctly 1`] = `
 >
   <h1>
     Stats for 
-    season
+    team
   </h1>
   <ul>
     <li>
       <button
-        id=""
+        className="button-header"
+        id="header-active"
         onClick={[Function]}
       >
-        Check team
+        Check
+         team
       </button>
     </li>
     <li>
       <button
-        id="header-active"
+        className="button-header"
+        id=""
         onClick={[Function]}
       >
-        Check season
+        Check
+         season
       </button>
     </li>
   </ul>

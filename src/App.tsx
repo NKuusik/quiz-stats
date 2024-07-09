@@ -81,6 +81,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     extendMenuBar(collapseWidth);
     let allTeams: {[teamName: string]: Team} = {};
     for (const season of Object.values(rawData)) {
+      
       axios.get(season)
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
@@ -116,7 +117,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         });
       setTeams(allTeams);
     }
-
     setSeasons(parsedSeasons);
   }, []);
 
