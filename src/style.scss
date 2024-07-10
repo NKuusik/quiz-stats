@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
 
 $default-background-color: rgb(33, 35, 75);
-$canvas-menu-bar-background-color: #161833;
+$menu-bar-background-color-canvas: #161833;
+$menu-bar-background-color-main: #060824;
 $header-button-color: rgb(230, 46, 229);
 $secondary-color: #B1B5EF;
 $default-border-radius: 15px;
 $default-background-gradient: linear-gradient(#433A65, #302A62);
+$reverse-background-gradient: linear-gradient(#302A62, #433A65);
 $comparison-container-width: 80%;
+$animation-speed: 500ms;
 
 body {
     background-color: $default-background-color;
@@ -22,34 +25,20 @@ button {
 }
 
 canvas {
-    background-color: $canvas-menu-bar-background-color;
+    background-color: $menu-bar-background-color-canvas;
     position: absolute;
 }
 
 .header {
-    float: right;
-    width: 80%;
-
     ul {
         list-style-type: none;
-        width: 60%;
+        width: 0%;
         display: flex;
-        flex-wrap: wrap;
         align-items: flex-start;
         float: right;
         justify-content: flex-end;
         padding-right: 20px;
     }
-
-    button {
-        margin-left: 10px;
-        border-color: $header-button-color;
-        background-color: transparent;
-        color: white;
-        border-style: solid;
-        border-width: 2px;
-        font-size: 15px;
-      }
 
     h1 {
         display: inline-block;
@@ -61,13 +50,24 @@ canvas {
     }
 }
 
+.button-header {
+    margin-left: 10px;
+    border-color: $header-button-color;
+    background-color: transparent;
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    font-size: 15px;
+    min-width: 140px;
+}
+
 .entry-selection {
     margin-top: 5%;
     margin-bottom: 5%;
     visibility: visible;
     padding-top: 5%;
     padding-bottom: 5%;
-    background-color: $canvas-menu-bar-background-color;
+    background-color: $menu-bar-background-color-canvas;
     border-radius: 10px;
     text-align: center;
     font-size: 20px;
@@ -77,19 +77,81 @@ canvas {
     }
 }
 
-.view-wrapper {
-    > div {
-    float: left;
+.app-wrapper {
+    .category-selection {
+        width: 20%;
+        float: left;
+    }
+    .chart-view {
+        width: 70%;
+        padding-left: 5%;
+        float: left;
+    } 
+    .header {
+        float: right;
+        width: 80%;
     }
 }
 
-.category-selection {
-    width: 20%;
+.app-wrapper-extended {
+    .category-selection {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;  
+        animation-name: slide-full;
+        animation-duration: $animation-speed;   
+    }
+    .chart-view {
+        display: none; 
+    }
+    .header {
+        width: 100%;
+
+    }
+    ul {
+        width: 10%;
+        flex-wrap: wrap;
+    }
+    .button-header {
+        min-width: 90px;
+    }
 }
 
-.chart-view {
-    width: 70%;
-    padding-left: 5%;
+.chart-view h1 {
+    max-width: 80%;
+}
+
+.app-wrapper-collapsed {
+    .category-selection {
+        display: none; 
+        animation-name: slide-out;
+        animation-duration: $animation-speed;  
+    }
+    .chart-view {
+        width: 90vw;
+        padding-left: 5vw;
+    }
+    ul {
+        width: 10%;
+        flex-wrap: wrap;
+    }
+    .button-header {
+        min-width: 90px;
+    }
+    #comparison-menu-bar {
+        min-width: 85vw;
+    }
+    // Todo: flatten this
+    #comparison-container #comparison-close {
+        width: 50%;
+        margin-left: 50%;
+        border-radius: 50% 50% 0% 0%;
+        background-color: $reverse-background-gradient;
+        img {
+            width: 50%;
+        }
+    }
 }
 
 .button-chart {
@@ -101,7 +163,7 @@ canvas {
 
 #fade-out {
     animation-name: slide-out;
-    animation-duration: 500ms;
+    animation-duration: $animation-speed;
 }
 
 #search-field {
@@ -117,13 +179,14 @@ canvas {
     }
 }
 
+// Animations here should go to .category-selection
 .menu-bar-container {
     padding-top: 10px;
     padding-left: 5%;
     padding-right: 5%;
-    background-color: #060824;
+    background-color: $menu-bar-background-color-main;
     animation-name: slide-in;
-    animation-duration: 500ms;
+    animation-duration: $animation-speed;    
 }
 
 .menu-bar-selection {
@@ -134,6 +197,7 @@ canvas {
 
 #comparison-container {
     width: 25%;
+    min-width: 200px;
     height: 20%;
     float: right;
     position: relative;
@@ -166,17 +230,21 @@ canvas {
         background-image: none;
         float: left;
         width: 20%;
+        min-width: 30px;
         border-radius: 50% 0% 0% 50%;
         background-image: $default-background-gradient;
 
         img {
             width: 100%;
+            min-width: 20px;
         }
     }
     #search-field { //Muuda id klassiks.
         padding: 0px 0px 15px 0px;
     }
 }
+
+
 
 #header-active {
     background-color: $header-button-color;
@@ -192,6 +260,15 @@ canvas {
     }
     to {
         width: 100%;
+    } 
+}
+
+@keyframes slide-full {
+    from {
+        width: inherit;
+    }
+    to {
+        width: 100vw;
     } 
 }
 

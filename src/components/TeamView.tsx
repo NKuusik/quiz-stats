@@ -9,26 +9,32 @@ type MyProps = {
   chosenTeam: Team;
   seasonNames: string[];
   allTeams : {[teamName: string]: Team};
+  collapseWidth: number;
 }
 
-const TeamView = ({chosenTeam, seasonNames, allTeams}: MyProps) => {
+const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
 
   // Reset cumulative view, when main team is changed
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
 
   if (cumulativeView) {
-    lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} />;
+    lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} collapseWidth={collapseWidth} />;
+  }
+
+  let buttonStartText = 'See points';
+  if (window.innerWidth < collapseWidth) {
+    buttonStartText = '';
   }
 
   return (
         <div className={styles['team-view']}>
             <h1>Stats for team {chosenTeam.name}</h1>
             <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
-              See points per season
+              {buttonStartText} per season
             </button>
             <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(true)}>
-              See points across seasons
+              {buttonStartText} across seasons
             </button>
             {lineChartComponent}
         </div>

@@ -25,33 +25,12 @@ const testSeasons = {
 it('default renders correctly', () => {
 
     const tree = renderer
-         .create(<SeasonViewWrapper seasons={testSeasons} />)
+         .create(<SeasonViewWrapper 
+          seasons={testSeasons}
+          fadeOut=''
+          collapseMenuBarFunction={() => console.log('collapseMenuBarFunction was called')}
+          chooseSeasonFunction={() => console.log('chooseSeasonFunction was called')}
+          />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
-
-
-test("Active season is changed in menu bar", () => {
-  const element = render(<SeasonViewWrapper seasons={testSeasons} />);
-  const entriesInMenuBar = element.container.querySelector('.entry-selection');
-  fireEvent.click(entriesInMenuBar);
-  expect(element.getByRole('heading')).toHaveTextContent('Stats for Test Season');
-});   
-
-test("clicking on the currently active season toggles the value off", () => {
-  const element = render(<SeasonViewWrapper seasons={testSeasons} />);
-  const entriesInMenuBar = element.container.querySelector('.entry-selection');
-  fireEvent.click(entriesInMenuBar);
-  expect(element.getByRole('heading')).toHaveTextContent('Stats for Test Season');
-  fireEvent.click(entriesInMenuBar);
-
-  // Trying to access the heading now will throw error as no heading exists.
-  let thrownError = null;
-  try {
-    element.getByRole('heading');
-  } catch (error) {
-    thrownError = error;
-  }
-
-  expect(thrownError).toBeInstanceOf(Error);
-});  

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import axios from 'axios';
 import {parseData} from './scripts/readData';
 import {Team} from './classes/EntityChildren/Team';
@@ -7,30 +7,35 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
-
+import styles from './style.css';
 type MyProps = {
   rawData: any;
+  collapseWidth: number;
 }
 
-type MyState = {
-  teams: {[teamName: string]: Team};
-  seasons: {[seasonName: string]: Season};
-  activeView: string;
-  viewTransition: boolean
-}
+const App = ({rawData, collapseWidth}: MyProps) => {
+  const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
+  const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
+  const [activeView, setActiveView] = useState<string>('');
+  const [viewTransition, setViewTransition] = useState<boolean>(false);
+  const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
+  const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
+  const nodeRef = useRef(null);
 
-class App extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props);
-    this.state = {
-      teams: {},
-      seasons: {},
-      activeView: '',
-      viewTransition: false
-    };
+  function extendMenuBar(collapseWidth: number): any {
+    const width = window.innerWidth;
+    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
+      if (activeEntry === null) {
+        setCategorySelectionStyle(styles['app-wrapper-extended']);
+      } else {
+        setCategorySelectionStyle(styles['app-wrapper-collapsed']);
+      }
+    } else if (width > collapseWidth) {
+      setCategorySelectionStyle(styles['app-wrapper']);
+    }
   }
 
-  updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
+  function updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
     teamLatestSeasonScores: string[],
     teamTotalScore: number, currentSeasonName: string):
     {[teamName: string]: Team} {
@@ -42,7 +47,7 @@ class App extends React.Component<MyProps, MyState> {
     return allTeams;
   }
 
-  setAndValidateSeasonLength(currentSeasonLength: number,
+  function setAndValidateSeasonLength(currentSeasonLength: number,
     latestSeasonScores: string[]): number {
     if (currentSeasonLength === 0) {
       currentSeasonLength = latestSeasonScores.length;
@@ -52,23 +57,31 @@ class App extends React.Component<MyProps, MyState> {
     return currentSeasonLength;
   }
 
-  validateCurrentSeasonRanking(currentSeasonName: string, currentSeasonRanking: string[],
-    currentSeasonTeams: string[]) {
+  function validateCurrentSeasonRanking(currentSeasonName: string, currentSeasonRanking: string[],
+    currentSeasonTeams: string[], allTeams: {[teamName: string]: Team}) {
     if (currentSeasonRanking.length !== currentSeasonTeams.length) {
       throw new Error('The number of teams in season rankings does not match ' +
         'with the actual number of teams');
     }
     for (const teamName of currentSeasonTeams) {
-      if (currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
-        throw new Error(`${teamName} is not in place ${this.state.teams[teamName].rankings[currentSeasonName]}.
-          Found ${currentSeasonRanking[this.state.teams[teamName].rankings[currentSeasonName] - 1]} instead.`);
+      if (currentSeasonRanking[allTeams[teamName].rankings[currentSeasonName] - 1] !== teamName) {
+        throw new Error(`${teamName} is not in place ${allTeams[teamName].rankings[currentSeasonName]}.
+          Found ${currentSeasonRanking[allTeams[teamName].rankings[currentSeasonName] - 1]} instead.`);
       }
     }
   }
 
-  componentDidMount() {
+  useEffect(() => {
+    const eventHandler = () => extendMenuBar(collapseWidth);
+    window.addEventListener('resize', eventHandler);
+    return () => window.removeEventListener('resize', eventHandler);
+  });
+  useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    for (const season of Object.values(this.props.rawData)) {
+    extendMenuBar(collapseWidth);
+    let allTeams: {[teamName: string]: Team} = {};
+    for (const season of Object.values(rawData)) {
+      
       axios.get(season)
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
@@ -77,71 +90,116 @@ class App extends React.Component<MyProps, MyState> {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
+
           for (let i = 1; i < parsedData.data.length - 1; i++) {
             const rawTeamData: string[] = parsedData.data[i];
             const teamRanking: number = parseInt(rawTeamData[0]);
             const teamName: string = rawTeamData[1];
             const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
             const teamTotalScore: number = parseFloat(rawTeamData[rawTeamData.length - 1]);
-            const allTeams: {[teamName: string]: Team} = this.updateTeamData({...this.state.teams}, teamRanking,
+            allTeams = updateTeamData(allTeams, teamRanking,
               teamName, teamLatestSeasonScores, teamTotalScore, currentSeasonName);
-            this.setState({teams: allTeams});
-            currentSeason.totalGames = this.setAndValidateSeasonLength(currentSeason.totalGames, this.state.teams[teamName].results[currentSeasonName]);
+
+            currentSeason.totalGames = setAndValidateSeasonLength(currentSeason.totalGames, allTeams[teamName].results[currentSeasonName]);
             currentSeasonTeamNames.push(teamName);
-            currentSeason.ranking[this.state.teams[teamName].rankings[currentSeasonName] - 1] = teamName;
+            currentSeason.ranking[allTeams[teamName].rankings[currentSeasonName] - 1] = teamName;
           }
-          this.validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames);
+
+          validateCurrentSeasonRanking(currentSeasonName, currentSeason.ranking, currentSeasonTeamNames, allTeams);
+
+          // Add current season to team data
           for (const teamName of currentSeasonTeamNames) {
-            currentSeason.teams[teamName] = this.state.teams[teamName];
-            const teamsState = {...this.state.teams};
-            teamsState[teamName].teamSeasons[currentSeasonName] = currentSeason;
-            this.setState({teams: teamsState});
+            currentSeason.teams[teamName] = allTeams[teamName];
+            allTeams[teamName].teamSeasons[currentSeasonName] = currentSeason;
           }
+
           parsedSeasons[currentSeasonName] = currentSeason;
         });
+      setTeams(allTeams);
     }
-    this.setState({seasons: parsedSeasons});
-  }
+    setSeasons(parsedSeasons);
+  }, []);
 
-  chooseView(chosenView : string) {
-    if (chosenView === this.state.activeView) {
-      this.setState({viewTransition: false});
+  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
+    if (activeEntry === data[entryName]) {
+      setActiveEntry(null);
     } else {
-      this.setState({activeView: chosenView});
-      this.setState({viewTransition: true});
+      setActiveEntry(data[entryName]);
     }
   }
 
-  fadeoutView(): string { // Halb kood aga töötab, vaata üle
-    if (this.state.viewTransition === false) {
+  function chooseView(chosenView : string) {
+    const width = window.innerWidth;
+    if (chosenView === activeView && width > collapseWidth) {
+      setViewTransition(false);
+    } else {
+      setActiveView(chosenView);
+      setViewTransition(true);
+    }
+    setActiveEntry(null);
+  }
+
+  function fadeoutView(): string { // Halb kood aga töötab, vaata üle
+    if (viewTransition === false) {
       return 'fade-out';
     } else {
       return '';
     }
   }
 
-  render() {
-    const activeView = this.state.activeView;
-    let view;
-    if (activeView === 'season') {
-      view = <SeasonViewWrapper fadeOut={this.fadeoutView()} seasons={this.state.seasons} />;
-    } else if (activeView === 'team') {
-      view = <TeamViewWrapper fadeOut={this.fadeoutView()} teams={this.state.teams} seasonNames={Object.keys(this.state.seasons)}/>;
+  function transitionCollapsedToExtendedView(collapseWidth: number): void {
+    const width = window.innerWidth;
+    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper-collapsed']) {
+      setCategorySelectionStyle(styles['app-wrapper-extended']);
     }
-    return (
-      <div>
-        <Header activeView={activeView} choice={this.chooseView.bind(this)}/>
+  }
+
+  function collapseMenuBar(collapseWidth: number): void {
+    const width = window.innerWidth;
+    if (width < collapseWidth) {
+      setCategorySelectionStyle(styles['app-wrapper-collapsed']);
+    }
+  }
+
+  let view;
+  if (activeView === 'season') {
+    view = <SeasonViewWrapper
+      fadeOut={fadeoutView()}
+      seasons={seasons}
+      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
+      chooseSeasonFunction={(chosenSeason) => chooseEntry(chosenSeason, seasons)}
+      activeEntry={activeEntry as Season | null}
+      />;
+  } else if (activeView === 'team') {
+    view = <TeamViewWrapper
+      fadeOut={fadeoutView()}
+      teams={teams}
+      seasonNames={Object.keys(seasons)}
+      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
+      chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
+      activeEntry={activeEntry as Team | null}
+      collapseWidth={collapseWidth}
+      />;
+  }
+  return (
+      <div className={categorySelectionStyle}>
+        <Header
+          activeView={activeView}
+          choice={(chosenView) => chooseView(chosenView)}
+          collapseWidth = {collapseWidth}
+          smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
+          />
         <Transition
-          in={this.state.viewTransition}
+          nodeRef={nodeRef}
+          in={viewTransition}
           timeout={450}
-          onExited={() => this.setState({activeView: ''})}
+          onExited={() => setActiveView('')}
         >
-          {() => view}
+            {() => view}
         </Transition>
 
       </div>
-    );
-  }
-}
+  );
+};
 
 export default App;

@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {useState, useRef} from 'react';
 import styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -8,74 +8,61 @@ type MyProps = {
   category : string[];
   choice : Function;
   viewType : string;
+  collapseFunction: Function;
 }
 
-type MyState = {
-  allEntries: string[];
-  matchedEntries: string[];
-  inputResetToggle: boolean;
-}
+const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
+  const [matchedEntries, setMatchedEntries] = useState(category.sort());
+  const [inputResetToggle, setInputResetToggle] = useState(false);
+  const menuBarRef = useRef<any>();
 
-
-class MenuBar extends React.Component<MyProps, MyState> {
-  private menuBarRef = React.createRef<HTMLDivElement>();
-  public searcFieldInputRef = React.createRef<string>();
-  constructor(props: MyProps) {
-    super(props);
-    this.state = {
-      allEntries: this.props.category,
-      matchedEntries: this.props.category.sort(),
-      inputResetToggle: false,
-    };
+  function filterEntries(entriesValue: string[]): void {
+    setMatchedEntries(entriesValue.sort());
   }
 
-  filterEntries(entriesValue: string[]): void {
-    this.setState({matchedEntries: entriesValue.sort()});
-  }
-
-  handleMouseDown(event: MouseEvent): void {
+  function handleMouseDown(event: MouseEvent): void {
     const startCoordinateY = event.clientY;
 
     const handleMouseMove = (event: MouseEvent) => {
       const distanceMoved = startCoordinateY - event.clientY;
-      this.menuBarRef.current!.scrollTop = startCoordinateY + distanceMoved;
+      menuBarRef.current!.scrollTop = startCoordinateY + distanceMoved;
     };
 
     const handleMouseUp = () => {
-      this.menuBarRef.current!.removeEventListener('mousemove', handleMouseMove);
-      this.menuBarRef.current!.removeEventListener('mouseup', handleMouseUp);
+      menuBarRef.current!.removeEventListener('mousemove', handleMouseMove);
+      menuBarRef.current!.removeEventListener('mouseup', handleMouseUp);
     };
 
-    this.menuBarRef.current!.addEventListener('mousemove', handleMouseMove);
-    this.menuBarRef.current!.addEventListener('mouseup', handleMouseUp);
+    menuBarRef.current!.addEventListener('mousemove', handleMouseMove);
+    menuBarRef.current!.addEventListener('mouseup', handleMouseUp);
   }
 
-  toggleSearchFieldInput() {
-    if (this.state.inputResetToggle === false) {
-      this.setState({inputResetToggle: true});
+  function toggleSearchFieldInput() {
+    if (inputResetToggle === false) {
+      setInputResetToggle(true);
     } else {
-      this.setState({inputResetToggle: false});      
+      setInputResetToggle(false);
     }
   }
 
-  render() {
-    return (
-            <div className={styles['menu-bar-container']}>
-              <SearchField viewType={this.props.viewType} menuBarEntries={this.state.allEntries} onFieldValueChange={this.filterEntries.bind(this)} inputResetToggle={this.state.inputResetToggle} />
-                <div ref={this.menuBarRef} onMouseDown={this.handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
-                {
-                this.state.matchedEntries.map(entry => (
-                    <div key={entry} className={styles['entry-selection']}
-                      onClick={() => {
-                        this.toggleSearchFieldInput();
-                        this.props.choice(entry)}}>
-                      {entry}
-                    </div>
-                ))}
-              </div>
+  return (
+    <div className={styles['menu-bar-container']}>
+      <SearchField viewType={viewType} menuBarEntries={category} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
+        <div ref={menuBarRef} onMouseDown={handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
+        {
+        matchedEntries.map(entry => (
+            <div key={entry} className={styles['entry-selection']}
+              onClick={() => {
+                toggleSearchFieldInput();
+                collapseFunction();
+                choice(entry);
+              }}>
+              {entry}
             </div>
-    );
-  }
-}
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default MenuBar;

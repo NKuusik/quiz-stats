@@ -11,6 +11,15 @@ type MyProps = {
 
 const SeasonView = ({season}: MyProps) => {
   const defaultDataSetsShown : number = 3;
+
+  function generateLabels(): string[] {
+    const labels : string[] = [];
+    for (let i = 1; i <= season.totalGames; i++) {
+      labels.push(`Game #${i}`);
+    }
+    return labels;
+  }
+
   const labels: string[] = generateLabels();
   const [cumulativeView, setCumulativeView] = useState(false);
 
@@ -19,14 +28,6 @@ const SeasonView = ({season}: MyProps) => {
       return true;
     }
     return false;
-  }
-
-  function generateLabels(): string[] {
-    const labels : string[] = [];
-    for (let i = 1; i <= season.totalGames; i++) {
-      labels.push(`Game #${i}`);
-    }
-    return labels;
   }
 
   return (
