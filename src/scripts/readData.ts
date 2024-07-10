@@ -1,7 +1,6 @@
 const papaparse = require('papaparse');
 
 export async function parseData(input: string): Promise<Object> {
-  console.log(input)
   return new Promise((resolve) => {
     papaparse.parse(input, {
       complete: function(results : Object) {

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -6,7 +7,7 @@ import * as rawData from './resources/seasons';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App rawData={rawData} collapseWidth={800}/>
+      <App rawData={rawData} collapseWidth={800}/>  
   </React.StrictMode>,
   document.getElementById('root')
 );
