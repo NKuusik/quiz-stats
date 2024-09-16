@@ -30,7 +30,6 @@ module.exports = {
                             sourceMap: true
                         }
                     },
-
                 ]
             },
             {    test: /\.scss$/,

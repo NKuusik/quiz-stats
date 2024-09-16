@@ -1,10 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div>
-  <div>
-    <div>
-      <div>
+<div
+  id=""
+>
+  <div
+    className="category-selection"
+  >
+    <div
+      className="menu-bar-container"
+    >
+      <div
+        id="search-field"
+      >
         <form>
           <input
             onChange={[Function]}
@@ -17,9 +25,12 @@ exports[`renders correctly 1`] = `
         </form>
       </div>
       <div
+        className="menu-bar-selection"
         onMouseDown={[Function]}
       >
         <div
+          className="entry-selection"
+          data-testid="matched-entry"
           onClick={[Function]}
         >
           Fake team
@@ -27,19 +38,27 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <div>
-    <div>
+  <div
+    className="chart-view"
+  >
+    <div
+      data-testid="team-view"
+    >
       <h1>
         Stats for team 
         Fake team
       </h1>
       <button
+        className="button-chart"
+        id="chart-button-active"
         onClick={[Function]}
       >
         See points
          per season
       </button>
       <button
+        className="button-chart"
+        id=""
         onClick={[Function]}
       >
         See points

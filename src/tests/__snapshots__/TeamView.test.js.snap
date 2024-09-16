@@ -1,18 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default renders correctly 1`] = `
-<div>
+<div
+  data-testid="team-view"
+>
   <h1>
     Stats for team 
     Fake team
   </h1>
   <button
+    className="button-chart"
+    id="chart-button-active"
     onClick={[Function]}
   >
     See points
      per season
   </button>
   <button
+    className="button-chart"
+    id=""
     onClick={[Function]}
   >
     See points
@@ -47,18 +53,24 @@ exports[`default renders correctly 1`] = `
 `;
 
 exports[`only 3 seasons are displayed 1`] = `
-<div>
+<div
+  data-testid="team-view"
+>
   <h1>
     Stats for team 
     Fake team
   </h1>
   <button
+    className="button-chart"
+    id="chart-button-active"
     onClick={[Function]}
   >
     See points
      per season
   </button>
   <button
+    className="button-chart"
+    id=""
     onClick={[Function]}
   >
     See points

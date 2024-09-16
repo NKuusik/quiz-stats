@@ -51,7 +51,7 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
         <div ref={menuBarRef} onMouseDown={handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
         {
         matchedEntries.map(entry => (
-            <div key={entry} className={styles['entry-selection']}
+            <div data-testid="matched-entry" key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
                 collapseFunction();

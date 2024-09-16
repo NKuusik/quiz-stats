@@ -28,7 +28,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   }
 
   return (
-        <div>
+        <div data-testid="team-view">
             <h1>Stats for team {chosenTeam.name}</h1>
             <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
               {buttonStartText} per season

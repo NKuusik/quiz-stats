@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import MenuBar from '../components/MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import {render, fireEvent} from '@testing-library/react';
+import {screen} from '@testing-library/dom'
 
 const category = [];
 const choice = () => {};
@@ -54,8 +55,8 @@ test('entries are shown', () => {
     "Fake team": firstTeam,
     "secondTeam": secondTeam
   };
-  const menuBar = render((<MenuBar viewType="team" category={Object.keys(testTeams)} choice={choice}/>));
-  const entriesAsDOM = menuBar.container.getElementsByClassName('entry-selection');
+  render((<MenuBar viewType="team" category={Object.keys(testTeams)} choice={choice}/>));
+  const entriesAsDOM = screen.getAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(2);
   expect(entriesAsDOM[0].textContent).toBe('Fake team');
   expect(entriesAsDOM[1].textContent).toBe('secondTeam');
@@ -74,28 +75,33 @@ test('entries correspond to value on SearchField input', () => {
     "secondTeam": secondTeam
   };
   const menuBar = render((<MenuBar viewType="team" category={Object.keys(testTeams)} choice={choice}/>));
-  const entriesAsDOM = menuBar.container.getElementsByClassName('entry-selection');
+  let entriesAsDOM = screen.queryAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(2);
   expect(entriesAsDOM[0].textContent).toBe('Fake team');
   expect(entriesAsDOM[1].textContent).toBe('secondTeam');
   const searchField = menuBar.container.querySelector('input');
+
   // No result
   fireEvent.change(searchField, {target: {value: 'boo'}});
   fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  entriesAsDOM = screen.queryAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(0);
 
   //One result
   fireEvent.change(searchField, {target: {value: 'Fake'}});
   fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  entriesAsDOM = screen.queryAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(1);
 
   //Two results, case insensitive
   fireEvent.change(searchField, {target: {value: 'team'}});
   fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  entriesAsDOM = screen.queryAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(2);
 
   //Two results, whitespaces and tab
   fireEvent.change(searchField, {target: {value: '  team  '}});
   fireEvent.keyUp(searchField, {key: 'A', code: 'KeyA'});
+  entriesAsDOM = screen.queryAllByTestId('matched-entry');
   expect(entriesAsDOM.length).toBe(2);
 });

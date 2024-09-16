@@ -49,6 +49,7 @@ test('active button can be toggled', () => {
   let activeButton = element.container.querySelector("#chart-button-active");
   const seasonViewButton = element.container.querySelectorAll(".button-chart")[0];
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
+
   expect(seasonViewButton).toBe(activeButton);
   fireEvent.click(cumulativeViewButton);
   activeButton = element.container.querySelector("#chart-button-active");

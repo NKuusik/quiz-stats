@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App default renders correctly 1`] = `
-<div>
+<div
+  className="app-wrapper"
+>
   <div
-    className=""
+    className="header"
   >
     <h1>
       Stats for 
@@ -12,6 +14,8 @@ exports[`App default renders correctly 1`] = `
     <ul>
       <li>
         <button
+          className="button-header"
+          id=""
           onClick={[Function]}
         >
           Check
@@ -20,6 +24,8 @@ exports[`App default renders correctly 1`] = `
       </li>
       <li>
         <button
+          className="button-header"
+          id=""
           onClick={[Function]}
         >
           Check

@@ -36,8 +36,6 @@ import {expect, jest, test} from '@jest/globals';
       ]
     }
 
-
-
     test('all teams are added correctly', async () => {
 
       axios.get
@@ -99,25 +97,25 @@ import {expect, jest, test} from '@jest/globals';
       {  
         let teamButton = app.container.querySelectorAll('button')[0];
         fireEvent.click(teamButton);  
-        let entriesAsDOM = app.container.getElementsByClassName('entry-selection');
+        let entriesAsDOM = screen.queryAllByTestId('matched-entry');
         let firstTestTeamButton = entriesAsDOM[0]
         fireEvent.click(firstTestTeamButton)
       })
 
 
-      let teamViewAsDom = app.container.getElementsByClassName('team-view');
+      let teamViewAsDom = screen.queryAllByTestId('team-view');
       expect(teamViewAsDom.length).toBe(1);
       expect(screen.getByText('Stats for team First Test Team')).toBeInTheDocument();
 
       // Pressing the team button again toggles the stats view off.
       await waitFor(() =>
         {  
-          let entriesAsDOM = app.container.getElementsByClassName('entry-selection');
+          let entriesAsDOM = screen.queryAllByTestId('matched-entry');
           let firstTestTeamButton = entriesAsDOM[0]
           fireEvent.click(firstTestTeamButton)
         })
 
-        teamViewAsDom = app.container.getElementsByClassName('team-view');
+        teamViewAsDom = screen.queryAllByTestId('team-view');
         expect(teamViewAsDom.length).toBe(0);
     });
 
