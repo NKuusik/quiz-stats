@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-
 jest.mock('axios');
 import axios from 'axios';
 import React from 'react';
