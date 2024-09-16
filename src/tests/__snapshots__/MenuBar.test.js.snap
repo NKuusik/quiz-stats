@@ -1,13 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    className="header-vertical-alignment"
-    id="search-field"
-  >
+<div>
+  <div>
     <form>
       <input
         onChange={[Function]}
@@ -20,20 +15,14 @@ exports[`default renders correctly 1`] = `
     </form>
   </div>
   <div
-    className="menu-bar-selection"
     onMouseDown={[Function]}
   />
 </div>
 `;
 
 exports[`season renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    className="header-vertical-alignment"
-    id="search-field"
-  >
+<div>
+  <div>
     <form>
       <input
         onChange={[Function]}
@@ -46,20 +35,14 @@ exports[`season renders correctly 1`] = `
     </form>
   </div>
   <div
-    className="menu-bar-selection"
     onMouseDown={[Function]}
   />
 </div>
 `;
 
 exports[`team renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    className="header-vertical-alignment"
-    id="search-field"
-  >
+<div>
+  <div>
     <form>
       <input
         onChange={[Function]}
@@ -72,7 +55,6 @@ exports[`team renders correctly 1`] = `
     </form>
   </div>
   <div
-    className="menu-bar-selection"
     onMouseDown={[Function]}
   />
 </div>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from '../style.css';
+import * as styles from '../style.css';
 
 type MyProps = {
   choice : Function;

@@ -1,19 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default renders correctly 1`] = `
-<div
-  id=""
->
-  <div
-    className="category-selection"
-  >
-    <div
-      className="menu-bar-container"
-    >
-      <div
-        className="header-vertical-alignment"
-        id="search-field"
-      >
+<div>
+  <div>
+    <div>
+      <div>
         <form>
           <input
             onChange={[Function]}
@@ -26,11 +17,9 @@ exports[`default renders correctly 1`] = `
         </form>
       </div>
       <div
-        className="menu-bar-selection"
         onMouseDown={[Function]}
       >
         <div
-          className="entry-selection"
           onClick={[Function]}
         >
           Test Season
@@ -38,8 +27,6 @@ exports[`default renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <div
-    className="chart-view"
-  />
+  <div />
 </div>
 `;

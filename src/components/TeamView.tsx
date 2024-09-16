@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import styles from '../style.css';
+import * as styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import TeamViewSeasonal from './TeamViewSubComponents/TeamViewSeasonal';
@@ -28,7 +28,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   }
 
   return (
-        <div className={styles['team-view']}>
+        <div>
             <h1>Stats for team {chosenTeam.name}</h1>
             <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
               {buttonStartText} per season

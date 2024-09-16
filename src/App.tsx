@@ -7,7 +7,7 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
-import styles from './style.css';
+import * as styles from './style.css';
 type MyProps = {
   rawData: any;
   collapseWidth: number;

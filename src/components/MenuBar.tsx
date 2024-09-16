@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import styles from '../style.css';
+import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 // Todo: kui valida menüüst elementi võiks SearchField minna tühjaks.

@@ -2,7 +2,7 @@
 
 exports[`default renders correctly 1`] = `
 <div
-  className="header"
+  className=""
 >
   <h1>
     Stats for 
@@ -11,8 +11,6 @@ exports[`default renders correctly 1`] = `
   <ul>
     <li>
       <button
-        className="button-header"
-        id=""
         onClick={[Function]}
       >
         Check
@@ -21,8 +19,6 @@ exports[`default renders correctly 1`] = `
     </li>
     <li>
       <button
-        className="button-header"
-        id=""
         onClick={[Function]}
       >
         Check
@@ -35,7 +31,7 @@ exports[`default renders correctly 1`] = `
 
 exports[`season renders correctly 1`] = `
 <div
-  className="header"
+  className=""
 >
   <h1>
     Stats for 
@@ -44,8 +40,6 @@ exports[`season renders correctly 1`] = `
   <ul>
     <li>
       <button
-        className="button-header"
-        id=""
         onClick={[Function]}
       >
         Check
@@ -54,8 +48,6 @@ exports[`season renders correctly 1`] = `
     </li>
     <li>
       <button
-        className="button-header"
-        id="header-active"
         onClick={[Function]}
       >
         Check
@@ -68,7 +60,7 @@ exports[`season renders correctly 1`] = `
 
 exports[`team renders correctly 1`] = `
 <div
-  className="header"
+  className=""
 >
   <h1>
     Stats for 
@@ -77,8 +69,6 @@ exports[`team renders correctly 1`] = `
   <ul>
     <li>
       <button
-        className="button-header"
-        id="header-active"
         onClick={[Function]}
       >
         Check
@@ -87,8 +77,6 @@ exports[`team renders correctly 1`] = `
     </li>
     <li>
       <button
-        className="button-header"
-        id=""
         onClick={[Function]}
       >
         Check

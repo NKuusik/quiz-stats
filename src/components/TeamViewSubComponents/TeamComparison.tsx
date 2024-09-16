@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Team} from '../../classes/EntityChildren/Team';
-import styles from '../../style.css';
+import * as styles from '../../style.css';
 import MenuBar from '../MenuBar';
 import {closeIcon} from '../../resources/icons/icons';
 
