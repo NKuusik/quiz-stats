@@ -48,12 +48,6 @@ class LineChart extends React.Component<MyProps> {
       <>
       <div className='header'>
         <h1 className='title'>{this.props.titleContent}</h1>
-        <div className='links'>
-          <a
-            className='btn btn-gh'
-          >
-          </a>
-        </div>
       </div>
       <canvas ref={this.myRef} width="400" height="150"></canvas>
     </>
