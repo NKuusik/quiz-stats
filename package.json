@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run scss | webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "build": "sass src/style.scss src/style.css && webpack --config webpack.prod.js",
     "test": "clear && jest --coverage",
     "snap": "clear && jest --updateSnapshot",
     "lint": "eslint './src/**'",
