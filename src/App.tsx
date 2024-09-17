@@ -8,6 +8,9 @@ import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
 import * as styles from './style.css';
+import Grid from '@mui/material/Grid2'
+import { Box} from '@mui/material';
+import MenuBar from './components/MenuBar';
 
 type MyProps = {
   rawData: any;
@@ -19,11 +22,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
   const [viewTransition, setViewTransition] = useState<boolean>(false);
-  const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
+  //const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
   const nodeRef = useRef(null);
 
   function extendMenuBar(collapseWidth: number): any {
+    /*
     const width = window.innerWidth;
     if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
       if (activeEntry === null) {
@@ -34,6 +38,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     } else if (width > collapseWidth) {
       setCategorySelectionStyle(styles['app-wrapper']);
     }
+      */
   }
 
   function updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
@@ -79,7 +84,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   });
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    extendMenuBar(collapseWidth);
+    //extendMenuBar(collapseWidth);
     let allTeams: {[teamName: string]: Team} = {};
     for (const season of Object.values(rawData)) {
       
@@ -149,57 +154,81 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   }
 
   function transitionCollapsedToExtendedView(collapseWidth: number): void {
+    /*
     const width = window.innerWidth;
     if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper-collapsed']) {
       setCategorySelectionStyle(styles['app-wrapper-extended']);
     }
+      */
   }
 
   function collapseMenuBar(collapseWidth: number): void {
+    /*
     const width = window.innerWidth;
     if (width < collapseWidth) {
       setCategorySelectionStyle(styles['app-wrapper-collapsed']);
     }
+      */
   }
 
   let view;
   if (activeView === 'season') {
-    view = <SeasonViewWrapper
+    view = 
+    <Grid container size={12}>
+      <SeasonViewWrapper
       fadeOut={fadeoutView()}
       seasons={seasons}
       collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
       chooseSeasonFunction={(chosenSeason) => chooseEntry(chosenSeason, seasons)}
       activeEntry={activeEntry as Season | null}
-      />;
+      />
+    </Grid>;
   } else if (activeView === 'team') {
-    view = <TeamViewWrapper
-      fadeOut={fadeoutView()}
-      teams={teams}
-      seasonNames={Object.keys(seasons)}
-      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
-      chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
-      activeEntry={activeEntry as Team | null}
-      collapseWidth={collapseWidth}
-      />;
-  }
-  return (
-      <div className={categorySelectionStyle}>
-        <Header
-          activeView={activeView}
-          choice={(chosenView) => chooseView(chosenView)}
-          collapseWidth = {collapseWidth}
-          smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
-          />
-        <Transition
-          nodeRef={nodeRef}
-          in={viewTransition}
-          timeout={450}
-          onExited={() => setActiveView('')}
-        >
-            {() => view}
-        </Transition>
+    view =   
+    <Grid container size={12}>
+      <Grid size={3}></Grid>
+      <Grid size="grow">
+      <TeamViewWrapper
+        fadeOut={fadeoutView()}
+        teams={teams}
+        seasonNames={Object.keys(seasons)}
+        collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
+        chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
+        activeEntry={teams['Hommik']}
+        collapseWidth={collapseWidth}
+        />;
+      </Grid>
+    </Grid>
+    };
 
-      </div>
+  return (
+      <Box >
+        <Grid container>
+        <Grid size={3}>
+            <MenuBar  
+              viewType={'team'} 
+              choice={(chosenTeam: string) => { console.log('choose team') }} 
+              category={Object.keys(teams)} 
+              collapseFunction={() => { console.log('collapsed'); }}/>
+          </Grid>
+        <Grid size="grow">
+            <Header
+              activeView={activeView}
+              choice={(chosenView) => chooseView(chosenView)}
+              collapseWidth = {collapseWidth}
+              smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
+            />
+          </Grid>
+            <Transition
+              nodeRef={nodeRef}
+              in={viewTransition}
+              timeout={450}
+              onExited={() => setActiveView('')}>
+              {() => view}
+            </Transition>
+
+        </Grid>
+      </Box>
   );
 };
 

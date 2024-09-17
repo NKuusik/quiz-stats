@@ -32,9 +32,12 @@ function TeamViewWrapper({
   }
   return (
       <div id={styles[fadeOut]} >
+        {/*
         <div className={styles['category-selection']}>
           <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => { collapseMenuBarFunction(); }}/>
         </div>
+
+*/}
         <div className={styles['chart-view']}>
           {teamView}
         </div>
