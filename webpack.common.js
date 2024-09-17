@@ -32,14 +32,6 @@ module.exports = {
                     },
                 ]
             },
-            {    test: /\.scss$/,
-                use: [                    
-                    {
-                        loader: 'sass-loader'
-                    },
-                    ]
-        
-            },   
             {
                 test: /\.csv$/,
                 loader: 'file-loader',

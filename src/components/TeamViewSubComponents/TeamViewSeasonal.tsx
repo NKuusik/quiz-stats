@@ -10,7 +10,7 @@ type MyProps = {
 const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
   const defaultDataSetsShown : number = 3;
 
-  function generateLabels(seasonsAsObject: Object): string[] {
+  function generateLabels(seasonsAsObject: object): string[] {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) {

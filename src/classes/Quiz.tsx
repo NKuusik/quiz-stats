@@ -1,6 +1,6 @@
 export class Quiz { // Todo
-    teams: Object;
-    seasons: Object;
+    teams: object;
+    seasons: object;
     // mis veel?
 
     constructor(teams, seasons) {
