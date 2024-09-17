@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Team} from '../../classes/EntityChildren/Team';
-import styles from '../../style.css';
+import * as styles from '../../style.css';
 import MenuBar from '../MenuBar';
 import {closeIcon} from '../../resources/icons/icons';
 
@@ -11,7 +11,7 @@ type MyProps = {
 }
 
 function TeamComparison({teams, comparisonTeamHandler, collapseWidth}: MyProps) {
-  const [viewActive, setViewActive] = useState<Boolean>(false);
+  const [viewActive, setViewActive] = useState<boolean>(false);
 
   let compareButtonText = 'Compare Teams';
   if (window.innerWidth < collapseWidth) {

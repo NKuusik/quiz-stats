@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Season} from '../classes/EntityChildren/Season';
-import styles from '../style.css';
+import * as styles from '../style.css';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import SeasonViewPerGame from './SeasonViewSubComponents/SeasonViewPerGame';
 import SeasonViewCumulative from './SeasonViewSubComponents/SeasonViewCumulative';

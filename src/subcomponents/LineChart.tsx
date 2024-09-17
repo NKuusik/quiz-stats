@@ -4,7 +4,7 @@ Chart.defaults.color = '#DCDEE6';
 
 type MyProps = {
   labels: Array<string>;
-  dataSets: Object;
+  dataSets: object;
   maxValue: number;
   titleContent: string;
 }

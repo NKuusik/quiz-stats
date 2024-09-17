@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles from '../style.css';
+import * as styles from '../style.css';
 
 type MyProps = {
     menuBarEntries: string[];
@@ -47,7 +47,7 @@ const SearchField = ({menuBarEntries, onFieldValueChange, viewType, inputResetTo
   }
 
   return (
-    <div id={styles['search-field']} className={styles['header-vertical-alignment']}>
+    <div id={styles['search-field']}>
         <form>
             <input type="text" placeholder={viewType} value={searchFieldValue} onChange={handleChange} onKeyUp={search} onKeyDown={preventSubmitWithEnter}/>
         </form>

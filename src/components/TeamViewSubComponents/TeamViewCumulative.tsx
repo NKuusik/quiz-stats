@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import LineChart from '../../subcomponents/LineChart';
-import styles from '../../style.css';
+import * as styles from '../../style.css';
 import {Team} from '../../classes/EntityChildren/Team';
 import {ChartDataSet} from '../../classes/ChartDataSet';
 import TeamComparison from './TeamComparison';

@@ -2,7 +2,7 @@
 
 exports[`default renders correctly 1`] = `
 <div
-  className="team-view"
+  data-testid="team-view"
 >
   <h1>
     Stats for team 
@@ -54,7 +54,7 @@ exports[`default renders correctly 1`] = `
 
 exports[`only 3 seasons are displayed 1`] = `
 <div
-  className="team-view"
+  data-testid="team-view"
 >
   <h1>
     Stats for team 

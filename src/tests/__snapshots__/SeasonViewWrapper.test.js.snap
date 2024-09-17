@@ -11,7 +11,6 @@ exports[`default renders correctly 1`] = `
       className="menu-bar-container"
     >
       <div
-        className="header-vertical-alignment"
         id="search-field"
       >
         <form>
@@ -31,6 +30,7 @@ exports[`default renders correctly 1`] = `
       >
         <div
           className="entry-selection"
+          data-testid="matched-entry"
           onClick={[Function]}
         >
           Test Season

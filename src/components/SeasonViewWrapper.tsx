@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
-import styles from '../style.css';
+import * as styles from '../style.css';
 import {Season} from '../classes/EntityChildren/Season';
 
 type MyProps = {
