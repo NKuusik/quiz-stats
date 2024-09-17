@@ -8,6 +8,7 @@ import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
 import * as styles from './style.css';
+
 type MyProps = {
   rawData: any;
   collapseWidth: number;
