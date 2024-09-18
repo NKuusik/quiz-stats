@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
@@ -15,6 +15,11 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const menuBarRef = useRef<any>();
+  
+  useEffect(() => {
+    setMatchedEntries(category.sort()),
+    toggleSearchFieldInput()
+  }, [viewType])
 
   function filterEntries(entriesValue: string[]): void {
     setMatchedEntries(entriesValue.sort());
