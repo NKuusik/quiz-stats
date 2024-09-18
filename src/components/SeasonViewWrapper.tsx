@@ -1,5 +1,4 @@
 import React from 'react';
-import MenuBar from './MenuBar';
 import SeasonView from './SeasonView';
 import * as styles from '../style.css';
 import {Season} from '../classes/EntityChildren/Season';
@@ -16,10 +15,7 @@ type MyProps = {
 }
 
 function SeasonViewWrapper({
-  seasons,
   fadeOut,
-  collapseMenuBarFunction,
-  chooseSeasonFunction,
   activeEntry
 } : MyProps) {
   let seasonView;
@@ -29,9 +25,6 @@ function SeasonViewWrapper({
 
   return (
     <div id={styles[fadeOut]} >
-      <div className={styles['category-selection']}>
-        <MenuBar viewType={'season'} category={Object.keys(seasons)} choice={(chosenSeason: string) => { chooseSeasonFunction(chosenSeason, seasons); }} collapseFunction ={() => { collapseMenuBarFunction(); }} />
-      </div>
       <div className={styles['chart-view']}>
         {seasonView}
         </div>

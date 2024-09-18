@@ -1,6 +1,5 @@
 import React from 'react';
 import TeamView from './TeamView';
-import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import * as styles from '../style.css';
 
@@ -21,8 +20,6 @@ function TeamViewWrapper({
   teams,
   seasonNames,
   fadeOut,
-  collapseMenuBarFunction,
-  chooseTeamFunction,
   activeEntry,
   collapseWidth
 } : MyProps) {
@@ -32,12 +29,6 @@ function TeamViewWrapper({
   }
   return (
       <div id={styles[fadeOut]} >
-        {/*
-        <div className={styles['category-selection']}>
-          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => { collapseMenuBarFunction(); }}/>
-        </div>
-
-*/}
         <div className={styles['chart-view']}>
           {teamView}
         </div>

@@ -172,61 +172,65 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   }
 
   let view;
+  let menuBar;
   if (activeView === 'season') {
+    menuBar =
+        <MenuBar  
+          viewType={'season'} 
+          choice={(chosenSeason: string) => { chooseEntry(chosenSeason, seasons) }} 
+          category={Object.keys(seasons)} 
+          collapseFunction={() => { console.log('collapsed'); }}/>
     view = 
-    <Grid container size={12}>
       <SeasonViewWrapper
       fadeOut={fadeoutView()}
       seasons={seasons}
       collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
       chooseSeasonFunction={(chosenSeason) => chooseEntry(chosenSeason, seasons)}
-      activeEntry={activeEntry as Season | null}
-      />
-    </Grid>;
+      activeEntry={activeEntry as Season | null}/>
+
   } else if (activeView === 'team') {
+    menuBar = 
+      <MenuBar  
+        viewType={'team'} 
+        choice={(chosenTeam: string) => { chooseEntry(chosenTeam, teams) }} 
+        category={Object.keys(teams)} 
+        collapseFunction={() => { console.log('collapsed'); }}/>
     view =   
-    <Grid container size={12}>
-      <Grid size={3}></Grid>
-      <Grid size="grow">
       <TeamViewWrapper
         fadeOut={fadeoutView()}
         teams={teams}
         seasonNames={Object.keys(seasons)}
         collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
         chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
-        activeEntry={teams['Hommik']}
-        collapseWidth={collapseWidth}
-        />;
-      </Grid>
-    </Grid>
+        activeEntry={activeEntry as Team | null}
+        collapseWidth={collapseWidth}/>;
     };
 
   return (
       <Box >
         <Grid container>
-        <Grid size={3}>
-            <MenuBar  
-              viewType={'team'} 
-              choice={(chosenTeam: string) => { console.log('choose team') }} 
-              category={Object.keys(teams)} 
-              collapseFunction={() => { console.log('collapsed'); }}/>
+          <Grid size={3}>
+              {menuBar}
           </Grid>
-        <Grid size="grow">
-            <Header
-              activeView={activeView}
-              choice={(chosenView) => chooseView(chosenView)}
-              collapseWidth = {collapseWidth}
-              smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
-            />
+          <Grid size="grow">
+              <Header
+                activeView={activeView}
+                choice={(chosenView) => chooseView(chosenView)}
+                collapseWidth = {collapseWidth}
+                smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}/>
           </Grid>
-            <Transition
-              nodeRef={nodeRef}
-              in={viewTransition}
-              timeout={450}
-              onExited={() => setActiveView('')}>
-              {() => view}
-            </Transition>
-
+          <Grid container size={12}>
+            <Grid size={3}></Grid>
+            <Grid size="grow">
+              <Transition
+                nodeRef={nodeRef}
+                in={viewTransition}
+                timeout={450}
+                onExited={() => setActiveView('')}>
+                {() => view}
+              </Transition>
+            </Grid>
+          </Grid>
         </Grid>
       </Box>
   );

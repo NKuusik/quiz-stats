@@ -86,7 +86,6 @@ canvas {
 }
 
 .chart-view {
-    background-color: red; 
     padding-left: 5%;
     padding-right: 5%;
 } 
@@ -97,7 +96,6 @@ canvas {
         float: left;
     }
     .chart-view {
-        background-color: red; 
         width: 70%;
         padding-left: 5%;
         float: left;
@@ -198,6 +196,7 @@ canvas {
 
 // Animations here should go to .category-selection
 .menu-bar-container {
+    position: relative;
     height: 75px;
     overflow-y: visible;
     padding-top: 10px;
