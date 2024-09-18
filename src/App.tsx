@@ -17,10 +17,15 @@ type MyProps = {
 }
 
 const App = ({rawData, collapseWidth}: MyProps) => {
+
+  const gridSizeArrayCollapsed: any = [{xs: 0, md: 0}, {xs: 12, md: 12}]
+  const gridSizeArrayRegular: any = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
+  const gridSizeArrayActiveEntry: any = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
+
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
-  const [activeGridSize, setActiveGridSize] = useState<[GridSize, GridSize]>([1, 11]);
+  const [activeGridSize, setActiveGridSize] = useState<[any, any]>(gridSizeArrayCollapsed);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   //const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
@@ -76,7 +81,11 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       }
     }
   }
+/*
+  useEffect(() => {
 
+  }, [])
+*/
   useEffect(() => {
     const eventHandler = () => extendMenuBar(collapseWidth);
     window.addEventListener('resize', eventHandler);
@@ -129,19 +138,21 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
+      setActiveGridSize(gridSizeArrayRegular)
     } else {
       setActiveEntry(data[entryName]);
+      setActiveGridSize(gridSizeArrayActiveEntry)
     }
   }
 
   function chooseView(chosenView : string) {
     const width = window.innerWidth;
     if (chosenView === activeView) { //&& width > collapseWidth) {
-      setActiveGridSize([1, 11]);
+      setActiveGridSize(gridSizeArrayCollapsed);
       setViewTransition(false);
 
     } else {
-      setActiveGridSize([3, "grow"]);
+      setActiveGridSize(gridSizeArrayRegular);
       setActiveView(chosenView);
       setViewTransition(true);
     }
