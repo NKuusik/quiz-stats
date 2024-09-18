@@ -7,9 +7,8 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
-import * as styles from './style.css';
 import Grid from '@mui/material/Grid2'
-import { Box} from '@mui/material';
+import { Box, GridSize} from '@mui/material';
 import MenuBar from './components/MenuBar';
 
 type MyProps = {
@@ -21,6 +20,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
+  const [activeGridSize, setActiveGridSize] = useState<[GridSize, GridSize]>([1, 11]);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   //const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
@@ -136,9 +136,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
 
   function chooseView(chosenView : string) {
     const width = window.innerWidth;
-    if (chosenView === activeView && width > collapseWidth) {
+    if (chosenView === activeView) { //&& width > collapseWidth) {
+      setActiveGridSize([1, 11]);
       setViewTransition(false);
+
     } else {
+      setActiveGridSize([3, "grow"]);
       setActiveView(chosenView);
       setViewTransition(true);
     }
@@ -209,10 +212,10 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   return (
       <Box >
         <Grid container>
-          <Grid size={3}>
+          <Grid size={activeGridSize[0]}>
               {menuBar}
           </Grid>
-          <Grid size="grow">
+          <Grid size={activeGridSize[1]}>
               <Header
                 activeView={activeView}
                 choice={(chosenView) => chooseView(chosenView)}
