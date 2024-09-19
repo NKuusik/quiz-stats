@@ -111,9 +111,7 @@ canvas {
 .menu-bar-container {
     position: relative;
     height: 75px;
-    overflow-y: visible;
     padding-top: 10px;
-
 
     background-color: $menu-bar-background-color-main;
     animation-name: slide-in;
@@ -125,7 +123,8 @@ canvas {
     cursor: grab;
     padding: 10px;
     height: 90vh;
-    overflow: auto;
+    overflow: scroll;
+    scrollbar-color: $default-background-color $menu-bar-background-color-main;
 }
 
 #comparison-container {
