@@ -18,14 +18,14 @@ type MyProps = {
 
 const App = ({rawData, collapseWidth}: MyProps) => {
 
-  const gridSizeArrayCollapsed: any = [{xs: 0, md: 0}, {xs: 12, md: 12}]
-  const gridSizeArrayRegular: any = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
-  const gridSizeArrayActiveEntry: any = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
+  const generalGridSizeNoMenu: any = [{xs: 0, md: 0}, {xs: 12, md: 12}]
+  const generalGridSizeRegular: any = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
+  const entryGridSize: any = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
   const [collapseMenuBar, setCollapseMenuBar] = useState<boolean>(false);
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
-  const [activeGridSize, setActiveGridSize] = useState<[any, any]>(gridSizeArrayCollapsed);
+  const [activeGridSize, setActiveGridSize] = useState<[any, any]>(generalGridSizeNoMenu);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
   const nodeRef = useRef(null);
@@ -118,21 +118,21 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
-      setActiveGridSize(gridSizeArrayRegular)
+      setActiveGridSize(generalGridSizeRegular)
     } else {
       setActiveEntry(data[entryName]);
-      setActiveGridSize(gridSizeArrayActiveEntry)
+      setActiveGridSize(entryGridSize)
       checkMenuBarCollapse()
     }
   }
 
   function chooseView(chosenView : string) {
     if (chosenView === activeView) {
-      setActiveGridSize(gridSizeArrayCollapsed);
+      setActiveGridSize(generalGridSizeNoMenu);
       setViewTransition(false);
 
     } else {
-      setActiveGridSize(gridSizeArrayRegular);
+      setActiveGridSize(generalGridSizeRegular);
       setActiveView(chosenView);
       setViewTransition(true);
     }
@@ -203,8 +203,8 @@ const App = ({rawData, collapseWidth}: MyProps) => {
                 collapseWidth = {collapseWidth}/>
           </Grid>
           <Grid container size={12}>
-            <Grid size={3}></Grid>
-            <Grid size="grow">
+            <Grid size={entryGridSize[0]}></Grid>
+            <Grid size={entryGridSize[1]}>
               <Transition
                 nodeRef={nodeRef}
                 in={viewTransition}
