@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as styles from '../style.css';
+import Grid from '@mui/material/Grid2';
 
 type MyProps = {
   choice : Function;
@@ -28,15 +29,22 @@ const Header = ({choice, activeView, collapseWidth} : MyProps) => {
 
   return (
         <div className={[styles['header']].join(' ')}>
-            <h1>Stats for {activeView === '' ? 'something' : activeView}</h1>
-            <ul>
-                <li><button id={styles[visualizeActiveButton('team')]} className={styles['button-header']} onClick={() => {
-                  handleClick('team');
-                }}>{buttonTextStart} team</button></li>
-                <li><button id={styles[visualizeActiveButton('season')]} className={styles['button-header']} onClick={() => {
-                  handleClick('season');
-                }}>{buttonTextStart} season</button></li>
-            </ul>
+            <Grid container>
+              <Grid>
+                <h1>Stats for {activeView === '' ? 'something' : activeView}</h1>
+              </Grid>
+              <Grid size={{xs: 12, sm: 6, md: 5, lg: 4, xl:3}} offset={{xs: 0, md: "auto"}}>
+                <ul>
+                  <li><button id={styles[visualizeActiveButton('team')]} className={styles['button-header']} onClick={() => {
+                    handleClick('team');
+                  }}>{buttonTextStart} team</button></li>
+                  <li><button id={styles[visualizeActiveButton('season')]} className={styles['button-header']} onClick={() => {
+                    handleClick('season');
+                  }}>{buttonTextStart} season</button></li>
+                </ul>
+              </Grid>
+            </Grid>
+
         </div>
   );
 };

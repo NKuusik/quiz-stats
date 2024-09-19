@@ -31,18 +31,17 @@ canvas {
 }
 
 .header {
+    padding-left: 15px;
 
     ul {
         list-style-type: none;
-        width: 0%;
+        padding-left: 0;
+        margin: 25px 0px 0px 0px;
         display: flex;
-        float: right;
-        align-items: flex-start;
-        justify-content: flex-end;
     }
 
     h1 {
-        display: inline-block;
+        //display: inline-block;
         color: $secondary-color;
         font-size: 34px;
         font-weight: 400;
@@ -131,13 +130,11 @@ canvas {
     width: 25%;
     min-width: 200px;
     height: 20%;
-    //float: right;
     position: relative;
     z-index: 1;
 
     .button-chart {
         margin: 0px;
-        //float: right;
     }
 
     .menu-bar-selection {

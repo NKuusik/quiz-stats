@@ -192,7 +192,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
 
   return (
       <Box>
-        <Grid container spacing={4}>
+        <Grid container>
           <Grid size={activeGridSize[0]}>
               {menuBar}
           </Grid>
