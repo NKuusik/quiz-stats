@@ -131,13 +131,13 @@ canvas {
     width: 25%;
     min-width: 200px;
     height: 20%;
-    float: right;
+    //float: right;
     position: relative;
     z-index: 1;
 
     .button-chart {
         margin: 0px;
-        float: right;
+        //float: right;
     }
 
     .menu-bar-selection {
@@ -145,11 +145,12 @@ canvas {
     }
 
     #comparison-menu-bar {
-        float: right;
         width: $comparison-container-width;
     }
 
     .menu-bar-container {
+        border-radius: 20% 0% 0% 0%;
+
         background-image: $default-background-gradient;
     }
 
@@ -160,10 +161,9 @@ canvas {
     #comparison-close {
         background-color: red;
         background-image: none;
-        float: left;
+        float: right;
         width: 20%;
-        min-width: 30px;
-        border-radius: 50% 0% 0% 50%;
+        border-radius: 0% 50% 50% 0%;
         background-image: $default-background-gradient;
 
         img {

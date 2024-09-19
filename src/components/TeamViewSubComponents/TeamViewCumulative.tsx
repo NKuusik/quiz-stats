@@ -4,6 +4,7 @@ import * as styles from '../../style.css';
 import {Team} from '../../classes/EntityChildren/Team';
 import {ChartDataSet} from '../../classes/ChartDataSet';
 import TeamComparison from './TeamComparison';
+import Grid from '@mui/material/Grid2';
 
 type MyProps = {
   chosenTeam: Team;
@@ -125,9 +126,19 @@ const TeamViewCumulative = ({chosenTeam, seasonNames, allTeams, collapseWidth}: 
 
   return (
       <span>
-        {cumulativeViewButton}
-        {teamComparisonComponent}
-        {lineChartComponent}
+        <Grid container>
+          <Grid>
+            {cumulativeViewButton}
+          </Grid>
+          <Grid size={{sm: 12, md:5, lg: 4}} offset={{sm: 0, md: 0, lg: "auto"}}>
+            {teamComparisonComponent}
+                {/**{lineChartComponent}*/}
+          </Grid>
+        </Grid>
+
+
+
+        {/*{lineChartComponent}*/}
       </span>
 
   );

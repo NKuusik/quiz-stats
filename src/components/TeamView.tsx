@@ -4,6 +4,7 @@ import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import TeamViewSeasonal from './TeamViewSubComponents/TeamViewSeasonal';
 import TeamViewCumulative from './TeamViewSubComponents/TeamViewCumulative';
+import Grid from '@mui/material/Grid2';
 
 type MyProps = {
   chosenTeam: Team;
@@ -30,13 +31,22 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   return (
         <div data-testid="team-view">
             <h1>Stats for team {chosenTeam.name}</h1>
-            <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
-              {buttonStartText} per season
-            </button>
-            <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(true)}>
-              {buttonStartText} across seasons
-            </button>
-            {lineChartComponent}
+            <Grid container>
+              <Grid size={"auto"}>
+                  <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
+                    {buttonStartText} per season
+                  </button>
+                  <button id={styles[visualizeActiveButton('cumulative', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(true)}>
+                    {buttonStartText} across seasons
+                  </button>
+              </Grid>
+              <Grid size="grow">
+                <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} collapseWidth={collapseWidth} />
+                {/**{lineChartComponent}*/}
+              </Grid>
+            </Grid>
+            <TeamViewSeasonal chosenTeam={chosenTeam} />
+
         </div>
   );
 };
