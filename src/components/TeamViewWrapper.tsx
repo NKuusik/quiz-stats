@@ -7,8 +7,6 @@ type MyProps = {
   teams : {[teamName: string]: Team};
   seasonNames : Array<string>;
   fadeOut: string;
-  collapseMenuBarFunction: Function;
-  chooseTeamFunction: Function;
   collapseWidth: number;
 
   // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference

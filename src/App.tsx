@@ -8,7 +8,7 @@ import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
 import Grid from '@mui/material/Grid2'
-import { Box, GridSize} from '@mui/material';
+import { Box } from '@mui/material';
 import MenuBar from './components/MenuBar';
 
 type MyProps = {
@@ -21,30 +21,15 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   const gridSizeArrayCollapsed: any = [{xs: 0, md: 0}, {xs: 12, md: 12}]
   const gridSizeArrayRegular: any = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
   const gridSizeArrayActiveEntry: any = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
-
+  const [collapseMenuBar, setCollapseMenuBar] = useState<boolean>(false);
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
   const [activeGridSize, setActiveGridSize] = useState<[any, any]>(gridSizeArrayCollapsed);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
-  //const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
   const nodeRef = useRef(null);
 
-  function extendMenuBar(collapseWidth: number): any {
-    /*
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
-      if (activeEntry === null) {
-        setCategorySelectionStyle(styles['app-wrapper-extended']);
-      } else {
-        setCategorySelectionStyle(styles['app-wrapper-collapsed']);
-      }
-    } else if (width > collapseWidth) {
-      setCategorySelectionStyle(styles['app-wrapper']);
-    }
-      */
-  }
 
   function updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
     teamLatestSeasonScores: string[],
@@ -81,19 +66,14 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       }
     }
   }
-/*
-  useEffect(() => {
 
-  }, [])
-*/
   useEffect(() => {
-    const eventHandler = () => extendMenuBar(collapseWidth);
+    const eventHandler = () => checkMenuBarCollapse();
     window.addEventListener('resize', eventHandler);
     return () => window.removeEventListener('resize', eventHandler);
   });
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    //extendMenuBar(collapseWidth);
     let allTeams: {[teamName: string]: Team} = {};
     for (const season of Object.values(rawData)) {
       
@@ -142,12 +122,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     } else {
       setActiveEntry(data[entryName]);
       setActiveGridSize(gridSizeArrayActiveEntry)
+      checkMenuBarCollapse()
     }
   }
 
   function chooseView(chosenView : string) {
-    const width = window.innerWidth;
-    if (chosenView === activeView) { //&& width > collapseWidth) {
+    if (chosenView === activeView) {
       setActiveGridSize(gridSizeArrayCollapsed);
       setViewTransition(false);
 
@@ -167,22 +147,13 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
   }
 
-  function transitionCollapsedToExtendedView(collapseWidth: number): void {
-    /*
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper-collapsed']) {
-      setCategorySelectionStyle(styles['app-wrapper-extended']);
-    }
-      */
-  }
-
-  function collapseMenuBar(collapseWidth: number): void {
-    /*
+  function checkMenuBarCollapse(): void {
     const width = window.innerWidth;
     if (width < collapseWidth) {
-      setCategorySelectionStyle(styles['app-wrapper-collapsed']);
+      setCollapseMenuBar(true)
+    } else {
+      setCollapseMenuBar(false)
     }
-      */
   }
 
   let view;
@@ -198,8 +169,6 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       <SeasonViewWrapper
       fadeOut={fadeoutView()}
       seasons={seasons}
-      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
-      chooseSeasonFunction={(chosenSeason) => chooseEntry(chosenSeason, seasons)}
       activeEntry={activeEntry as Season | null}/>
 
   } else if (activeView === 'team') {
@@ -214,11 +183,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         fadeOut={fadeoutView()}
         teams={teams}
         seasonNames={Object.keys(seasons)}
-        collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
-        chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
         activeEntry={activeEntry as Team | null}
         collapseWidth={collapseWidth}/>;
-    };
+  }
+  if (collapseMenuBar && activeEntry !== null) {
+    menuBar = undefined;
+  }
 
   return (
       <Box >
@@ -230,8 +200,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
               <Header
                 activeView={activeView}
                 choice={(chosenView) => chooseView(chosenView)}
-                collapseWidth = {collapseWidth}
-                smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}/>
+                collapseWidth = {collapseWidth}/>
           </Grid>
           <Grid container size={12}>
             <Grid size={3}></Grid>

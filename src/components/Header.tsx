@@ -3,12 +3,11 @@ import * as styles from '../style.css';
 
 type MyProps = {
   choice : Function;
-  smallLayoutTransitions: Function;
   activeView: string;
   collapseWidth: number
 }
 
-const Header = ({choice, activeView, smallLayoutTransitions, collapseWidth} : MyProps) => {
+const Header = ({choice, activeView, collapseWidth} : MyProps) => {
   function visualizeActiveButton(buttonName : string): string {
     if (activeView === buttonName) {
       return 'header-active';
@@ -19,7 +18,6 @@ const Header = ({choice, activeView, smallLayoutTransitions, collapseWidth} : My
 
   function handleClick(choiceName: string): void {
     choice(choiceName);
-    smallLayoutTransitions();
   }
 
   let buttonTextStart = 'Check';

@@ -6,8 +6,6 @@ import {Season} from '../classes/EntityChildren/Season';
 type MyProps = {
   seasons : {[seasonName: string]: Season};
   fadeOut: string;
-  collapseMenuBarFunction: Function;
-  chooseSeasonFunction: Function;
 
   // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference
   // that activeEntry becomes   activeEntry: Season | Team | null and conditional rendering is expanded
