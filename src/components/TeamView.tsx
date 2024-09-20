@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import * as styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
 import TeamViewSeasonal from './TeamViewSubComponents/TeamViewSeasonal';
 import TeamViewCumulative from './TeamViewSubComponents/TeamViewCumulative';
+import TeamViewAdditionalButtons from './TeamViewSubComponents/TeamViewAdditionalButtons';
 import Grid from '@mui/material/Grid2';
 
 type MyProps = {
@@ -15,18 +16,79 @@ type MyProps = {
 
 const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
+  const [averageView, setAverageView] = useState<boolean>(true);
+  const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
+  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
+  const [averageViewMaxValue, setAverageViewMaxValue] = useState<number>(0);
 
   // Reset cumulative view, when main team is changed
-  let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
+  function handleCumulativeViewToggle() {
+    setAverageView(!averageView);
+  }
 
+  function handleCumulativeViewMaxValue(value) {
+      setCumulativeViewMaxValue(value)
+  }
+
+  function handleAverageViewMaxValue(value) {
+    setAverageViewMaxValue(value)
+  }
+  
+  function resetMaxValues(): void {
+    setCumulativeViewMaxValue(0);
+    setAverageViewMaxValue(0);
+  }
+
+  function handleTeamComparison(teamName: string): void {
+    resetMaxValues();
+    const comparisonTeamsInstance: {[teamName: string]: Team} = comparisonTeams;
+    if (Object.hasOwnProperty.call(comparisonTeams, teamName)) {
+      delete comparisonTeamsInstance[teamName];
+    } else {
+      if (teamName !== chosenTeam.name) {
+        comparisonTeamsInstance[teamName] = allTeams[teamName];
+      }
+    }
+    console.log('handleTeamComparison')
+    setComparisonTeams(comparisonTeamsInstance);
+    console.log(comparisonTeams)
+  }
+
+    // Reset cumulative view, when main team is changed
+  useEffect(() => {
+      setComparisonTeams({});
+      resetMaxValues();
+    }, [chosenTeam]);
+
+  let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
+  let additionalButtons;
   if (cumulativeView) {
-    lineChartComponent = <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} collapseWidth={collapseWidth} />;
+    additionalButtons = <TeamViewAdditionalButtons 
+      chosenTeam={chosenTeam} 
+      seasonNames={seasonNames} 
+      allTeams={allTeams} 
+      collapseWidth={collapseWidth}
+      averageView={averageView}
+      statType={handleCumulativeViewToggle}
+      handleTeamComparison={handleTeamComparison}/>;
+    lineChartComponent = <TeamViewCumulative 
+      chosenTeam={chosenTeam} 
+      seasonNames={seasonNames} 
+      allTeams={allTeams} 
+      collapseWidth={collapseWidth} 
+      averageView={averageView} 
+      comparisonTeams={comparisonTeams}
+      cumulativeViewMaxValue={cumulativeViewMaxValue}
+      averageViewMaxValue={averageViewMaxValue}
+      handleCumulativeViewMaxValue={handleCumulativeViewMaxValue}
+      handleAverageViewMaxValue={handleAverageViewMaxValue}/>;
   }
 
   let buttonStartText = 'See points';
   if (window.innerWidth < collapseWidth) {
     buttonStartText = '';
   }
+  
 
   return (
         <div data-testid="team-view">
@@ -41,11 +103,10 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
                   </button>
               </Grid>
               <Grid size="grow">
-                <TeamViewCumulative chosenTeam={chosenTeam} seasonNames={seasonNames} allTeams={allTeams} collapseWidth={collapseWidth} />
-                {/**{lineChartComponent}*/}
+                {additionalButtons}
               </Grid>
             </Grid>
-            <TeamViewSeasonal chosenTeam={chosenTeam} />
+            {lineChartComponent}
 
         </div>
   );
