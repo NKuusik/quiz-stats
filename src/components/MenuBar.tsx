@@ -8,10 +8,9 @@ type MyProps = {
   category : string[];
   choice : Function;
   viewType : string;
-  collapseFunction: Function;
 }
 
-const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
+const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const menuBarRef = useRef<any>();
@@ -59,7 +58,6 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
             <div data-testid="matched-entry" key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
-                collapseFunction();
                 choice(entry);
               }}>
               {entry}

@@ -18,24 +18,49 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
   const [isAveragePointsView, setIsAveragePointsView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
-  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
-  const [isAveragePointsViewMaxValue, setisAveragePointsViewMaxValue] = useState<number>(0);
+  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(20);
+  const [averagePointsViewMaxValue, setAveragePointsViewMaxValue] = useState<number>(0);
 
   function handleCumulativeViewToggle() {
     setIsAveragePointsView(!isAveragePointsView);
   }
 
-  function handleCumulativeViewMaxValue(value) {
-      setCumulativeViewMaxValue(value)
-  }
-
-  function handleisAveragePointsViewMaxValue(value) {
-    setisAveragePointsViewMaxValue(value)
-  }
-
   function resetMaxValues(): void {
     setCumulativeViewMaxValue(0);
-    setisAveragePointsViewMaxValue(0);
+    setAveragePointsViewMaxValue(0);
+  }
+
+
+    // Reset cumulative view, when main team is changed
+  useEffect(() => {
+      setComparisonTeams({});
+      resetMaxValues();
+    }, [chosenTeam]);
+
+  function generatePointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
+    const totalPointsAllSeasons : number[] = [];
+    for (const seasonName of labels) {
+      let sum: number = 0;
+      let average: number = 0;
+      if (team.results[seasonName] !== undefined) {
+        const pointsAsNumbers = team.results[seasonName].map(Number);
+        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
+        if (averagePointMode) {
+          average = sum / team.results[seasonName].length;
+        }
+      }
+      if (!averagePointMode && (sum > cumulativeViewMaxValue)) {
+        setCumulativeViewMaxValue(sum);
+      } else if (averagePointMode && (average > averagePointsViewMaxValue)) {
+        setAveragePointsViewMaxValue(average);
+      }
+      if (!averagePointMode) {
+        totalPointsAllSeasons.push(sum);
+      } else if (averagePointMode) {
+        totalPointsAllSeasons.push(average);
+      }
+    }
+    return totalPointsAllSeasons;
   }
 
   function handleTeamComparison(teamName: string): void {
@@ -48,16 +73,8 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
         comparisonTeamsInstance[teamName] = allTeams[teamName];
       }
     }
-    console.log('handleTeamComparison')
     setComparisonTeams(comparisonTeamsInstance);
-    console.log(comparisonTeams)
   }
-
-    // Reset cumulative view, when main team is changed
-  useEffect(() => {
-      setComparisonTeams({});
-      resetMaxValues();
-    }, [chosenTeam]);
 
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
   let additionalButtons;
@@ -75,9 +92,8 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
       isAveragePointsView={isAveragePointsView} 
       comparisonTeams={comparisonTeams}
       cumulativeViewMaxValue={cumulativeViewMaxValue}
-      isAveragePointsViewMaxValue={isAveragePointsViewMaxValue}
-      handleCumulativeViewMaxValue={handleCumulativeViewMaxValue}
-      handleisAveragePointsViewMaxValue={handleisAveragePointsViewMaxValue}/>;
+      averagePointsViewMaxValue={averagePointsViewMaxValue}
+      generatePointsArray={generatePointsArray}/>;
   }
 
   let buttonStartText = 'See points';

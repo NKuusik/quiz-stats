@@ -163,8 +163,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         <MenuBar  
           viewType={'season'} 
           choice={(chosenSeason: string) => { chooseEntry(chosenSeason, seasons) }} 
-          category={Object.keys(seasons)} 
-          collapseFunction={() => { console.log('collapsed'); }}/>
+          category={Object.keys(seasons)}/>
     view = 
       <SeasonViewWrapper
       fadeOut={fadeoutView()}
@@ -176,8 +175,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
       <MenuBar  
         viewType={'team'} 
         choice={(chosenTeam: string) => { chooseEntry(chosenTeam, teams) }} 
-        category={Object.keys(teams)} 
-        collapseFunction={() => { console.log('collapsed'); }}/>
+        category={Object.keys(teams)}/>
     view =   
       <TeamViewWrapper
         fadeOut={fadeoutView()}

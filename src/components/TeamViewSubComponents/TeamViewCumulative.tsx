@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import LineChart from '../../subcomponents/LineChart';
 import {Team} from '../../classes/EntityChildren/Team';
 import {ChartDataSet} from '../../classes/ChartDataSet';
@@ -9,9 +9,8 @@ type MyProps = {
   isAveragePointsView: boolean,
   comparisonTeams: {[teamName: string]: Team},
   cumulativeViewMaxValue: number,
-  isAveragePointsViewMaxValue: number,
-  handleCumulativeViewMaxValue: Function
-  handleisAveragePointsViewMaxValue: Function
+  averagePointsViewMaxValue: number,
+  generatePointsArray: Function
 }
 
 const TeamViewCumulative = ({
@@ -19,10 +18,9 @@ const TeamViewCumulative = ({
   seasonNames,
   isAveragePointsView, 
   comparisonTeams, 
-  cumulativeViewMaxValue, 
-  isAveragePointsViewMaxValue, 
-  handleCumulativeViewMaxValue, 
-  handleisAveragePointsViewMaxValue}: MyProps) => {
+  cumulativeViewMaxValue,
+  averagePointsViewMaxValue, 
+  generatePointsArray}: MyProps) => {
 
   function generateLabels(): string[] {
     const labels : string[] = [];
@@ -35,35 +33,7 @@ const TeamViewCumulative = ({
 
   const cumulativeLabels: string[] = generateLabels();
 
-  function generatePointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
-    const totalPointsAllSeasons : number[] = [];
-    for (const seasonName of labels) {
-      let sum: number = 0;
-      let average: number = 0;
-      if (team.results[seasonName] !== undefined) {
-        const pointsAsNumbers = team.results[seasonName].map(Number);
-        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
-        if (averagePointMode) {
-          average = sum / team.results[seasonName].length;
-        }
-      }
-      if (!averagePointMode && (sum > cumulativeViewMaxValue)) {
-        handleCumulativeViewMaxValue(sum);
-      } else if (averagePointMode && (average > isAveragePointsViewMaxValue)) {
-        handleisAveragePointsViewMaxValue(average);
-      }
-      if (!averagePointMode) {
-        totalPointsAllSeasons.push(sum);
-      } else if (averagePointMode) {
-        totalPointsAllSeasons.push(average);
-      }
-    }
-    return totalPointsAllSeasons;
-  }
-
   function generateDataSets(averagePointsMode: boolean = true): ChartDataSet[] {
-    console.log("generateDataSets")
-    console.log(comparisonTeams)
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
     const chartDataSets: ChartDataSet[] = [];
     for (const currentTeam of displayedTeams) {
@@ -87,7 +57,7 @@ const TeamViewCumulative = ({
   }
 
   let lineChartComponent = <LineChart 
-    maxValue={isAveragePointsViewMaxValue} 
+    maxValue={averagePointsViewMaxValue} 
     titleContent={'Average points across seasons'} 
     dataSets={generateDataSets(true)} 
     labels={cumulativeLabels} />;
