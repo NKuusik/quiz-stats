@@ -6,20 +6,23 @@ import {ChartDataSet} from '../../classes/ChartDataSet';
 type MyProps = {
   chosenTeam: Team;
   seasonNames: string[];
-  allTeams : {[teamName: string]: Team};
-  collapseWidth: number,
-  averageView: boolean,
+  isAveragePointsView: boolean,
   comparisonTeams: {[teamName: string]: Team},
   cumulativeViewMaxValue: number,
-  averageViewMaxValue: number,
+  isAveragePointsViewMaxValue: number,
   handleCumulativeViewMaxValue: Function
-  handleAverageViewMaxValue: Function
+  handleisAveragePointsViewMaxValue: Function
 }
 
 const TeamViewCumulative = ({
-  chosenTeam, seasonNames, allTeams, collapseWidth, 
-  averageView, comparisonTeams, cumulativeViewMaxValue, 
-  averageViewMaxValue, handleCumulativeViewMaxValue, handleAverageViewMaxValue}: MyProps) => {
+  chosenTeam, 
+  seasonNames,
+  isAveragePointsView, 
+  comparisonTeams, 
+  cumulativeViewMaxValue, 
+  isAveragePointsViewMaxValue, 
+  handleCumulativeViewMaxValue, 
+  handleisAveragePointsViewMaxValue}: MyProps) => {
 
   function generateLabels(): string[] {
     const labels : string[] = [];
@@ -46,8 +49,8 @@ const TeamViewCumulative = ({
       }
       if (!averagePointMode && (sum > cumulativeViewMaxValue)) {
         handleCumulativeViewMaxValue(sum);
-      } else if (averagePointMode && (average > averageViewMaxValue)) {
-        handleAverageViewMaxValue(average);
+      } else if (averagePointMode && (average > isAveragePointsViewMaxValue)) {
+        handleisAveragePointsViewMaxValue(average);
       }
       if (!averagePointMode) {
         totalPointsAllSeasons.push(sum);
@@ -84,12 +87,12 @@ const TeamViewCumulative = ({
   }
 
   let lineChartComponent = <LineChart 
-    maxValue={averageViewMaxValue} 
+    maxValue={isAveragePointsViewMaxValue} 
     titleContent={'Average points across seasons'} 
     dataSets={generateDataSets(true)} 
     labels={cumulativeLabels} />;
 
-  if (!averageView) {
+  if (!isAveragePointsView) {
     lineChartComponent = <LineChart 
       maxValue={cumulativeViewMaxValue} 
       titleContent={'Total points across seasons'} 

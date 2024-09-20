@@ -16,27 +16,26 @@ type MyProps = {
 
 const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) => {
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
-  const [averageView, setAverageView] = useState<boolean>(true);
+  const [isAveragePointsView, setIsAveragePointsView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(0);
-  const [averageViewMaxValue, setAverageViewMaxValue] = useState<number>(0);
+  const [isAveragePointsViewMaxValue, setisAveragePointsViewMaxValue] = useState<number>(0);
 
-  // Reset cumulative view, when main team is changed
   function handleCumulativeViewToggle() {
-    setAverageView(!averageView);
+    setIsAveragePointsView(!isAveragePointsView);
   }
 
   function handleCumulativeViewMaxValue(value) {
       setCumulativeViewMaxValue(value)
   }
 
-  function handleAverageViewMaxValue(value) {
-    setAverageViewMaxValue(value)
+  function handleisAveragePointsViewMaxValue(value) {
+    setisAveragePointsViewMaxValue(value)
   }
-  
+
   function resetMaxValues(): void {
     setCumulativeViewMaxValue(0);
-    setAverageViewMaxValue(0);
+    setisAveragePointsViewMaxValue(0);
   }
 
   function handleTeamComparison(teamName: string): void {
@@ -64,24 +63,21 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   let additionalButtons;
   if (cumulativeView) {
     additionalButtons = <TeamViewAdditionalButtons 
-      chosenTeam={chosenTeam} 
-      seasonNames={seasonNames} 
       allTeams={allTeams} 
       collapseWidth={collapseWidth}
-      averageView={averageView}
+      isAveragePointsView={isAveragePointsView}
       statType={handleCumulativeViewToggle}
       handleTeamComparison={handleTeamComparison}/>;
+
     lineChartComponent = <TeamViewCumulative 
       chosenTeam={chosenTeam} 
       seasonNames={seasonNames} 
-      allTeams={allTeams} 
-      collapseWidth={collapseWidth} 
-      averageView={averageView} 
+      isAveragePointsView={isAveragePointsView} 
       comparisonTeams={comparisonTeams}
       cumulativeViewMaxValue={cumulativeViewMaxValue}
-      averageViewMaxValue={averageViewMaxValue}
+      isAveragePointsViewMaxValue={isAveragePointsViewMaxValue}
       handleCumulativeViewMaxValue={handleCumulativeViewMaxValue}
-      handleAverageViewMaxValue={handleAverageViewMaxValue}/>;
+      handleisAveragePointsViewMaxValue={handleisAveragePointsViewMaxValue}/>;
   }
 
   let buttonStartText = 'See points';
@@ -89,7 +85,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
     buttonStartText = '';
   }
   
-
   return (
         <div data-testid="team-view">
             <h1>Stats for team {chosenTeam.name}</h1>
@@ -107,7 +102,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
               </Grid>
             </Grid>
             {lineChartComponent}
-
         </div>
   );
 };
