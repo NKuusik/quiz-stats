@@ -4,32 +4,44 @@ exports[`default renders correctly 1`] = `
 <div
   className="header"
 >
-  <h1>
-    Stats for 
-    something
-  </h1>
-  <ul>
-    <li>
-      <button
-        className="button-header"
-        id=""
-        onClick={[Function]}
-      >
-        Check
-         team
-      </button>
-    </li>
-    <li>
-      <button
-        className="button-header"
-        id=""
-        onClick={[Function]}
-      >
-        Check
-         season
-      </button>
-    </li>
-  </ul>
+  <div
+    className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
+  >
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row css-1fzlhpv-MuiGrid2-root"
+    >
+      <h1>
+        Stats for 
+        something
+      </h1>
+    </div>
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 MuiGrid2-grid-md-5 MuiGrid2-grid-lg-4 MuiGrid2-grid-xl-3 css-g8jdsd-MuiGrid2-root"
+    >
+      <ul>
+        <li>
+          <button
+            className="button-header"
+            id=""
+            onClick={[Function]}
+          >
+            Check
+             team
+          </button>
+        </li>
+        <li>
+          <button
+            className="button-header"
+            id=""
+            onClick={[Function]}
+          >
+            Check
+             season
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 `;
 
@@ -37,32 +49,44 @@ exports[`season renders correctly 1`] = `
 <div
   className="header"
 >
-  <h1>
-    Stats for 
-    season
-  </h1>
-  <ul>
-    <li>
-      <button
-        className="button-header"
-        id=""
-        onClick={[Function]}
-      >
-        Check
-         team
-      </button>
-    </li>
-    <li>
-      <button
-        className="button-header"
-        id="header-active"
-        onClick={[Function]}
-      >
-        Check
-         season
-      </button>
-    </li>
-  </ul>
+  <div
+    className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
+  >
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row css-1fzlhpv-MuiGrid2-root"
+    >
+      <h1>
+        Stats for 
+        season
+      </h1>
+    </div>
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 MuiGrid2-grid-md-5 MuiGrid2-grid-lg-4 MuiGrid2-grid-xl-3 css-g8jdsd-MuiGrid2-root"
+    >
+      <ul>
+        <li>
+          <button
+            className="button-header"
+            id=""
+            onClick={[Function]}
+          >
+            Check
+             team
+          </button>
+        </li>
+        <li>
+          <button
+            className="button-header"
+            id="header-active"
+            onClick={[Function]}
+          >
+            Check
+             season
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 `;
 
@@ -70,31 +94,43 @@ exports[`team renders correctly 1`] = `
 <div
   className="header"
 >
-  <h1>
-    Stats for 
-    team
-  </h1>
-  <ul>
-    <li>
-      <button
-        className="button-header"
-        id="header-active"
-        onClick={[Function]}
-      >
-        Check
-         team
-      </button>
-    </li>
-    <li>
-      <button
-        className="button-header"
-        id=""
-        onClick={[Function]}
-      >
-        Check
-         season
-      </button>
-    </li>
-  </ul>
+  <div
+    className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
+  >
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row css-1fzlhpv-MuiGrid2-root"
+    >
+      <h1>
+        Stats for 
+        team
+      </h1>
+    </div>
+    <div
+      className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 MuiGrid2-grid-md-5 MuiGrid2-grid-lg-4 MuiGrid2-grid-xl-3 css-g8jdsd-MuiGrid2-root"
+    >
+      <ul>
+        <li>
+          <button
+            className="button-header"
+            id="header-active"
+            onClick={[Function]}
+          >
+            Check
+             team
+          </button>
+        </li>
+        <li>
+          <button
+            className="button-header"
+            id=""
+            onClick={[Function]}
+          >
+            Check
+             season
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 `;

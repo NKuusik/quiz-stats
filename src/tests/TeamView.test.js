@@ -39,13 +39,21 @@ const allTeams = {"Fake Team": testTeam};
 
 it('only 3 seasons are displayed', () => {
     const tree = renderer
-         .create(<TeamView allTeams={allTeams} seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} chosenTeam={testTeam}/>)
+         .create(<TeamView 
+            allTeams={allTeams} 
+            seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} 
+            chosenTeam={testTeam}
+            collapseWidth={800} />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
      });
 
 test('active button can be toggled', () => {
-  const element = render(<TeamView allTeams={allTeams} seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} chosenTeam={testTeam}/>)
+  const element = render(<TeamView 
+    allTeams={allTeams} 
+    seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} 
+    chosenTeam={testTeam}
+    collapseWidth={800}/>)
   let activeButton = element.container.querySelector("#chart-button-active");
   const seasonViewButton = element.container.querySelectorAll(".button-chart")[0];
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
@@ -84,7 +92,11 @@ allTeams["Second team"] = secondTeam;
 allTeams["Third team"] = thirdTeam;
 
 test('can compare teams in cumulative view', () => {
-  const element = render(<TeamView allTeams={allTeams} seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} chosenTeam={testTeam}/>)
+  const element = render(<TeamView 
+      allTeams={allTeams} 
+      seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} 
+      chosenTeam={testTeam}
+      collapseWidth={800}/>)
   const cumulativeViewButton = element.container.querySelectorAll(".button-chart")[1];
   fireEvent.click(cumulativeViewButton);
 

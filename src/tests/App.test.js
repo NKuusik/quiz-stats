@@ -129,9 +129,25 @@ import {expect, jest, test} from '@jest/globals';
         collapseWidth={800}
         />);
       
+    
+      let menubarEntries = screen.queryAllByTestId('matched-entry');
+      // Menubar is not visible at the beginning.
+      expect(menubarEntries.length).toBe(0);
 
-      let wrapperWithExtendedLayout = app.container.getElementsByClassName('app-wrapper-extended');
-      expect(wrapperWithExtendedLayout.length).toBe(0);
+
+      // Pressing the team button displays stats view for that team.
+      await waitFor(() =>
+        {  
+          let teamButton = app.container.querySelectorAll('button')[0];
+          fireEvent.click(teamButton);  
+          menubarEntries = screen.queryAllByTestId('matched-entry');
+          let firstTestTeamButton = menubarEntries[0]
+          fireEvent.click(firstTestTeamButton)
+        })
+
+      // All entries in the menubar are visible during normal view.
+      expect(menubarEntries.length).toBe(3);
+
 
       // Resizing the window changes the layout
       await waitFor(() =>
@@ -140,22 +156,10 @@ import {expect, jest, test} from '@jest/globals';
         global.dispatchEvent(new Event('resize'));
       })
 
-      expect(wrapperWithExtendedLayout.length).toBe(1);
+      // Menubar is no longer visible with a small screen size.
+      menubarEntries = screen.queryAllByTestId('matched-entry');
+      expect(menubarEntries.length).toBe(0);
 
-      // Choosing an entry from the menubar collapses the layout
-      await waitFor(() =>
-        {  
-          let teamButton = app.container.querySelectorAll('button')[0];
-          fireEvent.click(teamButton);  
-          let entriesAsDOM = app.container.getElementsByClassName('entry-selection');
-          let firstTestTeamButton = entriesAsDOM[0]
-          fireEvent.click(firstTestTeamButton)
-        })
-
-        expect(wrapperWithExtendedLayout.length).toBe(0);
-
-        let wrapperWithCollapsedLayout = app.container.getElementsByClassName('app-wrapper-collapsed');
-        expect(wrapperWithCollapsedLayout.length).toBe(1);
 
       // Collapsed view is retained when resized to normal size and back
       await waitFor(() =>
@@ -164,31 +168,9 @@ import {expect, jest, test} from '@jest/globals';
           global.dispatchEvent(new Event('resize'));
         })
 
-        let wrapperWithRegularLayout = app.container.getElementsByClassName('app-wrapper');
-        expect(wrapperWithRegularLayout.length).toBe(1);
-        expect(wrapperWithCollapsedLayout.length).toBe(0);
-
-      await waitFor(() =>
-          {  
-            global.innerWidth = 500;
-            global.dispatchEvent(new Event('resize'));
-          })
-        
-      expect(wrapperWithCollapsedLayout.length).toBe(1);
-      
-      // Clicking on a category button during collapsed view returns to the extended layout
-      await waitFor(() =>
-        {  
-          let seasonButton = app.container.querySelectorAll('button')[1];
-          fireEvent.click(seasonButton);  
-        })
-
-        let entriesAsDOM = app.container.getElementsByClassName('entry-selection');
-        expect(entriesAsDOM.length).toBe(1);
-        expect(entriesAsDOM[0].textContent).toBe('season 01');
-        expect(wrapperWithExtendedLayout.length).toBe(1);
-        expect(wrapperWithCollapsedLayout.length).toBe(0);
-
+        // All entries in the menubar are visible again after increasing screen size.
+        menubarEntries = screen.queryAllByTestId('matched-entry');
+        expect(menubarEntries.length).toBe(3);
     });
   
     it('default renders correctly', () => {

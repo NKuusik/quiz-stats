@@ -5,41 +5,44 @@ exports[`default renders correctly 1`] = `
   id=""
 >
   <div
-    className="category-selection"
+    className="chart-view"
   >
-    <div
-      className="menu-bar-container"
-    >
-      <div
-        id="search-field"
+    <div>
+      <h1>
+        Stats for 
+        Test Season
+      </h1>
+      <button
+        className="button-chart"
+        id="chart-button-active"
+        onClick={[Function]}
       >
-        <form>
-          <input
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            placeholder="season"
-            type="text"
-            value=""
-          />
-        </form>
-      </div>
-      <div
-        className="menu-bar-selection"
-        onMouseDown={[Function]}
+        See game-by-game
+      </button>
+      <button
+        className="button-chart"
+        id=""
+        onClick={[Function]}
       >
+        See incrementally
+      </button>
+      <div>
+        <p>
+          I am a mock chart.
+        </p>
         <div
-          className="entry-selection"
-          data-testid="matched-entry"
-          onClick={[Function]}
+          className="test-data"
         >
-          Test Season
+          <p>
+            3,4
+          </p>
         </div>
+        <canvas
+          height="150"
+          width="400"
+        />
       </div>
     </div>
   </div>
-  <div
-    className="chart-view"
-  />
 </div>
 `;

@@ -1,20 +1,23 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 // Todo: kui valida menüüst elementi võiks SearchField minna tühjaks.
-
 type MyProps = {
   category : string[];
-  choice : Function;
+  choice : (chosenSeason: string) => void;
   viewType : string;
-  collapseFunction: Function;
 }
 
-const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
+const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
-  const menuBarRef = useRef<any>();
+  const menuBarRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    setMatchedEntries(category.sort()),
+    toggleSearchFieldInput()
+  }, [viewType])
 
   function filterEntries(entriesValue: string[]): void {
     setMatchedEntries(entriesValue.sort());
@@ -47,14 +50,17 @@ const MenuBar = ({category, choice, viewType, collapseFunction} : MyProps) => {
 
   return (
     <div className={styles['menu-bar-container']}>
-      <SearchField viewType={viewType} menuBarEntries={category} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
+      <SearchField 
+        viewType={viewType} 
+        menuBarEntries={category} 
+        onFieldValueChange={filterEntries.bind(this)} 
+        inputResetToggle={inputResetToggle} />
         <div ref={menuBarRef} onMouseDown={handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
         {
         matchedEntries.map(entry => (
             <div data-testid="matched-entry" key={entry} className={styles['entry-selection']}
               onClick={() => {
                 toggleSearchFieldInput();
-                collapseFunction();
                 choice(entry);
               }}>
               {entry}

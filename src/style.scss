@@ -4,6 +4,7 @@ $default-background-color: rgb(33, 35, 75);
 $menu-bar-background-color-canvas: #161833;
 $menu-bar-background-color-main: #060824;
 $header-button-color: rgb(230, 46, 229);
+
 $secondary-color: #B1B5EF;
 $default-border-radius: 15px;
 $default-background-gradient: linear-gradient(#433A65, #302A62);
@@ -30,27 +31,25 @@ canvas {
 }
 
 .header {
+    padding-left: 15px;
+
     ul {
         list-style-type: none;
-        width: 0%;
+        padding-left: 0;
+        margin: 25px 0px 0px 0px;
         display: flex;
-        align-items: flex-start;
-        float: right;
-        justify-content: flex-end;
-        padding-right: 20px;
     }
 
     h1 {
-        display: inline-block;
-        padding-top: 25px;
-        padding-left: 10px;
         color: $secondary-color;
         font-size: 34px;
         font-weight: 400;
     }
+
 }
 
 .button-header {
+
     margin-left: 10px;
     border-color: $header-button-color;
     background-color: transparent;
@@ -64,7 +63,6 @@ canvas {
 .entry-selection {
     margin-top: 5%;
     margin-bottom: 5%;
-    visibility: visible;
     padding-top: 5%;
     padding-bottom: 5%;
     background-color: $menu-bar-background-color-canvas;
@@ -77,81 +75,9 @@ canvas {
     }
 }
 
-.app-wrapper {
-    .category-selection {
-        width: 20%;
-        float: left;
-    }
-    .chart-view {
-        width: 70%;
-        padding-left: 5%;
-        float: left;
-    } 
-    .header {
-        float: right;
-        width: 80%;
-    }
-}
-
-.app-wrapper-extended {
-    .category-selection {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;  
-        animation-name: slide-full;
-        animation-duration: $animation-speed;   
-    }
-    .chart-view {
-        display: none; 
-    }
-    .header {
-        width: 100%;
-
-    }
-    ul {
-        width: 10%;
-        flex-wrap: wrap;
-    }
-    .button-header {
-        min-width: 90px;
-    }
-}
-
-.chart-view h1 {
-    max-width: 80%;
-}
-
-.app-wrapper-collapsed {
-    .category-selection {
-        display: none; 
-        animation-name: slide-out;
-        animation-duration: $animation-speed;  
-    }
-    .chart-view {
-        width: 90vw;
-        padding-left: 5vw;
-    }
-    ul {
-        width: 10%;
-        flex-wrap: wrap;
-    }
-    .button-header {
-        min-width: 90px;
-    }
-    #comparison-menu-bar {
-        min-width: 85vw;
-    }
-    // Todo: flatten this
-    #comparison-container #comparison-close {
-        width: 50%;
-        margin-left: 50%;
-        border-radius: 50% 50% 0% 0%;
-        background-color: $reverse-background-gradient;
-        img {
-            width: 50%;
-        }
-    }
+.chart-view {
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .button-chart {
@@ -160,17 +86,17 @@ canvas {
     color: white;
     background-image: $default-background-gradient;
 }
-
+/*
 #fade-out {
     animation-name: slide-out;
     animation-duration: $animation-speed;
-}
+}*/
 
 #search-field {
     padding: 15px;
 
     input {
-        width: 100%;
+        width: 90%;
         line-height: 200%;
         background-color: $default-background-color;
         color: white;
@@ -181,31 +107,33 @@ canvas {
 
 // Animations here should go to .category-selection
 .menu-bar-container {
+    position: relative;
+    height: 75px;
     padding-top: 10px;
-    padding-left: 5%;
-    padding-right: 5%;
+
     background-color: $menu-bar-background-color-main;
     animation-name: slide-in;
     animation-duration: $animation-speed;    
 }
 
 .menu-bar-selection {
+    background-color: $menu-bar-background-color-main;
     cursor: grab;
+    padding: 10px;
     height: 90vh;
-    overflow: auto;
+    overflow: scroll;
+    scrollbar-color: $default-background-color $menu-bar-background-color-main;
 }
 
 #comparison-container {
     width: 25%;
     min-width: 200px;
     height: 20%;
-    float: right;
     position: relative;
     z-index: 1;
 
     .button-chart {
         margin: 0px;
-        float: right;
     }
 
     .menu-bar-selection {
@@ -213,11 +141,12 @@ canvas {
     }
 
     #comparison-menu-bar {
-        float: right;
         width: $comparison-container-width;
     }
 
     .menu-bar-container {
+        border-radius: 20% 0% 0% 0%;
+
         background-image: $default-background-gradient;
     }
 
@@ -228,10 +157,9 @@ canvas {
     #comparison-close {
         background-color: red;
         background-image: none;
-        float: left;
+        float: right;
         width: 20%;
-        min-width: 30px;
-        border-radius: 50% 0% 0% 50%;
+        border-radius: 0% 50% 50% 0%;
         background-image: $default-background-gradient;
 
         img {
@@ -260,15 +188,6 @@ canvas {
     }
     to {
         width: 100%;
-    } 
-}
-
-@keyframes slide-full {
-    from {
-        width: inherit;
-    }
-    to {
-        width: 100vw;
     } 
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import TeamView from './TeamView';
-import MenuBar from './MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import * as styles from '../style.css';
 
@@ -8,8 +7,6 @@ type MyProps = {
   teams : {[teamName: string]: Team};
   seasonNames : Array<string>;
   fadeOut: string;
-  collapseMenuBarFunction: Function;
-  chooseTeamFunction: Function;
   collapseWidth: number;
 
   // Todo: it seems SeasonViewWrapper and TeamViewWrapper can be merged into a single component with the only difference
@@ -21,8 +18,6 @@ function TeamViewWrapper({
   teams,
   seasonNames,
   fadeOut,
-  collapseMenuBarFunction,
-  chooseTeamFunction,
   activeEntry,
   collapseWidth
 } : MyProps) {
@@ -32,9 +27,6 @@ function TeamViewWrapper({
   }
   return (
       <div id={styles[fadeOut]} >
-        <div className={styles['category-selection']}>
-          <MenuBar viewType={'team'} choice={(chosenTeam: string) => { chooseTeamFunction(chosenTeam, teams); }} category={Object.keys(teams)} collapseFunction={() => { collapseMenuBarFunction(); }}/>
-        </div>
         <div className={styles['chart-view']}>
           {teamView}
         </div>

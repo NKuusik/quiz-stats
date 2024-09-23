@@ -7,33 +7,29 @@ import TeamViewWrapper from './components/TeamViewWrapper';
 import SeasonViewWrapper from './components/SeasonViewWrapper';
 import Header from './components/Header';
 import {Transition} from 'react-transition-group';
-import * as styles from './style.css';
+import Grid from '@mui/material/Grid2'
+import { Box } from '@mui/material';
+import MenuBar from './components/MenuBar';
+
 type MyProps = {
-  rawData: any;
+  rawData: object;
   collapseWidth: number;
 }
 
 const App = ({rawData, collapseWidth}: MyProps) => {
+
+  const generalGridSizeNoMenu: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 0, md: 0}, {xs: 12, md: 12}]
+  const generalGridSizeRegular: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
+  const entryGridSize: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
+  const [collapseMenuBar, setCollapseMenuBar] = useState<boolean>(false);
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
+  const [activeGridSize, setActiveGridSize] = useState<[{[key: string]: number}, {[key: string]: number|string}]>(generalGridSizeNoMenu);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
-  const [categorySelectionStyle, setCategorySelectionStyle] = useState<any>(styles['app-wrapper']);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
   const nodeRef = useRef(null);
 
-  function extendMenuBar(collapseWidth: number): any {
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper']) {
-      if (activeEntry === null) {
-        setCategorySelectionStyle(styles['app-wrapper-extended']);
-      } else {
-        setCategorySelectionStyle(styles['app-wrapper-collapsed']);
-      }
-    } else if (width > collapseWidth) {
-      setCategorySelectionStyle(styles['app-wrapper']);
-    }
-  }
 
   function updateTeamData(allTeams: {[teamName: string]: Team}, teamRanking: number, currentTeamName: string,
     teamLatestSeasonScores: string[],
@@ -72,13 +68,12 @@ const App = ({rawData, collapseWidth}: MyProps) => {
   }
 
   useEffect(() => {
-    const eventHandler = () => extendMenuBar(collapseWidth);
+    const eventHandler = () => checkMenuBarCollapse();
     window.addEventListener('resize', eventHandler);
     return () => window.removeEventListener('resize', eventHandler);
   });
   useEffect(() => {
     const parsedSeasons: {[seasonName: string]: Season} = {};
-    extendMenuBar(collapseWidth);
     let allTeams: {[teamName: string]: Team} = {};
     for (const season of Object.values(rawData)) {
       
@@ -86,13 +81,13 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
         })
-        .then((parsedData: { data: any[]; }) => {
+        .then((parsedData: { data: string[]; }) => {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
 
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const rawTeamData: string[] = parsedData.data[i];
+            const rawTeamData: string[] = parsedData.data[i] as unknown as string[];
             const teamRanking: number = parseInt(rawTeamData[0]);
             const teamName: string = rawTeamData[1];
             const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
@@ -120,19 +115,24 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     setSeasons(parsedSeasons);
   }, []);
 
-  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
+  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}): void {
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
+      setActiveGridSize(generalGridSizeRegular)
     } else {
       setActiveEntry(data[entryName]);
+      setActiveGridSize(entryGridSize)
+      checkMenuBarCollapse()
     }
   }
 
   function chooseView(chosenView : string) {
-    const width = window.innerWidth;
-    if (chosenView === activeView && width > collapseWidth) {
+    if (chosenView === activeView) {
+      setActiveGridSize(generalGridSizeNoMenu);
       setViewTransition(false);
+
     } else {
+      setActiveGridSize(generalGridSizeRegular);
       setActiveView(chosenView);
       setViewTransition(true);
     }
@@ -147,58 +147,73 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     }
   }
 
-  function transitionCollapsedToExtendedView(collapseWidth: number): void {
-    const width = window.innerWidth;
-    if (width < collapseWidth && categorySelectionStyle === styles['app-wrapper-collapsed']) {
-      setCategorySelectionStyle(styles['app-wrapper-extended']);
-    }
-  }
-
-  function collapseMenuBar(collapseWidth: number): void {
+  function checkMenuBarCollapse(): void {
     const width = window.innerWidth;
     if (width < collapseWidth) {
-      setCategorySelectionStyle(styles['app-wrapper-collapsed']);
+      setCollapseMenuBar(true)
+    } else {
+      setCollapseMenuBar(false)
     }
   }
 
   let view;
+  let menuBar;
   if (activeView === 'season') {
-    view = <SeasonViewWrapper
+    menuBar =
+        <MenuBar  
+          viewType={'season'} 
+          choice={(chosenSeason: string) => { chooseEntry(chosenSeason, seasons) }} 
+          category={Object.keys(seasons)}/>
+    view = 
+      <SeasonViewWrapper
       fadeOut={fadeoutView()}
       seasons={seasons}
-      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
-      chooseSeasonFunction={(chosenSeason) => chooseEntry(chosenSeason, seasons)}
-      activeEntry={activeEntry as Season | null}
-      />;
-  } else if (activeView === 'team') {
-    view = <TeamViewWrapper
-      fadeOut={fadeoutView()}
-      teams={teams}
-      seasonNames={Object.keys(seasons)}
-      collapseMenuBarFunction={() => collapseMenuBar(collapseWidth)}
-      chooseTeamFunction={(chosenTeam) => chooseEntry(chosenTeam, teams)}
-      activeEntry={activeEntry as Team | null}
-      collapseWidth={collapseWidth}
-      />;
-  }
-  return (
-      <div className={categorySelectionStyle}>
-        <Header
-          activeView={activeView}
-          choice={(chosenView) => chooseView(chosenView)}
-          collapseWidth = {collapseWidth}
-          smallLayoutTransitions={() => { transitionCollapsedToExtendedView(collapseWidth); }}
-          />
-        <Transition
-          nodeRef={nodeRef}
-          in={viewTransition}
-          timeout={450}
-          onExited={() => setActiveView('')}
-        >
-            {() => view}
-        </Transition>
+      activeEntry={activeEntry as Season | null}/>
 
-      </div>
+  } else if (activeView === 'team') {
+    menuBar = 
+      <MenuBar  
+        viewType={'team'} 
+        choice={(chosenTeam: string) => { chooseEntry(chosenTeam, teams) }} 
+        category={Object.keys(teams)}/>
+    view =   
+      <TeamViewWrapper
+        fadeOut={fadeoutView()}
+        teams={teams}
+        seasonNames={Object.keys(seasons)}
+        activeEntry={activeEntry as Team | null}
+        collapseWidth={collapseWidth}/>;
+  }
+  if (collapseMenuBar && activeEntry !== null) {
+    menuBar = undefined;
+  }
+
+  return (
+      <Box>
+        <Grid container>
+          <Grid size={activeGridSize[0]}>
+              {menuBar}
+          </Grid>
+          <Grid size={activeGridSize[1]}>
+              <Header
+                activeView={activeView}
+                choice={(chosenView) => chooseView(chosenView)}
+                collapseWidth = {collapseWidth}/>
+          </Grid>
+          <Grid container size={12}>
+            <Grid size={entryGridSize[0]}></Grid>
+            <Grid size={entryGridSize[1]}>
+              <Transition
+                nodeRef={nodeRef}
+                in={viewTransition}
+                timeout={450}
+                onExited={() => setActiveView('')}>
+                {() => view}
+              </Transition>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
   );
 };
 

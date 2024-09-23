@@ -16,7 +16,10 @@ const viewTypeTeam = "team";
 
 it('default renders correctly', () => {
     const tree = renderer
-         .create(<MenuBar viewType="" category={category} choice={choice}/>)
+         .create(<MenuBar 
+            viewType="" 
+            category={category} 
+            choice={choice}/>)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
      });

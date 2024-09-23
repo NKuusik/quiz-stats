@@ -5,40 +5,6 @@ exports[`renders correctly 1`] = `
   id=""
 >
   <div
-    className="category-selection"
-  >
-    <div
-      className="menu-bar-container"
-    >
-      <div
-        id="search-field"
-      >
-        <form>
-          <input
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            placeholder="team"
-            type="text"
-            value=""
-          />
-        </form>
-      </div>
-      <div
-        className="menu-bar-selection"
-        onMouseDown={[Function]}
-      >
-        <div
-          className="entry-selection"
-          data-testid="matched-entry"
-          onClick={[Function]}
-        >
-          Fake team
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
     className="chart-view"
   >
     <div
@@ -48,22 +14,33 @@ exports[`renders correctly 1`] = `
         Stats for team 
         Fake team
       </h1>
-      <button
-        className="button-chart"
-        id="chart-button-active"
-        onClick={[Function]}
+      <div
+        className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
       >
-        See points
-         per season
-      </button>
-      <button
-        className="button-chart"
-        id=""
-        onClick={[Function]}
-      >
-        See points
-         across seasons
-      </button>
+        <div
+          className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-auto css-1djy14n-MuiGrid2-root"
+        >
+          <button
+            className="button-chart"
+            id="chart-button-active"
+            onClick={[Function]}
+          >
+            See points
+             per season
+          </button>
+          <button
+            className="button-chart"
+            id=""
+            onClick={[Function]}
+          >
+            See points
+             across seasons
+          </button>
+        </div>
+        <div
+          className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-grow css-2edihr-MuiGrid2-root"
+        />
+      </div>
       <div>
         <p>
           I am a mock chart.
