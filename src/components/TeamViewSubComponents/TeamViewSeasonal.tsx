@@ -10,7 +10,7 @@ type MyProps = {
 const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
   const defaultDataSetsShown : number = 3;
 
-  function generateLabels(seasonsAsObject: object): string[] {
+  const generateLabels = (seasonsAsObject: object): string[] => {
     let longestSeason = [];
     for (const seasonKey in seasonsAsObject) {
       if (seasonsAsObject[seasonKey].length > longestSeason.length) {
@@ -24,7 +24,7 @@ const TeamViewSeasonal = ({chosenTeam}: MyProps) => {
     return labels;
   }
 
-  function generateDataSets(): ChartDataSet[] {
+  const generateDataSets = (): ChartDataSet[] => {
     const arrayWithSeasonPoints : ChartDataSet[] = [];
     for (const seasonName of Object.keys(chosenTeam.results)) {
       const dataColor : string = chosenTeam.teamSeasons[seasonName].color;

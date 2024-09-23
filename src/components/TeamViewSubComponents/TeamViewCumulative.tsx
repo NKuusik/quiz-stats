@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import LineChart from '../../subcomponents/LineChart';
 import {Team} from '../../classes/EntityChildren/Team';
 import {ChartDataSet} from '../../classes/ChartDataSet';
@@ -8,19 +8,17 @@ type MyProps = {
   seasonNames: string[];
   isAveragePointsView: boolean,
   comparisonTeams: {[teamName: string]: Team},
-  cumulativeViewMaxValue: number,
-  averagePointsViewMaxValue: number,
-  generatePointsArray: Function
 }
 
 const TeamViewCumulative = ({
   chosenTeam, 
   seasonNames,
   isAveragePointsView, 
-  comparisonTeams, 
-  cumulativeViewMaxValue,
-  averagePointsViewMaxValue, 
-  generatePointsArray}: MyProps) => {
+  comparisonTeams
+  }: MyProps) => {
+
+  const [cumulativeViewMaxValue, setCumulativeViewMaxValue] = useState<number>(20);
+  const [averagePointsViewMaxValue, setAveragePointsViewMaxValue] = useState<number>(0);
 
   function generateLabels(): string[] {
     const labels : string[] = [];
@@ -31,7 +29,45 @@ const TeamViewCumulative = ({
     return labels;
   }
 
+  function resetMaxValues(): void {
+    setCumulativeViewMaxValue(0);
+    setAveragePointsViewMaxValue(0);
+  }
+
+    // Re-calculate max values when either chosenTeam or comparisonTeams change.
+  useEffect(() => {
+      resetMaxValues();
+    }, [chosenTeam, comparisonTeams]);
+
   const cumulativeLabels: string[] = generateLabels();
+
+
+  function generatePointsArray(team: Team, labels: string[], averagePointMode: boolean = true): number[] {
+    const totalPointsAllSeasons : number[] = [];
+    for (const seasonName of labels) {
+      let sum: number = 0;
+      let average: number = 0;
+      if (team.results[seasonName] !== undefined) {
+        const pointsAsNumbers = team.results[seasonName].map(Number);
+        sum = pointsAsNumbers.reduce((a: number, b: number) => a + b, 0); // Kui Team klassil oleks info iga hooaja totalpointsist, pole seda vaja
+        if (averagePointMode) {
+          average = sum / team.results[seasonName].length;
+        }
+      }
+      if (!averagePointMode && (sum > cumulativeViewMaxValue)) {
+        setCumulativeViewMaxValue(sum);
+      } else if (averagePointMode && (average > averagePointsViewMaxValue)) {
+        setAveragePointsViewMaxValue(average);
+      }
+      if (!averagePointMode) {
+        totalPointsAllSeasons.push(sum);
+      } else if (averagePointMode) {
+        totalPointsAllSeasons.push(average);
+      }
+    }
+    return totalPointsAllSeasons;
+  }
+
 
   function generateDataSets(averagePointsMode: boolean = true): ChartDataSet[] {
     const displayedTeams = [chosenTeam].concat(Object.values(comparisonTeams));
