@@ -29,7 +29,7 @@ const TeamViewCumulative = ({
     return labels;
   }
 
-  function resetMaxValues(): void {
+  const resetMaxValues = (): void => {
     setCumulativeViewMaxValue(0);
     setAveragePointsViewMaxValue(0);
   }

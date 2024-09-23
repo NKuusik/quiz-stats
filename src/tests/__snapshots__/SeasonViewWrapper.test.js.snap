@@ -6,6 +6,43 @@ exports[`default renders correctly 1`] = `
 >
   <div
     className="chart-view"
-  />
+  >
+    <div>
+      <h1>
+        Stats for 
+        Test Season
+      </h1>
+      <button
+        className="button-chart"
+        id="chart-button-active"
+        onClick={[Function]}
+      >
+        See game-by-game
+      </button>
+      <button
+        className="button-chart"
+        id=""
+        onClick={[Function]}
+      >
+        See incrementally
+      </button>
+      <div>
+        <p>
+          I am a mock chart.
+        </p>
+        <div
+          className="test-data"
+        >
+          <p>
+            3,4
+          </p>
+        </div>
+        <canvas
+          height="150"
+          width="400"
+        />
+      </div>
+    </div>
+  </div>
 </div>
 `;

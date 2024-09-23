@@ -12,7 +12,6 @@ it('default renders correctly', () => {
   const tree = renderer
       .create(<Header 
         choice={() => console.log('choice was called')}
-        smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
         activeView="" 
         collapseWidth={800}
         />)
@@ -24,7 +23,6 @@ it('season renders correctly', () => {
   const tree = renderer
        .create(<Header 
         choice={() => console.log('choice was called')}
-        smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
         activeView="season" 
         collapseWidth={800}
         />)
@@ -36,7 +34,6 @@ it('team renders correctly', () => {
   const tree = renderer
       .create(<Header 
         choice={() => console.log('choice was called')}
-        smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
         activeView="team" 
         collapseWidth={800}
         />)
@@ -47,7 +44,6 @@ it('team renders correctly', () => {
 test('Header displays "Stats for something" when no active view', () => {
   render(<Header 
     choice={() => console.log('choice was called')}
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     activeView="" 
     collapseWidth={800}
     />);
@@ -57,7 +53,6 @@ test('Header displays "Stats for something" when no active view', () => {
 test('Header displays "Stats for teams" when team is active view', () => {
   render(<Header 
     choice={() => console.log('choice was called')}
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     activeView="team" 
     collapseWidth={800}
     />);
@@ -67,7 +62,6 @@ test('Header displays "Stats for teams" when team is active view', () => {
 test('Header displays "Stats for seasons" when season is active view', () => {
   render(<Header 
     choice={() => console.log('choice was called')}
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     activeView="season" 
     collapseWidth={800}
     />);
@@ -79,7 +73,6 @@ test('Active view value changes when clicking the corresponding button', () => {
   let header = render(<Header 
     activeView={choiceValue} 
     choice={(value) => {choiceValue = value}} 
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     collapseWidth={800}
     />);
   let activeButton = header.container.querySelector('#header-active');
@@ -92,7 +85,6 @@ test('Active view value changes when clicking the corresponding button', () => {
   header = render(<Header 
     activeView={choiceValue} 
     choice={(value) => {choiceValue = value}} 
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     collapseWidth={800}
     />);
   teamButton = header.container.querySelectorAll('button')[0];
@@ -104,7 +96,6 @@ test('Active view value changes when clicking the corresponding button', () => {
   header = render(<Header 
     activeView={choiceValue} 
     choice={(value) => {choiceValue = value}} 
-    smallLayoutTransitions={() => console.log('smallLayoutTransitions was called')}
     collapseWidth={800}
     />);
   activeButton = header.container.querySelector('#header-active');

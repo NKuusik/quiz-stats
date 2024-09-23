@@ -6,9 +6,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import TeamViewWrapper from '../components/TeamViewWrapper';
 import {Team} from '../classes/EntityChildren/Team';
-import {render, fireEvent} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Season} from '../classes/EntityChildren/Season';
-import App from '../App';
 
 const testTeam = new Team("Fake team", [1, 2], 3);
 const testSeason = new Season("SeasonNumber");
@@ -30,28 +29,21 @@ it('renders correctly', () => {
           teams={testTeams} 
           seasonNames={['SeasonNumber']} 
           fadeOut={''} 
-          seasons={testSeasons} 
-          collapseMenuBarFunction={() => console.log('collapseMenuBarFunction was called')} 
-          chooseTeamFunction={() => console.log('chooseTeamFunction was called')}
+          collapseWidth={800}
           activeEntry={testTeam}
           />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
     });
 
-test("Active team is changed in menu bar", () => {
+test("Active team is displayed", () => {
   const element = render(<TeamViewWrapper 
     teams={testTeams} 
     seasonNames={['SeasonNumber']} 
     fadeOut={''} 
-    seasons={testSeasons} 
-    collapseMenuBarFunction={() => console.log('collapseMenuBarFunction was called')} 
-    chooseTeamFunction={() => console.log('chooseTeamFunction was called')}
+    collapseWidth={800}
     activeEntry={testTeam}
     />);
-  const entriesInMenuBar = element.container.querySelector('.entry-selection');
-  fireEvent.click(entriesInMenuBar);
+
   expect(element.getByRole('heading')).toHaveTextContent('Stats for team Fake team');
 });  
-
-// Todo: Active team dissapears after toggling the same team.

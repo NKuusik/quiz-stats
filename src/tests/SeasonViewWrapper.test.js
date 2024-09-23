@@ -28,8 +28,7 @@ it('default renders correctly', () => {
          .create(<SeasonViewWrapper 
           seasons={testSeasons}
           fadeOut=''
-          collapseMenuBarFunction={() => console.log('collapseMenuBarFunction was called')}
-          chooseSeasonFunction={() => console.log('chooseSeasonFunction was called')}
+          activeEntry={testSeason}
           />)
          .toJSON();
        expect(tree).toMatchSnapshot(); 
