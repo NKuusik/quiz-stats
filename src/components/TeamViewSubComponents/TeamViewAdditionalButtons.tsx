@@ -7,9 +7,9 @@ import Grid from '@mui/material/Grid2';
 type MyProps = {
   allTeams : {[teamName: string]: Team};
   collapseWidth: number,
-  statType: Function,
+  statType: () => void,
   isAveragePointsView: boolean,
-  handleTeamComparison: Function
+  handleTeamComparison: (teamName: string) => void
 }
 
 const TeamViewAdditionalButtons = ({

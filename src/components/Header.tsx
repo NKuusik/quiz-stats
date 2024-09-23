@@ -3,7 +3,7 @@ import * as styles from '../style.css';
 import Grid from '@mui/material/Grid2';
 
 type MyProps = {
-  choice : Function;
+  choice : (chosenView: string) => void;
   activeView: string;
   collapseWidth: number
 }

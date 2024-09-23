@@ -3,7 +3,7 @@ import * as styles from '../style.css';
 
 type MyProps = {
     menuBarEntries: string[];
-    onFieldValueChange: Function;
+    onFieldValueChange: (entriesValue: string[]) => void;
     viewType: string;
     inputResetToggle: boolean;
 }

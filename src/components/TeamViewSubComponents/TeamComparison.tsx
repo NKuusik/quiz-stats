@@ -6,7 +6,7 @@ import {closeIcon} from '../../resources/icons/icons';
 
 type MyProps = {
     teams : {[teamName: string]: Team};
-    comparisonTeamHandler: any;
+    comparisonTeamHandler: (teamName: string) => void;
     collapseWidth: number;
 }
 

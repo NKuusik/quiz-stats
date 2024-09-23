@@ -7,7 +7,7 @@ type MyProps = {
   season : Season;
   defaultDataSetsShown : number;
   labels: string[];
-  isDataSetHidden: Function;
+  isDataSetHidden: (currentCount: number, defaultDataSetsShown: number) => boolean;
 }
 
 const SeasonViewPerGame = ({season, defaultDataSetsShown, labels, isDataSetHidden}: MyProps) => {

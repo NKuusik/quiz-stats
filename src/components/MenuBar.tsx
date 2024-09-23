@@ -3,17 +3,16 @@ import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 
 // Todo: kui valida menüüst elementi võiks SearchField minna tühjaks.
-
 type MyProps = {
   category : string[];
-  choice : Function;
+  choice : (chosenSeason: string) => void;
   viewType : string;
 }
 
 const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
-  const menuBarRef = useRef<any>();
+  const menuBarRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     setMatchedEntries(category.sort()),
@@ -51,7 +50,11 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
 
   return (
     <div className={styles['menu-bar-container']}>
-      <SearchField viewType={viewType} menuBarEntries={category} onFieldValueChange={filterEntries.bind(this)} inputResetToggle={inputResetToggle} />
+      <SearchField 
+        viewType={viewType} 
+        menuBarEntries={category} 
+        onFieldValueChange={filterEntries.bind(this)} 
+        inputResetToggle={inputResetToggle} />
         <div ref={menuBarRef} onMouseDown={handleMouseDown.bind(this)} className={styles['menu-bar-selection']}>
         {
         matchedEntries.map(entry => (

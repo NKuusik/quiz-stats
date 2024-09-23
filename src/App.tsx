@@ -12,20 +12,20 @@ import { Box } from '@mui/material';
 import MenuBar from './components/MenuBar';
 
 type MyProps = {
-  rawData: any;
+  rawData: object;
   collapseWidth: number;
 }
 
 const App = ({rawData, collapseWidth}: MyProps) => {
 
-  const generalGridSizeNoMenu: any = [{xs: 0, md: 0}, {xs: 12, md: 12}]
-  const generalGridSizeRegular: any = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
-  const entryGridSize: any = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
+  const generalGridSizeNoMenu: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 0, md: 0}, {xs: 12, md: 12}]
+  const generalGridSizeRegular: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 12, md: 3}, {xs: 0, md: "grow"}]
+  const entryGridSize: [{[key: string]: number}, {[key: string]: number|string}] = [{xs: 0, md: 3}, {xs: 12, md: "grow"}]
   const [collapseMenuBar, setCollapseMenuBar] = useState<boolean>(false);
   const [teams, setTeams] = useState<{[teamName: string]: Team}>({});
   const [seasons, setSeasons] = useState<{[seasonName: string]: Season}>({});
   const [activeView, setActiveView] = useState<string>('');
-  const [activeGridSize, setActiveGridSize] = useState<[any, any]>(generalGridSizeNoMenu);
+  const [activeGridSize, setActiveGridSize] = useState<[{[key: string]: number}, {[key: string]: number|string}]>(generalGridSizeNoMenu);
   const [viewTransition, setViewTransition] = useState<boolean>(false);
   const [activeEntry, setActiveEntry] = useState<Season | Team | null>(null);
   const nodeRef = useRef(null);
@@ -81,13 +81,13 @@ const App = ({rawData, collapseWidth}: MyProps) => {
         .then((res: { data: string; }) => { // Mõtle, kas kogu see eraldi mooduliks
           return parseData(res.data);
         })
-        .then((parsedData: { data: any[]; }) => {
+        .then((parsedData: { data: string[]; }) => {
           const currentSeasonName: string = `season ${parsedData.data[0]}`;
           const currentSeasonTeamNames: string[] = [];
           const currentSeason = new Season(currentSeasonName);
 
           for (let i = 1; i < parsedData.data.length - 1; i++) {
-            const rawTeamData: string[] = parsedData.data[i];
+            const rawTeamData: string[] = parsedData.data[i] as unknown as string[];
             const teamRanking: number = parseInt(rawTeamData[0]);
             const teamName: string = rawTeamData[1];
             const teamLatestSeasonScores: string[] = rawTeamData.slice(2, -1);
@@ -115,7 +115,7 @@ const App = ({rawData, collapseWidth}: MyProps) => {
     setSeasons(parsedSeasons);
   }, []);
 
-  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}) {
+  function chooseEntry(entryName: string, data: {[key: string]: Season} | {[key: string]: Team}): void {
     if (activeEntry === data[entryName]) {
       setActiveEntry(null);
       setActiveGridSize(generalGridSizeRegular)
