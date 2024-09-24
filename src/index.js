@@ -8,7 +8,9 @@ import * as rawData from './resources/seasons';
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
-<App rawData={rawData} collapseWidth={900} />
+    <React.StrictMode>
+        <App rawData={rawData} collapseWidth={900} />
+    </React.StrictMode>
 );
 
 reportWebVitals();
