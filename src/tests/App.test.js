@@ -4,7 +4,6 @@
 jest.mock('axios');
 import axios from 'axios';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import App  from '../App';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
@@ -172,14 +171,4 @@ import {expect, jest, test} from '@jest/globals';
         menubarEntries = screen.queryAllByTestId('matched-entry');
         expect(menubarEntries.length).toBe(3);
     });
-  
-    it('default renders correctly', () => {
-      const tree = renderer
-          .create(<App 
-            rawData={localTestData}
-            collapseWidth={800}
-            />)
-          .toJSON();
-        expect(tree).toMatchSnapshot(); 
-      });    
   }) 

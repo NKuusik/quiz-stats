@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import TeamView from '../components/TeamView';
 import { Team } from '../classes/EntityChildren/Team';
 import { Season } from '../classes/EntityChildren/Season';
@@ -16,12 +15,12 @@ testTeam.teamSeasons["TestSeason 01"] = testSeason;
 
 
 it('default renders correctly', () => {
-    const tree = renderer
-         .create(<TeamView allTeams={allTeams} seasonNames={["TestSeason 01"]} chosenTeam={testTeam} collapseWidth={800}/>)
-         .toJSON();
+    const tree = render(<TeamView 
+        allTeams={allTeams} 
+        seasonNames={["TestSeason 01"]} 
+        chosenTeam={testTeam} collapseWidth={800}/>);
        expect(tree).toMatchSnapshot(); 
      });
-
 
 const secondSeason = new Season("TestSeason 02");
 const thirdSeason = new Season("TestSeason 03");
@@ -38,13 +37,11 @@ const allTeams = {"Fake Team": testTeam};
 
 
 it('only 3 seasons are displayed', () => {
-    const tree = renderer
-         .create(<TeamView 
+    const tree = render(<TeamView 
             allTeams={allTeams} 
             seasonNames={["TestSeason 01", "TestSeason 02", "TestSeason 03", "TestSeason 04"]} 
             chosenTeam={testTeam}
-            collapseWidth={800} />)
-         .toJSON();
+            collapseWidth={800} />);
        expect(tree).toMatchSnapshot(); 
      });
 

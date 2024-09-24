@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import SeasonView from '../components/SeasonView';
 import {Team} from '../classes/EntityChildren/Team';
 import {Season} from '../classes/EntityChildren/Season';
@@ -25,9 +24,7 @@ testTeam.results["Test Season"] = [1, 2, 4.2, 5, 6];
 const testSeason = new Season("Test Season", testTeams, 5, ["Fake team"]);
 
 it('default renders correctly', () => {
-    const tree = renderer
-         .create(<SeasonView season={testSeason} />)
-         .toJSON();
+    const tree = render(<SeasonView season={testSeason} />);
        expect(tree).toMatchSnapshot(); 
     });
 
@@ -46,9 +43,7 @@ fourthTeam.results["Second Season"] = [1, 2, 4, 5, 6];
 const secondSeason = new Season("Second Season", secondTestTeams, 5, ["Fake team", "Second team", "Third team", "Fourth team"]);
 
 it('teams are hidden by default after third team', () => {
-    const tree = renderer
-         .create(<SeasonView season={secondSeason} />)
-         .toJSON();
+    const tree = render(<SeasonView season={secondSeason} />);
        expect(tree).toMatchSnapshot(); 
     });
 

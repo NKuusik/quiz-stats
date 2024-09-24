@@ -1,76 +1,298 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    id="search-field"
-  >
-    <form>
-      <input
-        onChange={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        placeholder=""
-        type="text"
-        value=""
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="menu-bar-container"
+      >
+        <div
+          id="search-field"
+        >
+          <form>
+            <input
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </form>
+        </div>
+        <div
+          class="menu-bar-selection"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="menu-bar-container"
+    >
+      <div
+        id="search-field"
+      >
+        <form>
+          <input
+            placeholder=""
+            type="text"
+            value=""
+          />
+        </form>
+      </div>
+      <div
+        class="menu-bar-selection"
       />
-    </form>
-  </div>
-  <div
-    className="menu-bar-selection"
-    onMouseDown={[Function]}
-  />
-</div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`season renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    id="search-field"
-  >
-    <form>
-      <input
-        onChange={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        placeholder="season"
-        type="text"
-        value=""
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="menu-bar-container"
+      >
+        <div
+          id="search-field"
+        >
+          <form>
+            <input
+              placeholder="season"
+              type="text"
+              value=""
+            />
+          </form>
+        </div>
+        <div
+          class="menu-bar-selection"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="menu-bar-container"
+    >
+      <div
+        id="search-field"
+      >
+        <form>
+          <input
+            placeholder="season"
+            type="text"
+            value=""
+          />
+        </form>
+      </div>
+      <div
+        class="menu-bar-selection"
       />
-    </form>
-  </div>
-  <div
-    className="menu-bar-selection"
-    onMouseDown={[Function]}
-  />
-</div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`team renders correctly 1`] = `
-<div
-  className="menu-bar-container"
->
-  <div
-    id="search-field"
-  >
-    <form>
-      <input
-        onChange={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        placeholder="team"
-        type="text"
-        value=""
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="menu-bar-container"
+      >
+        <div
+          id="search-field"
+        >
+          <form>
+            <input
+              placeholder="team"
+              type="text"
+              value=""
+            />
+          </form>
+        </div>
+        <div
+          class="menu-bar-selection"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="menu-bar-container"
+    >
+      <div
+        id="search-field"
+      >
+        <form>
+          <input
+            placeholder="team"
+            type="text"
+            value=""
+          />
+        </form>
+      </div>
+      <div
+        class="menu-bar-selection"
       />
-    </form>
-  </div>
-  <div
-    className="menu-bar-selection"
-    onMouseDown={[Function]}
-  />
-</div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
