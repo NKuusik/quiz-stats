@@ -172,7 +172,16 @@ canvas {
     }
 }
 
-
+   /* 
+        See https://github.com/chartjs/Chart.js/issues/11005
+        as to why there needs to be a container here.
+    */
+.chart-container {
+    aspect-ratio: 2;
+    min-height: 300px;
+    height: 50vh;
+    width: 100%;
+}
 
 #header-active {
     background-color: $header-button-color;
