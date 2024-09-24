@@ -3,41 +3,34 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import Header from '../components/Header';
 import {screen} from '@testing-library/dom';
 import {render, fireEvent} from '@testing-library/react';
 
 it('default renders correctly', () => {
-  const tree = renderer
-      .create(<Header 
+  const tree = render(<Header 
         choice={() => console.log('choice was called')}
         activeView="" 
         collapseWidth={800}
-        />)
-      .toJSON();
+        />);
     expect(tree).toMatchSnapshot(); 
   });
 
 it('season renders correctly', () => {
-  const tree = renderer
-       .create(<Header 
+  const tree = render(<Header 
         choice={() => console.log('choice was called')}
         activeView="season" 
         collapseWidth={800}
-        />)
-       .toJSON();
+        />);
      expect(tree).toMatchSnapshot(); 
    });
 
 it('team renders correctly', () => {
-  const tree = renderer
-      .create(<Header 
+  const tree = render(<Header 
         choice={() => console.log('choice was called')}
         activeView="team" 
         collapseWidth={800}
-        />)
-      .toJSON();
+        />);
     expect(tree).toMatchSnapshot(); 
    });
 

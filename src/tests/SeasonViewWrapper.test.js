@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import SeasonViewWrapper from '../components/SeasonViewWrapper';
 import { Team } from '../classes/EntityChildren/Team';
 import { Season } from '../classes/EntityChildren/Season';
@@ -24,12 +23,10 @@ const testSeasons = {
 
 it('default renders correctly', () => {
 
-    const tree = renderer
-         .create(<SeasonViewWrapper 
+    const tree = render(<SeasonViewWrapper 
           seasons={testSeasons}
           fadeOut=''
           activeEntry={testSeason}
-          />)
-         .toJSON();
+          />);
        expect(tree).toMatchSnapshot(); 
     });

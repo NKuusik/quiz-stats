@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import TeamViewWrapper from '../components/TeamViewWrapper';
 import {Team} from '../classes/EntityChildren/Team';
 import {render} from '@testing-library/react';
@@ -24,15 +23,13 @@ const testSeasons = {
 
 it('renders correctly', () => {
 
-    const tree = renderer
-         .create(<TeamViewWrapper 
+    const tree = render(<TeamViewWrapper 
           teams={testTeams} 
           seasonNames={['SeasonNumber']} 
           fadeOut={''} 
           collapseWidth={800}
           activeEntry={testTeam}
-          />)
-         .toJSON();
+          />);
        expect(tree).toMatchSnapshot(); 
     });
 

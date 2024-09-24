@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
 import MenuBar from '../components/MenuBar';
 import {Team} from '../classes/EntityChildren/Team';
 import {render, fireEvent} from '@testing-library/react';
@@ -15,26 +14,26 @@ const viewTypeSeason = "season";
 const viewTypeTeam = "team";
 
 it('default renders correctly', () => {
-    const tree = renderer
-         .create(<MenuBar 
+    const tree = render(<MenuBar 
             viewType="" 
             category={category} 
-            choice={choice}/>)
-         .toJSON();
+            choice={choice}/>);
        expect(tree).toMatchSnapshot(); 
      });
 
 it('season renders correctly', () => {
-    const tree = renderer
-         .create(<MenuBar viewType={viewTypeSeason} category={category} choice={choice}/>)
-         .toJSON();
+    const tree = render(<MenuBar 
+        viewType={viewTypeSeason} 
+        category={category} 
+        choice={choice}/>);
        expect(tree).toMatchSnapshot(); 
      });
 
 it('team renders correctly', () => {
-    const tree = renderer
-         .create(<MenuBar viewType={viewTypeTeam} category={category} choice={choice}/>)
-         .toJSON();
+    const tree = render(<MenuBar 
+        viewType={viewTypeTeam} 
+        category={category} 
+        choice={choice}/>);
        expect(tree).toMatchSnapshot(); 
      });
 

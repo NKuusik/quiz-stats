@@ -1,48 +1,148 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`default renders correctly 1`] = `
-<div
-  id=""
->
-  <div
-    className="chart-view"
-  >
+{
+  "asFragment": [Function],
+  "baseElement": <body>
     <div>
-      <h1>
-        Stats for 
-        Test Season
-      </h1>
-      <button
-        className="button-chart"
-        id="chart-button-active"
-        onClick={[Function]}
-      >
-        See game-by-game
-      </button>
-      <button
-        className="button-chart"
+      <div
         id=""
-        onClick={[Function]}
       >
-        See incrementally
-      </button>
-      <div>
-        <p>
-          I am a mock chart.
-        </p>
         <div
-          className="test-data"
+          class="chart-view"
         >
-          <p>
-            3,4
-          </p>
+          <div>
+            <h1>
+              Stats for 
+              Test Season
+            </h1>
+            <button
+              class="button-chart"
+              id="chart-button-active"
+            >
+              See game-by-game
+            </button>
+            <button
+              class="button-chart"
+              id=""
+            >
+              See incrementally
+            </button>
+            <div>
+              <p>
+                I am a mock chart.
+              </p>
+              <div
+                class="test-data"
+              >
+                <p>
+                  3,4
+                </p>
+              </div>
+              <canvas
+                height="150"
+                width="400"
+              />
+            </div>
+          </div>
         </div>
-        <canvas
-          height="150"
-          width="400"
-        />
       </div>
     </div>
-  </div>
-</div>
+  </body>,
+  "container": <div>
+    <div
+      id=""
+    >
+      <div
+        class="chart-view"
+      >
+        <div>
+          <h1>
+            Stats for 
+            Test Season
+          </h1>
+          <button
+            class="button-chart"
+            id="chart-button-active"
+          >
+            See game-by-game
+          </button>
+          <button
+            class="button-chart"
+            id=""
+          >
+            See incrementally
+          </button>
+          <div>
+            <p>
+              I am a mock chart.
+            </p>
+            <div
+              class="test-data"
+            >
+              <p>
+                3,4
+              </p>
+            </div>
+            <canvas
+              height="150"
+              width="400"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
