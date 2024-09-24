@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Chart from 'chart.js/auto';
+import * as styles from '../style.css';
 Chart.defaults.color = '#DCDEE6';
 
 type MyProps = {
@@ -24,6 +25,7 @@ class LineChart extends React.Component<MyProps> {
         datasets: this.props.dataSets
       },
       options: {
+        maintainAspectRatio: false,
         scales: {
           y: {
             max: this.props.maxValue,
@@ -32,7 +34,7 @@ class LineChart extends React.Component<MyProps> {
         },
         plugins: {
           legend: {
-            position: 'right'
+            position: 'bottom'
           }
         }
       }
@@ -48,14 +50,16 @@ class LineChart extends React.Component<MyProps> {
 
   render() {
     return (
-      <>
-      <div className='header'>
-        <h1 className='title'>{this.props.titleContent}</h1>
-      </div>
-      <canvas ref={this.myRef} width="400" height="150"></canvas>
-    </>
-    );
-  }
-}
+    <div>
+        <div className='header'>
+          <h1 className='title'>{this.props.titleContent}</h1>
+        </div>
+        <div className={styles['chart-container']}>
+          <canvas ref={this.myRef} ></canvas>
+        </div>
+    </div>
+  )}
+};
+
 
 export default LineChart;
