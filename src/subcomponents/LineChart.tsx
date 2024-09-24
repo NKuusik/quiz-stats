@@ -14,6 +14,9 @@ class LineChart extends React.Component<MyProps> {
   private chart;
 
   componentDidMount() {
+    if (this.chart !== undefined) {
+      this.chart.destroy()
+    }
     this.chart = new Chart(this.myRef.current, {
       type: 'line',
       data: {
