@@ -7,11 +7,11 @@ type MyProps = {
   category : string[];
   choice : (chosenEntry: string) => void;
   viewType : string;
+  selectedEntries : Set<any>
 }
 
-const MenuBar = ({category, choice, viewType} : MyProps) => {
+const MenuBar = ({category, choice, viewType, selectedEntries} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
-  const [selectedEntries, setSelectedEntries] = useState(new Set())
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const menuBarRef = useRef<HTMLDivElement>(null);
 
@@ -22,13 +22,7 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
     setMatchedEntries(category.sort()),
     toggleSearchFieldInput()
   }, [viewType])
-/*
-  useEffect(() => {
-    if (viewType !== 'comparison') {
-      setSelectedEntries(new Set())
-    }
-  }, [selectedEntries])
-*/
+
   function filterEntries(entriesValue: string[]): void {
     setMatchedEntries(entriesValue.sort());
   }
@@ -80,16 +74,6 @@ const MenuBar = ({category, choice, viewType} : MyProps) => {
               onClick={() => {
                 toggleSearchFieldInput();
                 choice(entry);
-                let currentSelection = new Set(selectedEntries);
-                
-                if (!selectedEntries.has(entry)) {
-                  currentSelection.add(entry)
-                } else {
-                  currentSelection.delete(entry)
-                }
-
-                setSelectedEntries(currentSelection)
-                console.log(currentSelection)
               }}>
               {entry}
             </div>

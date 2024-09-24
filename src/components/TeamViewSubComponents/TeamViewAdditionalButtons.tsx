@@ -9,12 +9,17 @@ type MyProps = {
   collapseWidth: number,
   statType: () => void,
   isAveragePointsView: boolean,
-  handleTeamComparison: (teamName: string) => void
+  handleTeamComparison: (teamName: string) => void,
+  selectedEntries: Set<any> 
 }
 
 const TeamViewAdditionalButtons = ({
-    allTeams, collapseWidth, 
-    statType, isAveragePointsView, handleTeamComparison}: MyProps) => {
+    allTeams, 
+    collapseWidth, 
+    statType, 
+    isAveragePointsView, 
+    handleTeamComparison, 
+    selectedEntries}: MyProps) => {
 
   let buttonStartText = 'See';
 
@@ -25,7 +30,8 @@ const TeamViewAdditionalButtons = ({
   const teamComparisonComponent = <TeamComparison 
     teams={allTeams} 
     comparisonTeamHandler={handleTeamComparison} 
-    collapseWidth={collapseWidth} />;
+    collapseWidth={collapseWidth} 
+    selectedEntries={selectedEntries}/>;
 
   let cumulativeViewButton =
     <button className={styles['button-chart']} onClick={() => statType()}>

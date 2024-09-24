@@ -18,9 +18,11 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
   const [isAveragePointsView, setIsAveragePointsView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
+  const [selectedEntries, setSelectedEntries] = useState(new Set())
 
   useEffect(() => {
     setComparisonTeams({});
+    setSelectedEntries(new Set())
   }, [chosenTeam]);
 
 
@@ -29,6 +31,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   }
 
   const handleTeamComparison = (teamName: string): void  =>  {
+    handleSelectedEntries(teamName);
     const comparisonTeamsInstance: {[teamName: string]: Team} = {...comparisonTeams};
     if (Object.hasOwnProperty.call(comparisonTeams, teamName)) {
       delete comparisonTeamsInstance[teamName];
@@ -40,6 +43,21 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
     setComparisonTeams(comparisonTeamsInstance);
   }
 
+
+  // Todo: implement redux store instead.
+  const handleSelectedEntries = (entry: string): void => {
+    if (chosenTeam.name !==  entry) {
+      let currentSelection = new Set(selectedEntries);
+      if (!selectedEntries.has(entry)) {
+        currentSelection.add(entry)
+      } else {
+        currentSelection.delete(entry)
+      }
+  
+      setSelectedEntries(currentSelection)
+    }
+  }
+
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
   let additionalButtons;
   if (cumulativeView) {
@@ -48,7 +66,9 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
       collapseWidth={collapseWidth}
       isAveragePointsView={isAveragePointsView}
       statType={handleCumulativeViewToggle}
-      handleTeamComparison={handleTeamComparison}/>;
+      handleTeamComparison={handleTeamComparison}
+      // Todo: replace passing down selectedEntries with Redux store.
+      selectedEntries={selectedEntries}/>; 
 
     lineChartComponent = <TeamViewCumulative 
       chosenTeam={chosenTeam} 
