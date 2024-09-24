@@ -178,6 +178,7 @@ canvas {
     */
 .chart-container {
     aspect-ratio: 2;
+    min-height: 300px;
     height: 50vh;
     width: 100%;
 }
