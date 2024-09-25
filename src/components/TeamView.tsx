@@ -19,6 +19,8 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   const [isAveragePointsView, setIsAveragePointsView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
   const [selectedEntries, setSelectedEntries] = useState(new Set())
+  const teamViewGrid: [{[key: string]: number|string}, {[key: string]: number|string}] = 
+    [{xs: 12, md: "auto"}, {xs: 12, md: "grow"}]
 
   useEffect(() => {
     setComparisonTeams({});
@@ -81,12 +83,12 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   if (window.innerWidth < collapseWidth) {
     buttonStartText = '';
   }
-  
+
   return (
         <div data-testid="team-view">
             <h1>Stats for team {chosenTeam.name}</h1>
             <Grid container>
-              <Grid size={"auto"}>
+              <Grid size={teamViewGrid[0]}>
                   <button id={styles[visualizeActiveButton('game-by-game', cumulativeView)]} className={styles['button-chart']} onClick={() => setCumulativeView(false)}>
                     {buttonStartText} per season
                   </button>
@@ -94,7 +96,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
                     {buttonStartText} across seasons
                   </button>
               </Grid>
-              <Grid size="grow">
+              <Grid size={teamViewGrid[1]}>
                 {additionalButtons}
               </Grid>
             </Grid>
