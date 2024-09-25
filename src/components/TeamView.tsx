@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import * as styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
@@ -6,6 +6,7 @@ import TeamViewSeasonal from './TeamViewSubComponents/TeamViewSeasonal';
 import TeamViewCumulative from './TeamViewSubComponents/TeamViewCumulative';
 import TeamViewAdditionalButtons from './TeamViewSubComponents/TeamViewAdditionalButtons';
 import Grid from '@mui/material/Grid2';
+import { SelectedEntriesProvider } from './Context/SelectedEntriesContext';
 
 type MyProps = {
   chosenTeam: Team;
@@ -45,8 +46,6 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
     setComparisonTeams(comparisonTeamsInstance);
   }
 
-
-  // Todo: implement redux store instead.
   const handleSelectedEntries = (entry: string): void => {
     if (chosenTeam.name !==  entry) {
       let currentSelection = new Set(selectedEntries);
@@ -63,14 +62,15 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   let lineChartComponent = <TeamViewSeasonal chosenTeam={chosenTeam} />;
   let additionalButtons;
   if (cumulativeView) {
-    additionalButtons = <TeamViewAdditionalButtons 
-      allTeams={allTeams} 
-      collapseWidth={collapseWidth}
-      isAveragePointsView={isAveragePointsView}
-      statType={handleCumulativeViewToggle}
-      handleTeamComparison={handleTeamComparison}
-      // Todo: replace passing down selectedEntries with Redux store.
-      selectedEntries={selectedEntries}/>; 
+    additionalButtons = 
+    <SelectedEntriesProvider selectedEntries={selectedEntries}>
+      <TeamViewAdditionalButtons 
+        allTeams={allTeams} 
+        collapseWidth={collapseWidth}
+        isAveragePointsView={isAveragePointsView}
+        statType={handleCumulativeViewToggle}
+        handleTeamComparison={handleTeamComparison}/>
+    </SelectedEntriesProvider>
 
     lineChartComponent = <TeamViewCumulative 
       chosenTeam={chosenTeam} 

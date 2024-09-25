@@ -1,22 +1,23 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
+import { useSelectedEntries } from './Context/SelectedEntriesContext';
 
 // Todo: kui valida menüüst elementi võiks SearchField minna tühjaks.
 type MyProps = {
   category : string[];
   choice : (chosenEntry: string) => void;
   viewType : string;
-  selectedEntries : Set<any>
 }
 
-const MenuBar = ({category, choice, viewType, selectedEntries} : MyProps) => {
+const MenuBar = ({category, choice, viewType} : MyProps) => {
   const [matchedEntries, setMatchedEntries] = useState(category.sort());
   const [inputResetToggle, setInputResetToggle] = useState(false);
   const menuBarRef = useRef<HTMLDivElement>(null);
 
   const regularStyle = styles['entry-selection']
   const selectedStyle = [regularStyle, styles['selected-entry']].join(' ')
+  const selectedEntries = useSelectedEntries()
 
   useEffect(() => {
     setMatchedEntries(category.sort()),

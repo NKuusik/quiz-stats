@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Team} from '../../classes/EntityChildren/Team';
 import * as styles from '../../style.css';
 import MenuBar from '../MenuBar';
@@ -8,14 +8,12 @@ type MyProps = {
     teams : {[teamName: string]: Team};
     comparisonTeamHandler: (teamName: string) => void;
     collapseWidth: number;
-    selectedEntries: Set<any>
 }
 
 function TeamComparison({
     teams, 
     comparisonTeamHandler, 
-    collapseWidth, 
-    selectedEntries}: MyProps) {
+    collapseWidth}: MyProps) {
   const [viewActive, setViewActive] = useState<boolean>(false);
  
  
@@ -32,8 +30,7 @@ function TeamComparison({
     menuBar = <MenuBar 
       category={Object.keys(teams)} 
       choice={(comparedTeamName: string) => comparisonTeamHandler(comparedTeamName)} 
-      viewType={'comparison'} 
-      selectedEntries={selectedEntries}/>;
+      viewType={'comparison'}/>;
   }
 
   return (
