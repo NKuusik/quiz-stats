@@ -10,9 +10,13 @@ type MyProps = {
     collapseWidth: number;
 }
 
-function TeamComparison({teams, comparisonTeamHandler, collapseWidth}: MyProps) {
+function TeamComparison({
+    teams, 
+    comparisonTeamHandler, 
+    collapseWidth}: MyProps) {
   const [viewActive, setViewActive] = useState<boolean>(false);
-
+ 
+ 
   let compareButtonText = 'Compare Teams';
   if (window.innerWidth < collapseWidth) {
     compareButtonText = 'compare';
@@ -23,7 +27,10 @@ function TeamComparison({teams, comparisonTeamHandler, collapseWidth}: MyProps) 
 
   if (viewActive) {
     closeButton = <button onClick={() => setViewActive(false)} className={styles['button-chart']} id={styles['comparison-close']} ><img src={closeIcon} alt='Close'></img></button>;
-    menuBar = <MenuBar category={Object.keys(teams)} choice={(comparedTeamName: string) => comparisonTeamHandler(comparedTeamName)} viewType={'comparison'}/>;
+    menuBar = <MenuBar 
+      category={Object.keys(teams)} 
+      choice={(comparedTeamName: string) => comparisonTeamHandler(comparedTeamName)} 
+      viewType={'comparison'}/>;
   }
 
   return (

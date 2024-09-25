@@ -3,6 +3,7 @@
 $default-background-color: rgb(33, 35, 75);
 $menu-bar-background-color-canvas: #161833;
 $menu-bar-background-color-main: #060824;
+$menu-bar-selected-entry: #424696;
 $header-button-color: rgb(230, 46, 229);
 
 $secondary-color: #B1B5EF;
@@ -71,8 +72,12 @@ canvas {
     font-size: 20px;
 
     &:hover {
-        background-color: #424696;
+        background-color: $menu-bar-selected-entry
     }
+
+    &.selected-entry {
+        background-color: $menu-bar-selected-entry;
+    }    
 }
 
 .chart-view {
