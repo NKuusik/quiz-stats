@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import * as styles from '../style.css';
 import SearchField from '../subcomponents/SearchField';
 import { useSelectedEntries } from './Context/SelectedEntriesContext';

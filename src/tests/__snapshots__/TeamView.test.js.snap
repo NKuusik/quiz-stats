@@ -16,7 +16,7 @@ exports[`default renders correctly 1`] = `
           class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
         >
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-auto css-1djy14n-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-auto css-32giis-MuiGrid2-root"
           >
             <button
               class="button-chart"
@@ -34,7 +34,7 @@ exports[`default renders correctly 1`] = `
             </button>
           </div>
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-grow css-2edihr-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-grow css-r6kcc-MuiGrid2-root"
           />
         </div>
         <div>
@@ -77,7 +77,7 @@ exports[`default renders correctly 1`] = `
         class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
       >
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-auto css-1djy14n-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-auto css-32giis-MuiGrid2-root"
         >
           <button
             class="button-chart"
@@ -95,7 +95,7 @@ exports[`default renders correctly 1`] = `
           </button>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-grow css-2edihr-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-grow css-r6kcc-MuiGrid2-root"
         />
       </div>
       <div>
@@ -195,7 +195,7 @@ exports[`only 3 seasons are displayed 1`] = `
           class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
         >
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-auto css-1djy14n-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-auto css-32giis-MuiGrid2-root"
           >
             <button
               class="button-chart"
@@ -213,7 +213,7 @@ exports[`only 3 seasons are displayed 1`] = `
             </button>
           </div>
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-grow css-2edihr-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-grow css-r6kcc-MuiGrid2-root"
           />
         </div>
         <div>
@@ -256,7 +256,7 @@ exports[`only 3 seasons are displayed 1`] = `
         class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16epkjp-MuiGrid2-root"
       >
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-auto css-1djy14n-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-auto css-32giis-MuiGrid2-root"
         >
           <button
             class="button-chart"
@@ -274,7 +274,7 @@ exports[`only 3 seasons are displayed 1`] = `
           </button>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-grow css-2edihr-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-grow css-r6kcc-MuiGrid2-root"
         />
       </div>
       <div>

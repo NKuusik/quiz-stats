@@ -1,8 +1,13 @@
 // SelectedEntriesContext
 import React, { createContext, useContext } from 'react';
 
-const SelectedEntriesContext = createContext<Set<any>>(new Set());
-export const SelectedEntriesProvider = ({ children, selectedEntries }) => {
+type MyProps = {
+   children: React.ReactNode;
+   selectedEntries: Set<string> 
+ }
+
+const SelectedEntriesContext = createContext<Set<string>>(new Set());
+export const SelectedEntriesProvider = ({ children, selectedEntries }: MyProps) => {
 
 return (
  <SelectedEntriesContext.Provider value={selectedEntries}>

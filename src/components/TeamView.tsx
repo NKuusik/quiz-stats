@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import * as styles from '../style.css';
 import {Team} from '../classes/EntityChildren/Team';
 import {visualizeActiveButton} from '../scripts/visualizeActiveButton';
@@ -19,7 +19,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
   const [cumulativeView, setCumulativeView] = useState<boolean>(false);
   const [isAveragePointsView, setIsAveragePointsView] = useState<boolean>(true);
   const [comparisonTeams, setComparisonTeams] = useState<{[teamName: string]: Team}>({});
-  const [selectedEntries, setSelectedEntries] = useState(new Set())
+  const [selectedEntries, setSelectedEntries] = useState<Set<string>>(new Set())
   const teamViewGrid: [{[key: string]: number|string}, {[key: string]: number|string}] = 
     [{xs: 12, md: "auto"}, {xs: 12, md: "grow"}]
 
@@ -48,7 +48,7 @@ const TeamView = ({chosenTeam, seasonNames, allTeams, collapseWidth}: MyProps) =
 
   const handleSelectedEntries = (entry: string): void => {
     if (chosenTeam.name !==  entry) {
-      let currentSelection = new Set(selectedEntries);
+      const currentSelection = new Set(selectedEntries);
       if (!selectedEntries.has(entry)) {
         currentSelection.add(entry)
       } else {
